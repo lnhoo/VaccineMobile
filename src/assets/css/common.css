@@ -1,7 +1,25 @@
 html,body{
 	height: 100%;
+	overflow: hidden;
+	font-size: 14px;
+	font-family: "Microsoft Yahei","微软雅黑",arial,"\5b8b\4f53";
 }
 #app{
 	height: 100%;
 	background: #303f7a;
+	overflow: hidden;
+	overflow-y: auto;
+}
+.fl-r{
+	float: right;
+}
+/*自定义小按钮*/
+.small-btn{
+	display: inline-block;
+	padding: 0 5px;
+	font-size: 12px;
+	border:1px solid #F2F2F2;
+	color:#FFFFFF;	
+	background: none;
+	border-radius: 5px;			
 }

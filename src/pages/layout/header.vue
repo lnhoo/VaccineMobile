@@ -1,12 +1,12 @@
 <template>
 	<header class="mui-bar mui-bar-nav" style="background-color: #303f7a;">
-	 <a class="mui-icon mui-icon-left-reply mui-pull-left">
-	  	<img src="../../assets/images/title1.png" class="title-img" />
-	  </a>
-	  <h1 class="mui-title">{{ headerName }}</h1>
-	 <a class="mui-icon mui-icon-left-reply mui-pull-right">
-	  	<img src="../../assets/images/title2.png" class="title-img" />
-	  </a>
+		<a class="mui-icon mui-icon-left-reply mui-pull-left" onclick="history.back()">
+		  	<img src="../../assets/images/title1.png" class="title-img" />
+		</a>
+		<h1 class="mui-title">{{ headerName }}</h1>
+		<a class="mui-icon mui-icon-left-reply mui-pull-right">
+		  	<img src="../../assets/images/title2.png" class="title-img" />
+		</a>
 	</header>
 </template>
 <script>

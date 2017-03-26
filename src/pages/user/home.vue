@@ -28,36 +28,36 @@
         <div id="divMenu">
         	<ul class="shye_ul">
 		    	<li class="cf">
-		        	<a href="#" class="cf">
+		        	<a href="javascript:;" class="cf" @tap="goPage(1)">
 		            	<img src="../../assets/images/j29.png"  class="img1"/>
 		                <span><b>库房盘点</b><i>Warehouse<br/>inventory</i></span>
 		                <img src="../../assets/images/j22.png" class="img2"/>
 		            </a>
-		            <a href="#" class="cf">
+		            <a href="javascript:;" class="cf" @tap="goPage(2)">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>接种登记</b><i> registered</i></span>
 		                <img src="../../assets/images/j23.png" class="img2"/>
 		            </a>
 		        </li>
 		        <li class="cf">
-		        	<a href="#" class="cf">
+		        	<a href="javascript:;" class="cf" @tap="goPage(3)">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>出库</b><i>outbound</i></span>
 		                <img src="../../assets/images/j24.png" class="img2"/>
 		            </a>
-		            <a href="#" class="cf">
+		            <a href="javascript:;" class="cf" @tap="goPage(4)">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>入库</b><i> Put in<br/>storage</i></span>
 		                <img src="../../assets/images/j25.png" class="img2"/>
 		            </a>
 		        </li>
 		        <li class="cf">
-		        	<a href="#" class="cf">
+		        	<a href="javascript:;" class="cf" @tap="goPage(5)">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>运输监控</b><i>Transportation</i></span>
 		                <img src="../../assets/images/j26.png" class="img2"/>
 		            </a>
-		            <a href="#" class="cf">
+		            <a href="javascript:;" class="cf" @tap="goPage(6)">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>冷链监控</b><i>Cold chain<br/>monitoring</i></span>
 		                <img src="../../assets/images/j27.png" class="img2"/>
@@ -94,7 +94,15 @@
 			});
 		},
 		methods : {
-           
+           	goPage( num ) {
+           		if( Math.floor(num)%1 ==1 ){
+           			this.$router.push("search")
+           		}else if( Math.floor(num)%1==2 ){
+           			this.$router.push("list")
+           		}else{
+           			this.$router.push("detail")
+           		}
+           	}
 		}
     }
 </script>

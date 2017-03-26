@@ -1,21 +1,32 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/pages/user/login'
-import Home from '@/pages/user/home'
-
 Vue.use(Router)
-
 export default new Router({
   routes: [
     {
       path: '/',
       name: 'login',
-      component: Login
+      component: resolve => require(['@/pages/user/login'], resolve)
     },
     {
       path: '/home',
       name: 'home',
-      component: Home
-    }    
+      component: resolve => require(['@/pages/user/home'], resolve)
+    },
+    {
+      path: '/list',
+      name: 'list',
+      component: resolve => require(['@/pages/stock/list'], resolve)
+    },
+    {
+      path: '/detail',
+      name: 'detail',
+      component: resolve => require(['@/pages/stock/detail'], resolve)
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: resolve => require(['@/pages/stock/search'], resolve)
+    } 
   ]
 })

@@ -1,0 +1,112 @@
+.search-page .searchbar {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 47px;
+    background: #c9c9ce;
+    z-index: 101;
+}
+.search-page .searchbar .searchbar-input {
+    width: 98%;
+    height: 48px;
+    position: absolute;
+    top:0;
+    left: 0;
+    z-index: 101;
+}
+.search-page .search-page{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.search-page .searchbar input[type="search"] {
+	width: 98%;
+	margin-left: 1%;
+	margin-top: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 28px;
+    border: none;
+    border-radius: 5px;
+    font-family: inherit;
+    color: #000;
+    font-size: 12px;
+    font-weight: normal;
+    padding: 0 8px;
+    background-color: #fff;
+    padding: 0 28px;
+    background-repeat: no-repeat;
+    background-position: 8px center;
+    background-image: url('../../images/search.svg');
+    -webkit-background-size: 13px 13px;
+    background-size: 13px 13px;
+    text-align: left;
+    position: absolute;
+    z-index: 201;
+    -webkit-transition-duration: 300ms;
+    transition-duration: 300ms;
+}
+.search-page .mui-card{
+	width: 98%;
+	margin-left: 1%;
+	margin-top: 47px;
+	background: none;
+	-webkit-box-shadow:none;
+	-moz-box-shadow:none;
+	-ms-box-shadow:none;
+	-o-box-shadow:none;
+	box-shadow:none;
+}
+.search-page .mui-table-view{
+	background: transparent;
+	color:#fff;
+}
+.search-page .mui-active{
+	background: transparent;
+}
+.search-page .mui-table-view-cell {
+    padding: 15px 15px;
+}
+.search-page .searchbar-overlay.searchbar-overlay-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.search-page .searchbar-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.4);
+    -webkit-transition-duration: 300ms;
+    transition-duration: 300ms;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+.search-page .searchbar-active .searchbar-input{
+	width: 84%;
+}
+.search-page  .searchbar-cancel {
+    -webkit-transition-duration: 300ms;
+    transition-duration: 300ms;
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+    font-size: 12px;
+    top:16px;
+    right:0;
+    cursor: pointer;
+    opacity: 0;
+    -webkit-flex-shrink: 0;
+    -ms-flex: 0 0 auto;
+   	position: absolute;
+   	z-index: 210;
+}
+.search-page .on{
+	-webkit-transform: translate3d(-40%, 0, 0);
+    transform: translate3d(-40%, 0, 0);
+    opacity: 1;
+}

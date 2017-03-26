@@ -1,0 +1,72 @@
+.stock-detail{
+	background: transparent;
+	height: 100%;
+	margin-top: 20px;
+}
+.stock-detail .grzx_top {
+    margin:  20px 0;
+}
+.stock-detail .grzx_top span {
+    float: left;
+    display: block;
+    width: 60px;
+    height: 60px;
+}
+.stock-detail .grzx_top span img {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    
+}
+.stock-detail .grzx_top i {
+    display: block;
+    float: right;
+    padding-top: 18px;
+}
+.stock-detail .cf::after {content: " ";display: block;clear: both;height: 0;overflow: hidden;}
+.stock-detail .grzx_top i a:hover, .stock-detail .grzx_top i a.open {
+    background: #fff;
+    color: #3f4f97;
+    border-radius: 15px;
+}
+.stock-detail .grzx_top i a {
+    font-size: 15px;
+    color: #dce3ff;
+    padding: 5px 15px;
+}
+.stock-detail .grzx_bottom {
+    padding: 10px 20px;
+}
+.stock-detail .grzx_bottom i {
+    display: block;
+    font-size: 18px;
+    color: #788dff;
+    line-height: 14px;
+    padding: 4px 0;
+    font-style: normal;
+}
+.stock-detail .grzx_bottom b {
+    font-size: 22px;
+    color: #aebaff;
+    line-height: 16px;
+    padding: 4px 0;
+    font-weight: normal;
+    padding-top: 15px;
+    display: block;
+}
+.stock-detail .grzx {
+    background: url('../../images/j8.jpg') no-repeat center;
+    background-size: 100% 100%;
+    padding: 20px 10px 70px 10px;
+}
+.stock-detail .mui-card{
+	margin: 0;
+}
+.stock-detail .mui-card .apply-icon{
+	float: left;
+	width: 20px;
+	height: 20px;
+	margin-right: .3em;
+	margin-top: 1px;
+}
