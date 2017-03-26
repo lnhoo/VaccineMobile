@@ -1,21 +1,24 @@
 .stock-list{
 	height: 100%;
-	padding: 20px;
+	padding: 45px 10px 40px 10px;
+	
+	-webkit-transition:all .3s ease;
+ 	transition:all .3s ease;
 }
 .stock-container{
 	display: block;
 	background: #f4f4f4;
 	border-radius: 20px;
-	height: 56px;
+	height: 42px;
 	margin-top: 10px;
-	margin-bottom: 15px;
-	padding-top: 13px;
+	padding-top: 6px;
 }
 .stock-container img {
     float: left;
-    width: 30px;
+    width: 24px;
     height: auto;
     margin-left: 18px;
+    margin-top: 3px;
 }
 .stock-container  b {
     font-size: 15px;

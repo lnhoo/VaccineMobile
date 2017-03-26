@@ -1,3 +1,8 @@
+.search-page{
+	height: 100%;
+	-webkit-transition:all .3s ease;
+ 	transition:all .3s ease;
+}
 .search-page .searchbar {
     position: absolute;
     width: 100%;

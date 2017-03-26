@@ -1,8 +1,6 @@
 html,body{
 	height: 100%;
-	overflow: hidden;
-	font-size: 14px;
-	font-family: "Microsoft Yahei","微软雅黑",arial,"\5b8b\4f53";
+	font: 14px/1.5 "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei","Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
 }
 #app{
 	height: 100%;
@@ -10,6 +8,7 @@ html,body{
 	overflow: hidden;
 	overflow-y: auto;
 }
+
 .fl-r{
 	float: right;
 }
@@ -22,4 +21,26 @@ html,body{
 	color:#FFFFFF;	
 	background: none;
 	border-radius: 5px;			
+}
+.move-enter-avtive,
+.move-leave-active{
+	-webkit-transform:translate3d(0,0,0);
+	transform:translate3d(0,0,0);
+}
+.move-enter,
+.move-leave-active{
+	-webkit-transform:translate3d(100%,0,0);
+	transform:translate3d(100%,0,0);
+}
+.midden-tab{
+	position: absolute;
+	top:45px;
+	bottom: 48px; 
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	overflow-y: auto;
+}
+.mui-active .icon{
+	background: #9399BF;
 }

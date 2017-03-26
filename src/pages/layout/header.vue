@@ -3,7 +3,7 @@
 		<a class="mui-icon mui-icon-left-reply mui-pull-left" onclick="history.back()">
 		  	<img src="../../assets/images/title1.png" class="title-img" />
 		</a>
-		<h1 class="mui-title">{{ headerName }}</h1>
+		<p class="mui-title" style="font-weight: normal;">{{ headerName }}</p>
 		<a class="mui-icon mui-icon-left-reply mui-pull-right">
 		  	<img src="../../assets/images/title2.png" class="title-img" />
 		</a>

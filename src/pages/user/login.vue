@@ -6,9 +6,9 @@
 			</div>
 		</div>
 		<div class="login-frm">
-			<input type="text" class="mui-input-clear user-name" v-model="userName" placeholder="用户名">
-			<input type="password" class="mui-input-clear password" v-model="password"  placeholder="密码">
-			<button type="button" class="mui-btn mui-btn-primary mui-btn-block login-btn" @click="login">登陆</button>
+			<input type="text" class="mui-input-clear user-name" v-model="userName" placeholder="输入用户名">
+			<input type="password" class="mui-input-clear password" v-model="password"  placeholder="输入密码">
+			<button type="button" class="mui-btn mui-btn-primary login-btn" @click="login">登陆</button>
 			<div class="message"><a href="javascript:;" @click="forgetPwd">忘记密码?</a></div>
 		</div>
 	</div>
@@ -18,8 +18,8 @@
     	name: 'page-login',
         data() {
 			return {
-				'userName' : 'admin',
-				'password' : 'admin'
+				'userName' : '',
+				'password' : ''
 			}
 		},
 		mounted(){
@@ -30,7 +30,7 @@
            		this.$router.push('/home');
            	},
            	forgetPwd(){
-           		mui.toast("忘记密码");
+           		mui.toast("忘记密码2222");
            	}
 		}
     }
