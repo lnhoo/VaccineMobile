@@ -58,5 +58,16 @@
     "not ie <= 8"
   ],
   "main": ".eslintrc.js",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lnhoo/VaccineMobile.git"
+  },
+  "keywords": [
+    "allen"
+  ],
+  "bugs": {
+    "url": "https://github.com/lnhoo/VaccineMobile/issues"
+  },
+  "homepage": "https://github.com/lnhoo/VaccineMobile#readme"
 }
