@@ -5,9 +5,12 @@ import router from './router'
 import mui from '../js/mui.min.js'
 import App from './App'
 import '@/assets/css/common'
+import '@/assets/css/animate'
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 window.mui=mui
+
+mui.init()
 
 if(process.env.NODE_ENV==="development"){
 	require('@/assets/css/mui.css') 

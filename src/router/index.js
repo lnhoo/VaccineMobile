@@ -27,6 +27,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: resolve => require(['@/pages/stock/search'], resolve)
-    } 
+    },
+    {
+      path: '/child-info',
+      name: 'childInfo',
+      component: resolve => require(['@/pages/inoculation/child_info'], resolve)
+    }  
   ]
 })
