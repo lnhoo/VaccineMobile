@@ -3,6 +3,9 @@ var utils = require('./utils')
 var webpack = require('webpack')
 var config = require('../config')
 var merge = require('webpack-merge')
+var gulp = require('gulp')
+var concat = require('gulp-concat')                                    
+var minifyCss = require('gulp-minify-css')
 var baseWebpackConfig = require('./webpack.base.conf')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -10,6 +13,17 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
 var env = config.build.env
+
+gulp.task('concatCss', function() {                                     
+    gulp.src(['./src/assets/css/mui.min.css'])                
+        .pipe(concat('mui.min.css'))                                   
+        .pipe(minifyCss())                                              
+        .pipe(gulp.dest('./dist/assets/css'));                                  
+})
+
+gulp.task('default', [ 'concatCss'])
+
+gulp.start()
 
 var webpackConfig = merge(baseWebpackConfig, {
   module: {
