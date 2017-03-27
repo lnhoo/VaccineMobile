@@ -30,7 +30,7 @@
            		this.$router.push('/home');
            	},
            	forgetPwd(){
-           		mui.toast("忘记密码2222");
+           		mui.toast("忘记密码");
            	}
 		}
     }
