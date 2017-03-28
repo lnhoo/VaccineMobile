@@ -1,0 +1,96 @@
+.page-nursery{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	overflow: hidden;
+	-webkit-transition:all .3s ease;
+	transition:all .3s ease;
+}
+.page-nursery .nursery-content{
+	position: absolute;
+	top: 45px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow-x:hidden;
+	overflow-y:auto;
+	background: #2B3E72;
+	padding: 10px;
+}
+.page-nursery .flex-items{
+	text-align: center;
+	padding: 6px 0;
+	margin: 6px;
+	font-size: 12px;
+}
+.page-nursery .flex-1{
+	flex: 8;
+	text-align: left;
+	padding: 14px 0;
+	position: relative;
+	color:#ccc;
+}
+.page-nursery .flex-1 b{
+	font-size: 15px;
+}
+.page-nursery .flex-1 i{
+	float: left;
+	margin-right: 5px; 
+	margin-top: 2px;
+	width: 6px;
+	height: 17px;
+	background: #fff;
+}
+.page-nursery .flex-2{
+	flex: 4;
+	padding: 14px 0;
+	text-align: right;
+	padding-right: 10px;
+	color:#ccc;
+}
+.page-nursery div.flex-items{
+	background: #fff;
+	color:#000;
+}
+.page-nursery .nursery-content .active{
+	background: #505DAF;
+	color:#fff;
+}
+.page-nursery .nursery-flex{
+	flex: 1;
+}
+.page-nursery .nursery-box{
+	padding: 10px 15px;
+}
+.page-nursery .pop-content{
+	background:#fff;
+	margin: 6px;
+	border-radius: 10px;
+	margin-top: 26px;
+	padding: 20px;
+	position: relative;
+	-webkit-box-shadow: 0px 0px 10px #E5C6C6;
+	box-shadow: 0px 0px 10px #E5C6C6;
+}
+.page-nursery .pop-content:after{
+	content: '';
+	width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #fff;
+    position: absolute;
+    left: 34px;
+    top: -14px;
+}
+.page-nursery .circular{
+	float: left;
+	width: 5px;
+	height: 5px;
+	background: red;
+	border-radius: 5px;
+	margin-top:7px; 
+	margin-right: 5px;
+}
