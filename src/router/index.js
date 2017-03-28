@@ -29,6 +29,11 @@ export default new Router({
       component: resolve => require(['@/pages/stock/search'], resolve)
     },
     {
+      path: '/nursery-stock',
+      name: 'nurseryStock',
+      component: resolve => require(['@/pages/inoculation/nursery_stock'], resolve)
+    },
+    {
       path: '/child-info',
       name: 'childInfo',
       component: resolve => require(['@/pages/inoculation/child_info'], resolve)
