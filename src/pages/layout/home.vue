@@ -51,7 +51,7 @@
 		            </a>
 		        </li>
 		        <li class="cf">
-		        	<a href="javascript:;" class="cf" @tap="goPage('search')">
+		        	<a href="javascript:;" class="cf" @tap="goPage('child-info')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>运输监控</b><i>Transportation</i></span>
 		                <img src="../../assets/images/j26.png" class="img2"/>
