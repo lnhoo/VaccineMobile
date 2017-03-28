@@ -1,17 +1,11 @@
 <template>
   <div id="app">
-    <router-view class="animated" transition="bounce"></router-view>
+    <router-view></router-view>
   </div>
 </template>
 <script>
 	export default {
-	  	name: 'app',
-	  	transitions: {
-		    bounce: {
-		      	enterClass: 'bounceInLeft',
-		      	leaveClass: 'bounceOutRight'
-		    }
-		}
+	  	name: 'app'
 	}
 </script>
 
