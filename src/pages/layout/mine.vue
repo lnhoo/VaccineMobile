@@ -1,32 +1,79 @@
 <template>
 	<div class="page-mine midden-tab">
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
-		<p>mineineineineineineineine</p>
+		<scroller style="top: 44px"
+              :on-refresh="refresh"
+              :on-infinite="infinite"
+              ref="my_scroller">
+	      	<div v-for="(item, index) in items" class="row" :class="{'grey-bg': index % 2 == 0}">
+	        	{{ item }}
+	      	</div>
+    	</scroller>
 	</div>
 </template>
 
 <script>
-	export default {
-		name : 'page-mine'
+	import Scroller from 'vue-scroller'
+  	export default {
+  		name : 'page-mine',
+	    components: {
+	     	Scroller
+	    },
+	    data() {
+	      	return {
+	        	items: []
+	      	}
+	    },
+	    mounted() {
+	    	for (var i = 1; i <= 20; i++) {
+	        	this.items.push(i + ' - keep walking, be 2 with you.');
+	    	}
+	      	this.top = 1;
+	      	this.bottom = 20;
+	      	setTimeout(() => {
+	        	this.$refs.my_scroller.resize();
+	      	})
+	    },
+	    methods: {
+		    refresh() {
+		        setTimeout(() => {
+		          var start = this.top - 1
+		          for (var i = start; i > start - 10; i--) {
+		            this.items.splice(0, 0, i + ' - keep walking, be 2 with you.');
+		          }
+		          this.top = this.top - 10;
+		          if (this.$refs.my_scroller)
+		            this.$refs.my_scroller.finishPullToRefresh();
+		        }, 1500)
+		    },
+	      	infinite() {
+		        setTimeout(() => {
+		          var start = this.bottom + 1;
+		          for (var i = start; i < start + 10; i++) {
+		            this.items.push(i + ' - mine');
+		          }
+		          this.bottom = this.bottom + 10;
+		          setTimeout(() => {
+		            if (this.$refs.my_scroller)
+		              this.$refs.my_scroller.resize();
+		          })
+		        }, 1500)
+		    }
+	    }
 	}
 </script>
 
 <style>
+  	.row {
+	    width: 100%;
+	    height: 50px;
+	    padding: 10px 0;
+	    font-size: 16px;
+	    line-height: 30px;
+	    text-align: center;
+	    color: #444;
+	    background-color: #fff;
+	 }
+  	.grey-bg {
+    	background-color: #eee;
+  	}
 </style>

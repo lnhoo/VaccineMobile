@@ -199,7 +199,19 @@
 					"dist/assets/js/manifest.61b1149e01dc1e6dd031.js",
 					"dist/assets/js/vendor.7138586cc03e150c531f.js",
 					"dist/assets/js/manifest.cdb09308f239b191a954.js",
-					"dist/assets/css/app.38deea163aa36285cdbb97282fa46349.css"
+					"dist/assets/css/app.38deea163aa36285cdbb97282fa46349.css",
+					"dist/assets/css/app.aa2f1b35ebb5c372f792cb869f81ae97.css",
+					"dist/assets/js/vendor.7ac048086af0c6b350f0.js",
+					"dist/assets/js/app.5110396479e85d2d704b.js",
+					"dist/assets/js/manifest.75063f6a09c06dcc7da3.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"pullrefresh_main.html": {
+				"resources": [
+					"js/mui.min.js",
+					"pullrefresh_sub.html"
 				],
 				"refer": [],
 				"priority": 0
@@ -247,7 +259,6 @@
 				"src/assets/images/j26.png",
 				"css/common.css",
 				"src/components/Hello.vue",
-				"js/mui.min.js",
 				"src/components/Login.vue",
 				"src/assets/images/j27.png",
 				"dist/static/js/app.dc040b3895bf2f558842.js.map",
