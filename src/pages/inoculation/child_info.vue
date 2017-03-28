@@ -1,13 +1,51 @@
 <template>
-	<div class="page-child-info">
-		<v-header :headerName="headerName"></v-header>
-		<div class="child-info-box">
-			<p class="tabs">
-				<a href="" class="items active">儿童信息</a>
-				<a href="" class="items">育苗信息</a>
-			</p>
+	<transition name="move">
+		<div class="page-child-info">
+			<v-header :headerName="headerName"></v-header>
+			<div class="child-info-box">
+				<p class="tabs">
+					<a href="" class="items active">儿童信息</a>
+					<a href="" class="items">育苗信息</a>
+				</p>
+				<div class="pop-wrap">
+					<div class="inner-box">
+						<div class="li-items flex border-1px">
+							<span class="flex-items text-l">姓名</span>
+							<span class="flex-items text-r">刘某某</span>
+						</div>
+						<div class="li-items flex border-1px">
+							<span class="flex-items text-l">性别</span>
+							<span class="flex-items text-r">女</span>
+						</div>
+						<div class="li-items flex border-1px">
+							<span class="flex-items text-l">接种编号</span>
+							<span class="flex-items text-r">sw0345</span>
+						</div>
+						<div class="li-items flex border-1px">
+							<span class="flex-items text-l">出生日期</span>
+							<span class="flex-items text-r">2017-04-01</span>
+						</div>
+						<div class="li-items flex border-1px">
+							<span class="flex-items text-l">接种日期</span>
+							<span class="flex-items text-r">2017-04-01</span>
+						</div>
+						<div class="li-items flex border-1px">
+							<span class="flex-items text-l">接种部位</span>
+							<span class="flex-items text-r">左手臂</span>
+						</div>
+						<div class="li-items flex border-1px">
+							<span class="flex-items text-l">接种点</span>
+							<span class="flex-items text-r">8:00</span>
+						</div>
+						<div class="li-items flex border-1px">
+							<span class="flex-items text-l">接种医生</span>
+							<span class="flex-items text-r">齐医生</span>
+						</div>	
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
+	</transition>
 </template>
 <script>
 	import header from '@/pages/layout/header'
@@ -16,39 +54,11 @@
 		components :{
     		'v-header' : header
     	},
-		//props : [ 'headerName' ],
 		data() {
-			return {}
+			return {
+				headerName : '儿童信息'
+			}
 		}
 	}
 </script>
-<style scoped="scoped">
-	.page-child-info{
-		height: 100%;
-		overflow: hidden;
-	}
-	.child-info-box{
-		position: fixed;
-		top: 50px;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: rgba(61,158,227,0.3);
-	}
-	.child-info-box .tabs{
-		padding: 10px 0;
-		text-align: right; 
-	}
-	.child-info-box .tabs .items{
-		display: inline-block;
-		margin-right: 1em;
-		padding: 5px 9px;
-		color:#fff;
-		border-radius: 13px;
-		font-size: 12px;
-	}
-	.child-info-box .tabs .active{
-		background: #fff;
-		color: #000;
-	}
-</style>
+<style scoped="scoped" src="@/assets/css/inoculation/child-info"></style>
