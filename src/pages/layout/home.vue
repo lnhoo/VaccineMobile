@@ -39,12 +39,12 @@
 		            </a>
 		        </li>
 		        <li class="cf">
-		        	<a href="javascript:;" class="cf" @tap="goPage('detail')">
+		        	<a href="javascript:;" class="cf" @tap="goPage('out-stock')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>出库</b><i>outbound</i></span>
 		                <img src="../../assets/images/j24.png" class="img2"/>
 		            </a>
-		            <a href="javascript:;" class="cf" @tap="goPage('detail')">
+		            <a href="javascript:;" class="cf" @tap="goPage('in-stock')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>入库</b><i> Put in<br/>storage</i></span>
 		                <img src="../../assets/images/j25.png" class="img2"/>
