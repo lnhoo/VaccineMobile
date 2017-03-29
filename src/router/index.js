@@ -47,6 +47,17 @@ export default new Router({
       path: '/vehicleline',
       name: 'vehicleline',
       component: resolve => require(['@/pages/transport/vehicleline'], resolve)
-    }
+    },
+    {
+      path: '/map',
+      name: 'map',
+      component: resolve => require(['@/pages/layout/map'], resolve)
+    },
+    {
+      path: '/barcode',
+      name: 'barcode',
+      component: resolve => require(['@/pages/layout/barcode'], resolve)
+    },
+
   ]
 })
