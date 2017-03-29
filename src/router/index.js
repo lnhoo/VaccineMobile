@@ -21,12 +21,12 @@ export default new Router({
 	{
       path: '/in-stock',
       name: 'inStock',
-      component: resolve => require(['@/pages/stock/in-stock'], resolve)
+      component: resolve => require(['@/pages/stock/in_stock'], resolve)
     },
 	{
       path: '/out-stock',
       name: 'outStock',
-      component: resolve => require(['@/pages/stock/out-stock'], resolve)
+      component: resolve => require(['@/pages/stock/out_stock'], resolve)
     },
     {
       path: '/search',
