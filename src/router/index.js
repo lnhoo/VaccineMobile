@@ -17,11 +17,16 @@ export default new Router({
       path: '/list',
       name: 'list',
       component: resolve => require(['@/pages/stock/list'], resolve)
+    },   
+	{
+      path: '/in-stock',
+      name: 'inStock',
+      component: resolve => require(['@/pages/stock/in-stock'], resolve)
     },
-    {
-      path: '/detail',
-      name: 'detail',
-      component: resolve => require(['@/pages/stock/detail'], resolve)
+	{
+      path: '/out-stock',
+      name: 'outStock',
+      component: resolve => require(['@/pages/stock/out-stock'], resolve)
     },
     {
       path: '/search',
