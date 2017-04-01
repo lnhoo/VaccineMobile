@@ -57,7 +57,6 @@ export default new Router({
       path: '/barcode',
       name: 'barcode',
       component: resolve => require(['@/pages/layout/barcode'], resolve)
-    },
-
+    }
   ]
 })
