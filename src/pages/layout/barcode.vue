@@ -24,7 +24,7 @@
 		},
 		methods : {
 			back() {
-
+				history.back()
 			},
 			scanPicture() {
 				plus.gallery.pick(function(path){

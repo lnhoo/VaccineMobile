@@ -1,6 +1,6 @@
 <template>
 	<div class="page-mine midden-tab">
-		<scroller style="top: 44px"
+		<scroller style="top: 0,bottom:45px;"
               :on-refresh="refresh"
               :on-infinite="infinite"
               ref="my_scroller">
@@ -31,10 +31,11 @@
 	      	this.bottom = 20;
 	      	setTimeout(() => {
 	        	this.$refs.my_scroller.resize();
-	      	})
+	      	},2000)
 	    },
 	    methods: {
 		    refresh() {
+		    	alert(77);
 		        setTimeout(() => {
 		          var start = this.top - 1
 		          for (var i = start; i > start - 10; i--) {
@@ -46,17 +47,22 @@
 		        }, 1500)
 		    },
 	      	infinite() {
-		        setTimeout(() => {
+	      		setTimeout(() => {
+	      			if(this.$refs.my_scroller){
+		      			this.$refs.my_scroller.resize()
+		      		}	
+	      		},3000)
+		       /* setTimeout(() => {
 		          var start = this.bottom + 1;
 		          for (var i = start; i < start + 10; i++) {
 		            this.items.push(i + ' - mine');
 		          }
 		          this.bottom = this.bottom + 10;
-		          setTimeout(() => {
+		         /* setTimeout(() => {
 		            if (this.$refs.my_scroller)
-		              this.$refs.my_scroller.resize();
+		            	this.$refs.my_scroller.resize();
 		          })
-		        }, 1500)
+		        }, 2500)*/
 		    }
 	    }
 	}
