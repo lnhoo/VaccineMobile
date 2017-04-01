@@ -20,7 +20,8 @@
 	    },
 	    data() {
 	      	return {
-	        	items: []
+	        	items : [],
+	        	count : 0
 	      	}
 	    },
 	    mounted() {
@@ -47,22 +48,25 @@
 		        }, 1500)
 		    },
 	      	infinite() {
-	      		setTimeout(() => {
-	      			if(this.$refs.my_scroller){
-		      			this.$refs.my_scroller.resize()
-		      		}	
-	      		},3000)
-		       /* setTimeout(() => {
-		          var start = this.bottom + 1;
-		          for (var i = start; i < start + 10; i++) {
-		            this.items.push(i + ' - mine');
-		          }
-		          this.bottom = this.bottom + 10;
-		         /* setTimeout(() => {
-		            if (this.$refs.my_scroller)
-		            	this.$refs.my_scroller.resize();
-		          })
-		        }, 2500)*/
+		       setTimeout(() => {
+
+		       		if(this.count<4){
+		       			var start = this.bottom + 1;
+			          	for (var i = start; i < start + 10; i++) {
+			            	this.items.push(i + ' - mine');
+			          	}
+			          	this.bottom = this.bottom + 10;
+			         	setTimeout(() => {
+			            	if (this.$refs.my_scroller){
+			            		this.$refs.my_scroller.finishInfinite(true);
+			            		this.count++;
+			            	}
+			          	})
+		       		}else{
+		       			this.$refs.my_scroller.finishInfinite(true);
+		       		}
+		          	
+		        }, 2500)
 		    }
 	    }
 	}
