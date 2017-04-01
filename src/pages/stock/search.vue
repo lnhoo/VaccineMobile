@@ -1,6 +1,7 @@
 <template>
 	<transition name="move">
 		<div class="stock-search">
+			<v-header :headerName="headerName"></v-header>
 			<div id="search" class="search-page">
 			  	<form  class="searchbar searchbar-init" :class="{'searchbar-active':active}">
 			      <div class="searchbar-input">
@@ -23,11 +24,16 @@
 	</transition>
 </template>
 <script>
+	import Header from '@/pages/layout/header'
 	export default {
 		name :'stock-detail',
+		components:{
+			"v-header" : Header
+		},
 		data() {
 			return {
 				active : false,
+				headerName : '搜索',
 				items : [
 					{carName : "湘B-A002221"},
 					{carName : "湘B-A002221"},
