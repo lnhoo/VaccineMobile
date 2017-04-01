@@ -12,7 +12,6 @@ html,body{
 	overflow: hidden;
 	-webkit-font-smoothing: antialiased;
   	-moz-osx-font-smoothing: grayscale;
-  	text-align: center;
   	color: #2c3e50;
 }
 
@@ -53,6 +52,9 @@ html,body{
 }
 .flex{
 	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	display: flex;
 }
 .flex-items{
@@ -76,5 +78,5 @@ html,body{
     border-top: 1px solid #EBEFF0;
 	content: ''
 }
-
+ 
     

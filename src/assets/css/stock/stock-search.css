@@ -1,13 +1,14 @@
-.search-page{
-	height: 100%;
-	-webkit-transition:all .3s ease;
- 	transition:all .3s ease;
+.stock-search{
+	position: fixed;
+    width: 100%;
+	-webkit-transition:all .6s ease;
+ 	transition:all .6s ease;
 }
 .search-page .searchbar {
     position: absolute;
     width: 100%;
     left: 0;
-    top: 0;
+    top: 45px;
     height: 47px;
     background: #c9c9ce;
     z-index: 101;
@@ -55,7 +56,7 @@
 .search-page .mui-card{
 	width: 98%;
 	margin-left: 1%;
-	margin-top: 47px;
+	margin-top: 90px;
 	background: none;
 	-webkit-box-shadow:none;
 	-moz-box-shadow:none;

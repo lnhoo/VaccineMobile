@@ -42,7 +42,7 @@
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     white-space: nowrap;
-    margin-right: 16px;
+    margin-right: 0;
     display: block;
 }
 .cf::after{
