@@ -36,7 +36,6 @@
 	    },
 	    methods: {
 		    refresh() {
-		    	alert(77);
 		        setTimeout(() => {
 		          var start = this.top - 1
 		          for (var i = start; i > start - 10; i--) {
