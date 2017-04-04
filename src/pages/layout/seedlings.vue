@@ -20,7 +20,19 @@
 
 <script>
 	export default {
-		name : 'page-seedings'
+		name : 'page-seedings',
+		data() {
+			return {
+			}
+		},
+		mounted(){
+			
+		},
+		methods : {
+           	goPage( url ) {
+           		this.$router.push(url)
+           	}
+		}
 	}
 </script>
 

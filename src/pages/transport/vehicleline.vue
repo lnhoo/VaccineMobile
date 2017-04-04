@@ -39,12 +39,12 @@
 			toDetail : function(){
 				this.$router.push("/vehicleline")
 			}
-		}
+		} 
 	}
 </script>
 
 <style>
-	.xslx{ position:relative;}
+	.xslx{ position:relative; margin-top: 15px;}
 	.xslx img{ width:100%; height:auto}
 	.clxs{ background:url(../../assets/images/j31.png) no-repeat center; background-size:100% 100%; position:absolute; bottom:0; left:0; width:100%; padding:8% 6%}
 	.clxs span,.clxs a{ float:left;}

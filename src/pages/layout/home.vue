@@ -32,7 +32,7 @@
 		                <span><b>库房盘点</b><i>Warehouse<br/>inventory</i></span>
 		                <img src="../../assets/images/j22.png" class="img2"/>
 		            </a>
-		            <a href="javascript:;" class="cf" @tap="goPage('nursery-stock')">
+		            <a href="javascript:;" class="cf" @tap="goPage('child-info')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>接种登记</b><i> registered</i></span>
 		                <img src="../../assets/images/j23.png" class="img2"/>
@@ -51,7 +51,7 @@
 		            </a>
 		        </li>
 		        <li class="cf">
-		        	<a href="javascript:;" class="cf" @tap="goPage('child-info')">
+		        	<a href="javascript:;" class="cf" @tap="goPage('vehicleline')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>运输监控</b><i>Transportation</i></span>
 		                <img src="../../assets/images/j26.png" class="img2"/>
