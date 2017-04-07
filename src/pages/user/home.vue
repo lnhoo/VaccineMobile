@@ -1,7 +1,6 @@
 <template>
 	<div class="page-home">
-		<v-header :headerName="headerName"></v-header>
-			
+		<v-header :headerName="headerName"></v-header>				
 		<!--首页 begin-->
 		<div v-show="home">
 			<v-home></v-home>	
