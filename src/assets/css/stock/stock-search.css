@@ -1,8 +1,9 @@
 .stock-search{
 	position: fixed;
     width: 100%;
-	-webkit-transition:all .6s ease;
- 	transition:all .6s ease;
+    background: #303F7A;
+	-webkit-transition:all .3s ease;
+ 	transition:all .3s ease;
 }
 .search-page .searchbar {
     position: absolute;

@@ -1,54 +1,74 @@
 <template>
-		<transition name="move">
-			<div class="stock-detail">
-				<v-header :headerName="headerName"></v-header>
-				<div class="xslx">
-					<img src="../../assets/images/j30.jpg"/>
-					<div class="clxs cf">
-			        	<span>行驶车辆</span>
-			            <a href="#">湘A2b457  </a>
-			            <a href="#">湘A2b457  </a>
-			            <a href="#">湘A2b457  </a>
-			            <a href="#">湘A2b457  </a>
-			            <a href="#">湘A2b457  </a>
-			            <a href="#">湘A2b457  </a>
-			            <a href="#">湘A2b457  </a>
-			        </div>
-				</div>
-				<v-tabber></v-tabber>
-			</div>
-		</transition>
-		
+	<transition name="move" v-on:after-leave="leave">
+		<div class="maps">
+			<v-header :headerName="headerName"></v-header>
+			<div id="allmap"></div>
+			<div class="footer-box">
+				行驶车辆：湘A：103455
+			</div> 
+		</div>
+	</transition>
 </template>
-
 <script>
-	import Header from '@/pages/layout/header'
-	import Tabber from '@/pages/layout/tabber'
+	import header from '@/pages/layout/header'
 	export default {
-		name :'stock-vehicleline',
+		name:'page-map',
 		components:{
-			"v-header" : Header,
-			'v-tabber' : Tabber
+			"v-header" : header 
 		},
 		data() {
 			return {
-				headerName : '行驶路线'	
+				headerName:'运输监控'
 			}
 		},
-		methods: {
-			toDetail : function(){
-				this.$router.push("/vehicleline")
+		mounted() {
+			// 百度地图API功能
+			var map = new BMap.Map("allmap");
+			map.centerAndZoom('济南',12);
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function(r){
+				if(this.getStatus() == BMAP_STATUS_SUCCESS){
+					var mk = new BMap.Marker(r.point);
+					map.addOverlay(mk);
+					map.panTo(r.point);
+					//alert('您的位置：'+r.point.lng+','+r.point.lat);
+				}
+				else {
+					//alert('failed'+this.getStatus());
+				}        
+			},{enableHighAccuracy: true})
+		},
+		methods:{
+			leave() {
+				this.$parent.homeRouter = false
 			}
-		} 
+		}
+
 	}
 </script>
-
-<style>
-	.xslx{ position:relative; margin-top: 15px;}
-	.xslx img{ width:100%; height:auto}
-	.clxs{ background:url(../../assets/images/j31.png) no-repeat center; background-size:100% 100%; position:absolute; bottom:0; left:0; width:100%; padding:8% 6%}
-	.clxs span,.clxs a{ float:left;}
-	.clxs span{ font-size:12px; color:#fff; padding:4px;}
-	.clxs a{ background:#6972b2;padding:4px 6px; display:inline-block; color:#fff; font-size:12px; margin:0 5px 10px 5px;border-radius:10px;}
-	.clxs a:hover,.clxs a.open{ background:#363f7e;}
+<style scoped="scoped">
+	#allmap{
+		position: absolute;
+		top:45px;
+		left: 0;
+		right: 0;
+		bottom: 120px;
+		overflow: hidden;
+	}
+	.maps{
+		height: 100%;
+		width: 100%;
+		background: #fff;
+		-webkit-transition:all .3s ease;
+		transition:all .3s ease;
+	}
+	.footer-box{
+		position: fixed;
+		bottom: 5px;
+		width: 94%;
+		height: 110px;
+		left:3%;
+		background: #3D4897;
+		border-radius: 5px;
+	}
 </style>

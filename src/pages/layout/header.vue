@@ -1,12 +1,8 @@
 <template>
 	<header class="mui-bar mui-bar-nav" style="background-color: #303f7a;">
-		<a class="mui-icon mui-icon-left-reply mui-pull-left" onclick="history.back()">
-		  	<img src="../../assets/images/title1.png" class="title-img" />
-		</a>
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<p class="mui-title" style="font-weight: normal;">{{ headerName }}</p>
-		<a class="mui-icon mui-icon-left-reply mui-pull-right">
-		  	<img src="../../assets/images/title2.png" class="title-img" />
-		</a>
+		<span class="mui-icon mui-icon-contact mui-pull-right" style="color:#fff;"></span>
 	</header>
 </template>
 <script>
@@ -15,6 +11,9 @@
 		props : [ 'headerName' ],
 		data() {
 			return {}
+		},
+		methods : {
+		
 		}
 	}
 </script>
@@ -26,4 +25,7 @@
 }
 .mui-title{color: white; font-size: 15px; font-weight: bold;}
 .title-img{width: 26px;}
+.mui-bar{
+	z-index: 0;
+}
 </style>

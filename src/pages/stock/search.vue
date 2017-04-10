@@ -1,6 +1,6 @@
 <template>
 	<transition name="move">
-		<div class="stock-search">
+		<div class="stock-search" v-show="searchFlag">
 			<v-header :headerName="headerName"></v-header>
 			<div id="search" class="search-page">
 			  	<form  class="searchbar searchbar-init" :class="{'searchbar-active':active}">
@@ -33,6 +33,7 @@
 		data() {
 			return {
 				active : false,
+				searchFlag : false,
 				headerName : '搜索',
 				items : [
 					{carName : "湘B-A002221"},
@@ -59,6 +60,12 @@
 			},
 			goHome () {
 				this.$router.push('home')
+			},
+			showToggle() {
+				this.searchFlag = !this.searchFlag
+			},
+			back() {
+				this.searchFlag = false
 			}
 		}
 	}

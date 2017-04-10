@@ -27,7 +27,7 @@
 	    <div id="divMenu">
         	<ul class="shye_ul">
 		    	<li class="cf">
-		        	<a href="javascript:;" class="cf" @tap="goPage('list')">
+		        	<a href="javascript:;" class="cf" @tap="goPage('home/nursery-stock')">
 		            	<img src="../../assets/images/j29.png"  class="img1"/>
 		                <span><b>库房盘点</b><i>Warehouse<br/>inventory</i></span>
 		                <img src="../../assets/images/j22.png" class="img2"/>
@@ -39,24 +39,24 @@
 		            </a>
 		        </li>
 		        <li class="cf">
-		        	<a href="javascript:;" class="cf" @tap="goPage('out-stock')">
+		        	<a href="javascript:;" class="cf" @tap="goPage('home/out-stock')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>出库</b><i>outbound</i></span>
 		                <img src="../../assets/images/j24.png" class="img2"/>
 		            </a>
-		            <a href="javascript:;" class="cf" @tap="goPage('in-stock')">
+		            <a href="javascript:;" class="cf" @tap="goPage('home/in-stock')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>入库</b><i> Put in<br/>storage</i></span>
 		                <img src="../../assets/images/j25.png" class="img2"/>
 		            </a>
 		        </li>
 		        <li class="cf">
-		        	<a href="javascript:;" class="cf" @tap="goPage('vehicleline')">
+		        	<a href="javascript:;" class="cf" @tap="goPage('home/vehicleline')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>运输监控</b><i>Transportation</i></span>
 		                <img src="../../assets/images/j26.png" class="img2"/>
 		            </a>
-		            <a href="javascript:;" class="cf" @tap="goPage('search')">
+		            <a href="javascript:;" class="cf" @tap="goPage('home/cold-chain')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>冷链监控</b><i>Cold chain<br/>monitoring</i></span>
 		                <img src="../../assets/images/j27.png" class="img2"/>
@@ -64,7 +64,7 @@
 		        </li>
 
 		    </ul>
-        </div>	
+        </div>
 	</div>
 </template>
 
@@ -72,8 +72,7 @@
 	export default {
     	name: 'page-home-tab',
         data() {
-			return {
-			}
+			return {}
 		},
 		mounted(){
 			//获得slider插件对象
@@ -85,7 +84,7 @@
 		},
 		methods : {
            	goPage( url ) {
-           		this.$router.push(url)
+           		this.$parent.goPage( url )
            	}
 		}
     }

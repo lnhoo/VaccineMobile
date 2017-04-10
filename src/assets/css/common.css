@@ -68,6 +68,9 @@ html,body{
 .text-r{
 	text-align: right;
 }
+.text-c{
+	text-align: center;
+}
 .border-1px{
 	position:relative;
 }

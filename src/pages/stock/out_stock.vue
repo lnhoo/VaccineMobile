@@ -1,12 +1,15 @@
 <template>
-	<transition name="move">
+	<transition name="move" v-on:after-leave="leave">
 		<div class="stock-detail">
 			<v-header :headerName="headerName"></v-header>
-			<div id="detail">
+			<div class="stock-detail-content">
 				<div class="grzx">
 					<div class="grzx_top cf">
 			        	<span><img src="../../assets/images/login.jpg"></span>
-			            <i><a href="#" class="open">入库</a><a href="#">出库</a></i>
+			            <i>
+			            	<a href="javascript:;" >入库</a>
+			            	<a href="javascript:;" class="open">出库</a>
+			            </i>
 			        </div>
 			        <div class="grzx_bottom">
 			        	<i>出库单号</i>
@@ -74,12 +77,12 @@
 		},
 		data() {
 			return {
-				headerName : '商品详情'	
+				headerName : '出库'	
 			}
 		},
 		methods : {
-			afterEnter() {
-				mui.toast("ok")
+			leave() {
+				this.$parent.homeRouter = false
 			}
 		}
 	}

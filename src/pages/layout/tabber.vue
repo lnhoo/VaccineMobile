@@ -34,6 +34,6 @@
 	}
 </script>
 <style scoped="scoped">
-	.mui-bar-tab{ background:#1e2850; }
+	.mui-bar-tab{ background:#1e2850;position: absolute;z-index: 0; }
 	.mui-tab-label{color: white;}
 </style>
