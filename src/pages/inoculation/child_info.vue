@@ -1,5 +1,5 @@
 <template>
-	<transition name="move">
+	<transition name="move" v-on:after-leave="leave">
 		<div class="page-child-info">
 			<v-header :headerName="headerName"></v-header>
 			<div class="child-info-box">
@@ -57,6 +57,11 @@
 		data() {
 			return {
 				headerName : '儿童信息'
+			}
+		},
+		methods:{
+			leave() {
+				this.$parent.homeRouter = false
 			}
 		}
 	}
