@@ -26,7 +26,7 @@ export default new Router({
                 {
                     path: 'cold-detail',
                     name: 'coldDetail',
-                    component: resolve => require(['@/pages/stock/cold-detail'], resolve) 
+                    component: resolve => require(['@/pages/stock/cold_detail'], resolve) 
                 }
             ]
         },
