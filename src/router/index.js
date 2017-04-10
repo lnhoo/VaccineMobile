@@ -44,22 +44,19 @@ export default new Router({
             path: 'vehicleline',
             name: 'vehicleline',
             component: resolve => require(['@/pages/transport/vehicleline'], resolve)
+        },
+        {
+            path: 'child-info',
+            name: 'childInfo',
+            component: resolve => require(['@/pages/inoculation/child_info'], resolve)
         }
       ]
     },  
-	
-	
     {
       path: '/search',
       name: 'search',
       component: resolve => require(['@/pages/stock/search'], resolve)
     },
-    {
-      path: '/child-info',
-      name: 'childInfo',
-      component: resolve => require(['@/pages/inoculation/child_info'], resolve)
-    },
-    
     {
       path: '/map',
       name: 'map',
