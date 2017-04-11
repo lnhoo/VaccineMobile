@@ -4,8 +4,8 @@
 			<v-header :headerName="headerName"></v-header>
 			<div class="child-info-box">
 				<p class="tabs">
-					<a href="" class="items active">儿童信息</a>
-					<a href="" class="items">育苗信息</a>
+					<a href="javascript:;" class="items active">儿童信息</a>
+					<a href="javascript:;" class="items">育苗信息</a>
 				</p>
 				<div class="pop-wrap">
 					<div class="inner-box">
@@ -37,7 +37,7 @@
 							<span class="flex-items text-l">接种点</span>
 							<span class="flex-items text-r">8:00</span>
 						</div>
-						<div class="li-items flex border-1px">
+						<div class="li-items flex">
 							<span class="flex-items text-l">接种医生</span>
 							<span class="flex-items text-r">齐医生</span>
 						</div>	
@@ -56,7 +56,7 @@
     	},
 		data() {
 			return {
-				headerName : '儿童信息'
+				headerName : '接种登记'
 			}
 		},
 		methods:{
