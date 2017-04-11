@@ -33,7 +33,7 @@ export default new Router({
         {
             path: 'in-stock',
             name: 'inStock',
-            component: resolve => require(['@/pages/stock/in_stock'], resolve)
+            component: resolve => require(['@/pages/stock/detail'], resolve)
         },
         {
             path: 'out-stock',
