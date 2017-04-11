@@ -7,8 +7,6 @@
 				<b class="jz" v-html="item.name+index"></b>
 				<span class="jz" v-html="item.address"></span>
 			</div>
-			<v-tabber></v-tabber>
-
 
 			<div :class="{'list-router-active':listRouter}" class="list-router" v-show="listRouter">
 				<router-view></router-view>	
@@ -19,11 +17,9 @@
 </template>
 <script>
 	import Header from '@/pages/layout/header'
-	import Tabber from '@/pages/layout/tabber'
 	export default {
 		components:{
-			'v-header' : Header,
-			'v-tabber' : Tabber
+			'v-header' : Header
 		},
 		name : 'stock-list',
 		data() {

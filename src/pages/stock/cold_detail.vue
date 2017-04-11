@@ -9,9 +9,9 @@
 					<span class="flex-items"  @click="switchTab($event)">设备3<br>温度：21<br>湿度：29</span>
 				</div>
 				
-				<div id="temperature" style="width: 90%;height:260px;margin:20px 0;"></div>
+				<div id="temperature" style="width: 96%;height:260px;margin:20px auto;"></div>
 
-				<div id="humidity" style="width: 90%;height:260px;"></div>
+				<div id="humidity" style="width: 96%;height:260px;margin:0 auto;"></div>
 
 			</div>
 		</div>
@@ -168,7 +168,7 @@
 	}
 	.device-list {
 		padding-top: 10px;
-		width: 100%;
+		width: 96%;
 		margin: 0 auto;
 	}
 	.device-list  .flex-items{
