@@ -8,7 +8,7 @@
 			        	<span><img src="../../assets/images/login.jpg"></span>
 			            <i>
 			            	<a href="javascript:;" class="open">入库</a>
-			            	<a href="javascript:;">出库</a>
+			            	<a href="javascript:;" @click="outStock">出库</a>
 			            </i>
 			        </div>
 			        <div class="grzx_bottom">
@@ -79,6 +79,9 @@
 		methods : {
 			leave() {
 				this.$parent.homeRouter = false
+			},
+			outStock() {
+				this.$router.push('/home/out-stock')
 			}
 		}
 	}

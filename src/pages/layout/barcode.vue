@@ -15,15 +15,18 @@
 		name:"page-header",
 		props : [ 'headerName' ],
 		data() {
-			return {}
+			return {
+				scan : null
+			}
 		},
 		mounted() {
-			let  scan=new plus.barcode.Barcode('bcid')
+			this.scan=new plus.barcode.Barcode('bcid')
 		    scan.onmarked = this.onmarked
 		    scan.start({conserve:true,filename:'_doc/barcode/'})
 		},
 		methods : {
 			back() {
+				this.scan.cancel()
 				history.back()
 			},
 			scanPicture() {

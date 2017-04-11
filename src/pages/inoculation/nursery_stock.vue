@@ -20,10 +20,12 @@
 					</div>	
 				</div>
 				<div class="pop-content">
-					<div class="nursery-box flex border-1px" v-for="(item,index)  in items">
-						<span class="nursery-flex text-l"><i class="circular"></i><span v-html="item.name"></span></span>
-						<span class="nursery-flex text-r"><span v-html="item.number"></span></span>
-					</div>
+					<ul class="mui-table-view">
+			            <li class="mui-table-view-cell text-l"  v-for="(item,index)  in items">
+			            	<i class="circular"></i><span v-html="item.name"></span>
+			            	<span class="fl-r" v-html="item.number">刘某某</span>
+			            </li>
+			        </ul>
 				</div>
 			</div>
 		</div>

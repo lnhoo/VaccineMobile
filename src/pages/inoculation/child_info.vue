@@ -9,38 +9,32 @@
 				</p>
 				<div class="pop-wrap">
 					<div class="inner-box">
-						<div class="li-items flex border-1px">
-							<span class="flex-items text-l">姓名</span>
-							<span class="flex-items text-r">刘某某</span>
-						</div>
-						<div class="li-items flex border-1px">
-							<span class="flex-items text-l">性别</span>
-							<span class="flex-items text-r">女</span>
-						</div>
-						<div class="li-items flex border-1px">
-							<span class="flex-items text-l">接种编号</span>
-							<span class="flex-items text-r">sw0345</span>
-						</div>
-						<div class="li-items flex border-1px">
-							<span class="flex-items text-l">出生日期</span>
-							<span class="flex-items text-r">2017-04-01</span>
-						</div>
-						<div class="li-items flex border-1px">
-							<span class="flex-items text-l">接种日期</span>
-							<span class="flex-items text-r">2017-04-01</span>
-						</div>
-						<div class="li-items flex border-1px">
-							<span class="flex-items text-l">接种部位</span>
-							<span class="flex-items text-r">左手臂</span>
-						</div>
-						<div class="li-items flex border-1px">
-							<span class="flex-items text-l">接种点</span>
-							<span class="flex-items text-r">8:00</span>
-						</div>
-						<div class="li-items flex">
-							<span class="flex-items text-l">接种医生</span>
-							<span class="flex-items text-r">齐医生</span>
-						</div>	
+						<ul class="mui-table-view">
+				            <li class="mui-table-view-cell text-l">
+				            	姓名<span class="fl-r">刘某某</span>
+				            </li>
+				            <li class="mui-table-view-cell text-l">
+				            	性别<span class="fl-r">女</span>
+				            </li>
+				            <li class="mui-table-view-cell text-l">
+				            	接种编号<span class="fl-r">sw0345</span>
+				            </li>
+				            <li class="mui-table-view-cell text-l">
+				            	出生日期<span class="fl-r">2017-04-01</span>
+				            </li>
+				            <li class="mui-table-view-cell text-l">
+				            	接种日期<span class="fl-r">2017-04-01</span>
+				            </li>
+				            <li class="mui-table-view-cell text-l">
+				            	接种部位<span class="fl-r">左手臂</span>
+				            </li>
+				            <li class="mui-table-view-cell text-l">
+				            	接种点<span class="fl-r">8:00</span>
+				            </li>
+				            <li class="mui-table-view-cell text-l">
+				            	接种医生<span class="fl-r">齐医生</span>
+				            </li>
+				        </ul>
 					</div>
 				</div>
 			</div>
