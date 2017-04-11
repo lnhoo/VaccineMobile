@@ -2,7 +2,7 @@
 	<header class="mui-bar mui-bar-nav" style="background-color: #303f7a;">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<p class="mui-title" style="font-weight: normal;">{{ headerName }}</p>
-		<span class="mui-icon mui-icon-contact mui-pull-right" style="color:#fff;"></span>
+		<span class="mui-icon mui-icon-contact mui-pull-right" style="color:#fff;" @tap="toHome"></span>
 	</header>
 </template>
 <script>
@@ -13,7 +13,9 @@
 			return {}
 		},
 		methods : {
-		
+			toHome() {
+				this.$router.push("/home")
+			}
 		}
 	}
 </script>
