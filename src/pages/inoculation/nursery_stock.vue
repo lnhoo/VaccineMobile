@@ -11,16 +11,16 @@
 					<div class="flex">
 						<div class="flex-items active" @click="switchTab($event)">库房信息1</div>
 						<div class="flex-items" @click="switchTab($event)">库房信息1</div>
-						<div class="flex-items" @click="switchTab($event)">库房信息1</div>
+						<div class="flex-items" @click="switchTab($event)">库房信息2</div>
 					</div>
 					<div class="flex">
-						<div class="flex-items" @click="switchTab($event)">库房信息1</div>
-						<div class="flex-items" @click="switchTab($event)">库房信息1</div>
-						<div class="flex-items" @click="switchTab($event)">库房信息1</div>
+						<div class="flex-items" @click="switchTab($event)">库房信息3</div>
+						<div class="flex-items" @click="switchTab($event)">库房信息4</div>
+						<div class="flex-items" @click="switchTab($event)">库房信息5</div>
 					</div>	
 				</div>
 				<div class="pop-content">
-					<div class="nursery-box flex" v-for="(item,index)  in items">
+					<div class="nursery-box flex border-1px" v-for="(item,index)  in items">
 						<span class="nursery-flex text-l"><i class="circular"></i><span v-html="item.name"></span></span>
 						<span class="nursery-flex text-r"><span v-html="item.number"></span></span>
 					</div>
