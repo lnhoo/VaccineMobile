@@ -6,6 +6,7 @@
 	-webkit-transition:all .3s ease;
  	transition:all .3s ease;
     padding: 45px 10px 0;
+    font-size: 12px;
 }
 .list-router{
     height:100%;

@@ -7,6 +7,7 @@
 	overflow: hidden;
 	-webkit-transition:all .3s ease;
 	transition:all .3s ease;
+	font-size: 12px;
 }
 .page-nursery .nursery-content{
 	position: absolute;
@@ -62,9 +63,7 @@
 .page-nursery .nursery-flex{
 	flex: 1;
 }
-.page-nursery .nursery-box{
-	padding: 10px 15px;
-}
+
 .page-nursery .pop-content{
 	background:#fff;
 	margin: 6px;
@@ -74,9 +73,6 @@
 	position: relative;
 	-webkit-box-shadow: 0px 0px 10px #E5C6C6;
 	box-shadow: 0px 0px 10px #E5C6C6;
-}
-.page-nursery .pop-content div:last-child:after{
-	border:none;
 }
 .page-nursery .pop-content:after{
 	content: '';

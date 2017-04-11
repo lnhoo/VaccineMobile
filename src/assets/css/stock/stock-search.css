@@ -4,6 +4,7 @@
     background: #303F7A;
 	-webkit-transition:all .3s ease;
  	transition:all .3s ease;
+    font-size: 12px;
 }
 .search-page .searchbar {
     position: absolute;

@@ -5,6 +5,7 @@
 	-webkit-transition:all .6s ease;
 	transition:all .6s ease;
 	background: #4858AA;
+	font-size: 12px;
 }
 .child-info-box{
 	position: fixed;
@@ -62,11 +63,7 @@
 	-webkit-o-shadow: 0px 0px 2px #E5C6C6;
 	box-shadow: 0px 0px 2px #E5C6C6;
 }
-.child-info-box .li-items{
-	padding: 8px 0;
-	color:#000;
-	font-size: 12px;
-}
+
 
 
 

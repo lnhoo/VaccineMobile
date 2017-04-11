@@ -6,6 +6,7 @@
 	overflow: hidden;
 	-webkit-transition:all .3s ease;
  	transition:all .3s ease;
+    font-size: 12px;
 }
 .stock-detail-content{
     position: absolute;
