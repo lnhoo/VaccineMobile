@@ -3,9 +3,9 @@
     width: 100%;
     position: fixed;
     background: #303F7A;
-    padding-top: 45px;
 	-webkit-transition:all .3s ease;
  	transition:all .3s ease;
+    padding: 45px 10px 0;
 }
 .list-router{
     height:100%;

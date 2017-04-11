@@ -4,6 +4,7 @@
 	position: relative;
 	-webkit-transition:all .6s ease;
 	transition:all .6s ease;
+	background: #4858AA;
 }
 .child-info-box{
 	position: fixed;
@@ -12,24 +13,20 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: rgba(61,158,227,0.2);
-	z-index: 100;
+	z-index: 10;
+	background: rgba(72,88,170,0.6);
 }
 .page-child-info:after{
 	position: absolute;
-	top:0;
+	top:45px;
 	left: 0;
 	content: '';
 	width: 100%;
-	height: 300px;
+	height: 130px;
 	background: url("../../images/bg.jpg") no-repeat;
-	background-size:100%;
-	z-index: 98;
-	-webkit-filter: blur(3px); /* Chrome, Opera */
-       -moz-filter: blur(3px);
-        -ms-filter: blur(3px);    
-            filter: blur(3px);
-}
+	background-size:cover;
+	z-index: 9;
+} 
 .child-info-box .tabs{
 	height: 40px;
 	margin-top: 20px;
@@ -58,7 +55,7 @@
 	height: auto;
 	width: 90%;
 	position: absolute;
-	top: 133px;
+	top: 155px;
 	padding: 20px;
 	border-radius: 10px;
 	-webkit-box-shadow: 0px 0px 2px #E5C6C6;
