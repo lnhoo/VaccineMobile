@@ -8,16 +8,9 @@
 					<span class="flex-items flex-2">查看全部</span>
 				</div>
 				<div class="flex-items-wrap">
-					<div class="flex">
-						<div class="flex-items active" @click="switchTab($event)">库房信息1</div>
-						<div class="flex-items" @click="switchTab($event)">库房信息1</div>
-						<div class="flex-items" @click="switchTab($event)">库房信息2</div>
+					<div class="stock-list-item"  @tap="switchTab($event)" v-for="(stock,index) in stockList" :class="{active:index==0}">
+						{{stock.ColdStoreName}}
 					</div>
-					<div class="flex">
-						<div class="flex-items" @click="switchTab($event)">库房信息3</div>
-						<div class="flex-items" @click="switchTab($event)">库房信息4</div>
-						<div class="flex-items" @click="switchTab($event)">库房信息5</div>
-					</div>	
 				</div>
 				<div class="pop-content">
 					<ul class="mui-table-view">
@@ -43,6 +36,7 @@
 				headerName : '库房盘点',
 				i : 10,
 				number : 38,
+				stockList : [],
 				items : [
 					{name: '库房信息1',number:10},
 					{name: '库房信息2',number:12},
@@ -58,6 +52,8 @@
 		},
 		mounted(){
 			console.log(this.$route.params.id)
+			let _self = this;
+			// 获取库存列表
 			mui.ajax({
                 type: "POST",
                 contentType:"application/json; charset=utf-8",
@@ -86,6 +82,7 @@
                 		mui.toast(req.Response.Header.ResultMsg)           	
                 	}else{
                 		console.log(req)
+                		_self.stockList = req.Response.Body.Items.Item.reverse()
                 	}
                 },
 				error:function(xhr,type,errorThrown){
@@ -99,12 +96,13 @@
 				this.$parent.homeRouter = false
 			},
 			switchTab(e) {
-				let flexItems = mui(".flex-items-wrap .flex-items")
+				let flexItems = mui(".stock-list-item")
 
 				for( let i=0; i<flexItems.length; i++ ){
-					flexItems[i].className = "flex-items"
+					flexItems[i].className = "stock-list-item"
 				}
-				e.target.className = "flex-items active"
+
+				e.target.className = "stock-list-item active"
 
 				this.items.push({name: '库房信息'+this.i,number:this.number})
 				this.i++
