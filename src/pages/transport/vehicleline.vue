@@ -36,70 +36,29 @@
 			}
 		},
 		mounted() {
-            (function(){        
-            	//闭包
-				function load_script(xyUrl, callback){
-				    var head = document.getElementsByTagName('head')[0];
-				    var script = document.createElement('script');
-				    script.type = 'text/javascript';
-				    script.src = xyUrl;
-				    //借鉴了jQuery的script跨域方法
-				    script.onload = script.onreadystatechange = function(){
-				        if((!this.readyState || this.readyState === "loaded" || this.readyState === "complete")){
-				            callback && callback();
-				            // Handle memory leak in IE
-				            script.onload = script.onreadystatechange = null;
-				            if ( head && script.parentNode ) {
-				                head.removeChild( script );
-				            }
-				        }
-				    };
-				    // Use insertBefore instead of appendChild  to circumvent an IE6 bug.
-				    head.insertBefore( script, head.firstChild );
-				}
-				function translate(point,type,callback){
-				    var callbackName = 'cbk_' + Math.round(Math.random() * 10000);    //随机函数名
-				    var xyUrl = "http://api.map.baidu.com/ag/coord/convert?from="+ type + "&to=4&x=" + point.lng + "&y=" + point.lat + "&callback=BMap.Convertor." + callbackName;
-				    //动态创建script标签
-				    load_script(xyUrl);
-				    BMap.Convertor[callbackName] = function(xyResult){
-				        delete BMap.Convertor[callbackName];    //调用完需要删除改函数
-				        var point = new BMap.Point(xyResult.x, xyResult.y);
-				        callback && callback(point);
-				    }
-				}
-
-				window.BMap = window.BMap || {};
-				BMap.Convertor = {};
-				BMap.Convertor.translate = translate;
-			})()
-
 			let _self = this;
-			this.map = new BMap.Map("allmap")
-			this.map.centerAndZoom(new BMap.Point(116.331398,39.897445),15)
-			let geolocation = new BMap.Geolocation()			
+			// 百度地图API功能
+			_self.map = new BMap.Map("allmap");
+			_self.map.centerAndZoom("北京",15);
+			var geolocation = new BMap.Geolocation();
 			geolocation.getCurrentPosition(function(r){
 				if(this.getStatus() == BMAP_STATUS_SUCCESS){
-					console.log(r.point)
-					BMap.Convertor.translate(r.point, 0, function(point){
-						//初始化地图 
-						console.log(point)
-						let mk = new BMap.Marker(point);
-						_self.map.addOverlay(mk);
-						_self.map.panTo(point);
-						let label = new BMap.Label("您的位置:"+point.lng+','+point.lat,{offset:new BMap.Size(-20,-20)});
-						mk.setLabel(label);
+					var mk = new BMap.Marker(r.point);
+					_self.map.addOverlay(mk);
+					_self.map.panTo(r.point);
+					var infoWindow = new BMap.InfoWindow("湘A435223<br>温度：27<br>湿度：27", { 
+						offset : new BMap.Size(0,-25)
+					});    // 创建信息窗口对象
+					_self.map.openInfoWindow(infoWindow,r.point); 
+
+					mk.addEventListener('click',function(){
+						_self.map.openInfoWindow(infoWindow,r.point); 
 					})
 				}
 				else {
-					console.log('failed'+this.getStatus());
+					alert('failed'+this.getStatus());
 				}        
 			},{enableHighAccuracy: true})
-           
-
-           /* $.getJSON("http://wthrcdn.etouch.cn/weather_mini?city=北京",{},function(result){
-                console.log(result)
-            });*/
 		},
 		methods:{
 			leave() {
@@ -122,17 +81,19 @@
 					lat = lat - 0.03
 				}
 
-				this.map.clearOverlays()
+				_self.map.clearOverlays()
 				let new_point = new BMap.Point(lng,lat)
+				let mk = new BMap.Marker(new_point);
+				_self.map.addOverlay(mk);
+				_self.map.panTo(new_point);
 
-				BMap.Convertor.translate(new_point, 0, function(point){
-					//初始化地图 
-					console.log(point)
-					let mk = new BMap.Marker(point);
-					_self.map.addOverlay(mk);
-					_self.map.panTo(point);
-					let label = new BMap.Label("您的位置:"+point.lng+','+point.lat,{offset:new BMap.Size(-20,-20)});
-					mk.setLabel(label);
+				var infoWindow = new BMap.InfoWindow("湘A4EE3<br>温度：25<br>湿度：23", { 
+					offset : new BMap.Size(0,-25)
+				});    // 创建信息窗口对象
+				_self.map.openInfoWindow(infoWindow,new_point); 
+				
+				mk.addEventListener('click',function(){
+					_self.map.openInfoWindow(infoWindow,new_point); 
 				})
 			}
 		}
@@ -141,16 +102,18 @@
 <style scoped="scoped">
 	#allmap{
 		position: absolute;
-		top:45px;
+		top:75px;
 		left: 0;
 		right: 0;
 		bottom: 120px;
 		overflow: hidden;
 	}
 	.maps{
-		height: 100%;
+		position: fixed;
+		top:0;
+		bottom: 0;
 		width: 100%;
-		background: #fff;
+		background: #303f7a;
 		-webkit-transition:all .3s ease;
 		transition:all .3s ease;
 	}
