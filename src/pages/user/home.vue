@@ -65,17 +65,30 @@
 			}
 		},
 		mounted(){
-			//获得slider插件对象
-			var gallery = mui('.mui-slider')
+			// 获取用户菜单权限集合
+			this.codeList = JSON.parse(localStorage.getItem("codeList"))
 
-			gallery.slider({
-			  interval:2000//自动轮播周期，若为0则不自动播放，默认为0；
-			})
 		},
 		methods : {
-           	goPage( url ) {
-           		this.homeRouter = !this.homeRouter
-           		this.$router.push(url)
+           	goPage( url,obj ) {
+           		let codeList = this.codeList;
+           		let flag = false;
+           		// 循环权限数组
+           		for(var i = 0;i < codeList.length;i++ ){
+           			// 存在该权限
+           			if( codeList[i] == obj ){
+           				flag = true;
+           				break;
+           			}
+           		}
+           		if(flag){
+           			mui.toast("有该权限")
+       				this.homeRouter = !this.homeRouter
+       				this.$router.push({path:url+"/"+JSON.stringify({uid:1})})
+           		}else{
+           			// 不存在该权限
+       				mui.alert("你没有该功能权限")
+       			}
            	},
            	toggleComponents( type ) {
            		var self = this;

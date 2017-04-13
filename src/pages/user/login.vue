@@ -14,12 +14,13 @@
 	</div>
 </template>
 <script>
+	let md5 = require("@/assets/js/md5")
     export default {
     	name: 'page-login',
         data() {
 			return {
-				'UserNo' : '',
-				'UserPwd' : ''
+				'UserNo' : 'test',
+				'UserPwd' : '123456'
 			}
 		},
 		mounted(){
@@ -27,29 +28,44 @@
 		},
 		methods: {
            	login (){
-           		var ajaxData = {
-				  	"Request": {
-				    	"Header": {
-						    "FunCode": "0001",
-						    "ResponseFormat": "2"
-				    	},
-					    "Body": {
-					      	"UserNo": this.UserNo,
-					      	"UserPwd": this.UserPwd
-					    }
-				  	}
-				}
-
+           		let _self = this;
            		mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
 	                url :"http://192.168.1.104:8393/WebService.asmx/CallFun",
-	                data :ajaxData,
+	                data:{
+                	 	strRequest:'{\
+                	 		"Request":{\
+                	 			"Header":{\
+	                	 			"AppCode":"01",\
+	                	 			"AppTypeCode":"01",\
+	                	 			"FunCode":"0001",\
+	                	 			"ResponseFormat":"2"\
+	                	 		},"Body":{\
+	                	 			"UserNo":"'+this.UserNo+'",\
+	                	 			"UserPwd":"'+md5(this.UserPwd)+'"\
+	                	 		}\
+	                	 	}\
+                	 	}'
+                	},
 	                dataType:'json',
-	                success:function(result){                   
-	                    console.log(result); 
-	                    console.log(result.d);
-	                    console.log(JSON.parse(result.d));
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                	}else{
+	                		console.log(JSON.parse(result.d))
+	                		_self.$router.push({ name: 'home'})
+	                		let item = req.Response.Body.Items.Item;
+	                		let codeList = [];
+	                		for(var i = 0 ;i < item.length; i++){
+	                			codeList.push(item[i].ResourceCode)
+	                		}
+	                		// 组织机构代码
+	                		localStorage.setItem("customerCode",req.Response.Body.CustomerCode);
+	                		// 权限列表
+	                		localStorage.setItem("codeList",JSON.stringify(codeList));
+	                	}
 	                },
 					error:function(xhr,type,errorThrown){
 						//异常处理；
