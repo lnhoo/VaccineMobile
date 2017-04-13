@@ -24,6 +24,7 @@
     top: 0;
     -webkit-box-shadow: none;
     box-shadow: none;
+    padding-top: 30px;
 }
 .mui-title{color: white; font-size: 15px; font-weight: bold;}
 .title-img{width: 26px;}

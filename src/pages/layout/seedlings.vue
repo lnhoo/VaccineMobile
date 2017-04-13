@@ -1,50 +1,84 @@
 <template>
 	<div class="page-seedlings midden-tab">
-		<scroller style="top: 0,bottom:45px;" ref="my_scroller">
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>
-			<p>育苗页面</p>	
-		</scroller>
+		<div id="scroll1" class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-1
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-2
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-3
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-4
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-5
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-6
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-7
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-8
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-9
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-10
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-11
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-12
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-13
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-14
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-15
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-16
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-17
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-18
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-19
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-20
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
-	import Scroller from 'vue-scroller'
 	export default {
 		name : 'page-seedings',
 		data() {
-			return {
-			}
+			return {}
 		},
-		components: {
-	     	Scroller
-	    },
 		mounted(){
-			setTimeout(() => {
-	        	this.$refs.my_scroller.resize();
-	      	},2000)
+			mui('.mui-scroll-wrapper').scroll({
+				indicators: true //是否显示滚动条
+			});
 		},
 		methods : {
            	goPage( url ) {
@@ -55,7 +89,8 @@
 </script>
 
 <style>
-.page-seedlings{
-	overflow: hidden;
+.midden-tab{
+	bottom: 60px;
 }
+
 </style>

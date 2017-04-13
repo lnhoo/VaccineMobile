@@ -1,31 +1,80 @@
 <template>
-	<div class="page-message midden-tab">
-		<p>消息页面</p>
-		<p>消息页面</p>
-		<button type="button" class="mui-btn mui-btn-primary mui-btn-block" @click="scanImg">扫描二维码</button>
-		<p>消息页面</p>
-		<p>消息页面</p>
-		<button type="button" class="mui-btn mui-btn-primary mui-btn-block" @click="maps">第三方地图</button>
-		<p>消息页面</p>
-		<p>消息页面</p>
-		<p>消息页面</p>
-		<p>消息页面</p>
-		<button type="button" class="mui-btn mui-btn-primary mui-btn-block" @click="getImage">拍照</button>
-		<p>消息页面</p>
-		<p>消息页面</p>
-		<p>消息页面</p>
-		<button type="button" class="mui-btn mui-btn-primary mui-btn-block" @click="callMap">js调用百度地图</button>
-		<p>消息页面</p>
-		<p>消息页面</p>
-		<p>消息页面</p>
+	<div class="midden-tab">
+		<div id="scroll1" class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell"  @click="scanImg">
+						扫描二维码
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-2
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-3
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-4
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-5
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-6
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-7
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-8
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-9
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-10
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-11
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-12
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-13
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-14
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-15
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-16
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-17
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-18
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-19
+					</li>
+					<li class="mui-table-view-cell">
+						第一个选项卡子项-20
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </template>
-
 <script>
 	export default {
 		name : 'page-message',
 		mounted() {
-			
+			mui('.mui-scroll-wrapper').scroll({
+				indicators: true //是否显示滚动条
+			});
 		},
 		methods :{
 			maps() {
@@ -73,11 +122,6 @@
 				this.$router.push('map')
 			},
 			scanImg() {
-				/*mui.openWindow({
-				    url: 'src/pages/layout/barcode_scan.html', 
-				    id:'info'
-				})*/
-				//plus.barcode.scan.start();
 				this.$router.push('barcode')
 			}
 		}
@@ -85,7 +129,5 @@
 </script>
 
 <style>
-	.page-message{
-		height: 100%;
-	}
+	
 </style>

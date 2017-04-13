@@ -6,7 +6,7 @@
 		</div>
 		<footer>
 			<div class="fbt" @click="back()">取　 消</div>
-			<div class="fbt" @click="scanPicture()">从相册选择二维码</div>
+			<div class="fbt" @click="scanPicture()">扫描</div>
 		</footer>
 	</div>
 </template>
@@ -21,24 +21,28 @@
 		},
 		mounted() {
 			this.scan=new plus.barcode.Barcode('bcid')
-		    scan.onmarked = this.onmarked
-		    scan.start({conserve:true,filename:'_doc/barcode/'})
+		    this.scan.onmarked = this.onmarked
+		    this.scan.start({conserve:true,filename:'_doc/barcode/'})
 		},
 		methods : {
 			back() {
-				this.scan.cancel()
+				this.scan.close()
 				history.back()
 			},
 			scanPicture() {
-				plus.gallery.pick(function(path){
+				/*plus.gallery.pick(function(path){
 				    plus.barcode.scan(path,onmarked,function(error){
 						plus.nativeUI.alert('无法识别此图片')
 					})
 			    }, function(err){
 			        plus.nativeUI.alert('Failed: '+err.message)
 			    })
+				*/
+			    this.scan.start({conserve:true,filename:'_doc/barcode/'})
 			},
 			onmarked(type, result, file) {
+				alert(JSON.stringify(result));
+				this.scan.cancel()
 				switch(type){
 			    	case plus.barcode.QR:
 			    	type = 'QR';
@@ -53,7 +57,7 @@
 			    	type = '其它'+type;
 			    	break;
 			    }
-			    console.log(file)
+			   
 			}
 		}
 	}
