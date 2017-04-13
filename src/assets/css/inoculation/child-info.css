@@ -4,13 +4,13 @@
 	position: relative;
 	-webkit-transition:all .6s ease;
 	transition:all .6s ease;
-	background: #4858AA;
+	background: #303f7a;
 	font-size: 12px;
 }
 .child-info-box{
 	position: fixed;
 	overflow: hidden;
-	top: 45px;
+	top: 75px;
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -19,7 +19,7 @@
 }
 .page-child-info:after{
 	position: absolute;
-	top:45px;
+	top:75px;
 	left: 0;
 	content: '';
 	width: 100%;

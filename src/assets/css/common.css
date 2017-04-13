@@ -42,12 +42,11 @@ html,body{
 } 
 .midden-tab{
 	position: absolute;
-	top:45px;
+	top:75px;
 	bottom: 48px; 
 	left: 0;
 	right: 0;
 	overflow: hidden;
-	overflow-y: auto;
 }
 .mui-active .icon{
 	background: #9399BF;

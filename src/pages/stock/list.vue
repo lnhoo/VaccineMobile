@@ -2,16 +2,16 @@
 	<transition name="move" v-on:after-leave="leave">
 		<div class="stock-list">
 			<v-header :headerName="headerName"></v-header>
-			<div class="stock-container" v-for="(item,index) in result" @click="toDetail($event)">
-				<img src="../../assets/images/j17.png"/>
-				<b class="jz" v-html="item.name+index"></b>
-				<span class="jz" v-html="item.address"></span>
+			<div class="stock-box">
+				<div class="stock-container" v-for="(item,index) in result" @click="toDetail($event)">
+					<img src="../../assets/images/j17.png"/>
+					<b class="jz" v-html="item.name+index"></b>
+					<span class="jz" v-html="item.address"></span>
+				</div>	
 			</div>
-
 			<div :class="{'list-router-active':listRouter}" class="list-router" v-show="listRouter">
 				<router-view></router-view>	
 			</div>
-
 		</div>
 	</transition>
 </template>
@@ -52,6 +52,24 @@
 					address : '湖南省长沙市岳麓区xxxxxx'
 				}]
 			}
+		},
+		mounted(){
+            mui.ajax({
+                type: "POST",
+                contentType:"application/json; charset=utf-8",
+                url:"http://192.168.31.184:8393/WebService.asmx/HelloWorld",
+                data:'',
+                dataType:'json',
+                success:function(result){                    
+                    console.log(result);
+                    console.log(result.d);
+                    console.log(JSON.parse(result.d));
+                },
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					alert(type);
+				}
+            }); 
 		},
 		methods: {
 			toDetail : function(e){
