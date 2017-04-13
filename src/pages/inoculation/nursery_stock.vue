@@ -57,7 +57,42 @@
 			}
 		},
 		mounted(){
-			
+			console.log(this.$route.params.id)
+			mui.ajax({
+                type: "POST",
+                contentType:"application/json; charset=utf-8",
+                url :"http://192.168.1.104:8393/WebService.asmx/CallFun",
+                data:{
+            	 	strRequest:'{\
+            	 		"Request":{\
+            	 			"Header":{\
+                	 			"AppCode":"01",\
+                	 			"AppTypeCode":"01",\
+                	 			"FunCode":"0004",\
+                	 			"ResponseFormat":"2"\
+                	 		},"Body":{\
+                	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
+                	 			"Page":"1",\
+                	 			"PageSize":"10",\
+                	 			"Status":"1"\
+                	 		}\
+                	 	}\
+            	 	}'
+            	},
+                dataType:'json',
+                success:function(result){
+                	let req = JSON.parse(result.d)
+                	if(req.Response.Header.ResultCode=="1"){
+                		mui.toast(req.Response.Header.ResultMsg)           	
+                	}else{
+                		console.log(req)
+                	}
+                },
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					alert(type);
+				}
+            }); 
 		},
 		methods: {
            	leave() {
