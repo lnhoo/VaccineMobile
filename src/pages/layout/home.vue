@@ -27,36 +27,36 @@
 	    <div id="divMenu">
         	<ul class="shye_ul">
 		    	<li class="cf">
-		        	<a href="javascript:;" class="cf" @tap="goPage('home/nursery-stock')">
+		        	<a href="javascript:;" class="cf"  @tap="goPage('home/nursery-stock','QueryStock_001')">
 		            	<img src="../../assets/images/j29.png"  class="img1"/>
 		                <span><b>库房盘点</b><i>Warehouse<br/>inventory</i></span>
 		                <img src="../../assets/images/j22.png" class="img2"/>
 		            </a>
-		            <a href="javascript:;" class="cf" @tap="goPage('home/child-info')">
+		            <a href="javascript:;" class="cf"  @tap="goPage('home/child-info','QueryStock_005')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
-		                <span><b>接种登记</b><i> registered</i></span>
+		                <span><b>育苗溯源</b><i> registered</i></span>
 		                <img src="../../assets/images/j23.png" class="img2"/>
 		            </a>
 		        </li>
 		        <li class="cf">
-		        	<a href="javascript:;" class="cf" @tap="goPage('home/out-stock')">
+		        	<a href="javascript:;" class="cf"  @tap="goPage('home/out-stock','Stock_005')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>出库</b><i>outbound</i></span>
 		                <img src="../../assets/images/j24.png" class="img2"/>
 		            </a>
-		            <a href="javascript:;" class="cf" @tap="goPage('home/in-stock')">
+		            <a href="javascript:;" class="cf"  @tap="goPage('home/in-stock','Stock_002')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>入库</b><i> Put in<br/>storage</i></span>
 		                <img src="../../assets/images/j25.png" class="img2"/>
 		            </a>
 		        </li>
 		        <li class="cf">
-		        	<a href="javascript:;" class="cf" @tap="goPage('home/vehicleline')">
+		        	<a href="javascript:;" class="cf" @tap="goPage('home/vehicleline','Monitor_004')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>运输监控</b><i>Transportation</i></span>
 		                <img src="../../assets/images/j26.png" class="img2"/>
 		            </a>
-		            <a href="javascript:;" class="cf" @tap="goPage('home/cold-chain')">
+		            <a href="javascript:;" class="cf" @tap="goPage('home/cold-chain','Monitor_003')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>冷链监控</b><i>Cold chain<br/>monitoring</i></span>
 		                <img src="../../assets/images/j27.png" class="img2"/>
@@ -72,19 +72,22 @@
 	export default {
     	name: 'page-home-tab',
         data() {
-			return {}
+			return {
+
+			}
 		},
 		mounted(){
 			//获得slider插件对象
 			var gallery = mui('.mui-slider');
+			
 
-			gallery.slider({
-			  interval:2000//自动轮播周期，若为0则不自动播放，默认为0；
-			});
+			gallery.slider({ interval:2000 });
 		},
 		methods : {
-           	goPage( url ) {
-           		this.$parent.goPage( url )
+           	goPage( url,obj ) {
+
+
+           		this.$parent.goPage( url , obj )
            	}
 		}
     }
