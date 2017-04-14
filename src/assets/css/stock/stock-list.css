@@ -72,8 +72,9 @@
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     white-space: nowrap;
-    margin-right: 5px;
+    padding-right: 10px;
     display: block;
+    text-align: right;
 }
 .cf::after{
     content: " ";
