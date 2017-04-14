@@ -1,18 +1,18 @@
 <template>
 	<nav class="mui-bar mui-bar-tab">
-	    <a  class="mui-tab-item mui-active" @tap="callSupFn('home')">
+	    <a  class="mui-tab-item mui-active" @tap="callSupFn('home','首页')">
 			<span class="mui-icon"><img width="30" class="icon" src="../../assets/images/j32.png" /></span>
 			<span class="mui-tab-label">首页</span>
 		</a>
-		<a  class="mui-tab-item" @tap="callSupFn('message')">
+		<a  class="mui-tab-item" @tap="callSupFn('message','消息')">
 			<span class="mui-icon"><img width="30" class="icon" src="../../assets/images/j33.png" /></span>
 			<span class="mui-tab-label">消息</span>
 		</a>
-		<a  class="mui-tab-item" @tap="callSupFn('seedlings')">
+		<a  class="mui-tab-item" @tap="callSupFn('seedlings','疫苗')">
 			<span class="mui-icon"><img width="30" class="icon" src="../../assets/images/j34.png" /></span>
 			<span class="mui-tab-label">疫苗</span>
 		</a>
-		<a  class="mui-tab-item" @tap="callSupFn('mine')">
+		<a  class="mui-tab-item" @tap="callSupFn('mine','我的')">
 			<span class="mui-icon"><img width="30" class="icon" src="../../assets/images/j35.png" /></span>
 			<span class="mui-tab-label">我的</span>
 		</a>
@@ -27,8 +27,8 @@
 			}
 		},
 		methods : {
-			callSupFn(type) {
-				this.$parent.toggleComponents( type );
+			callSupFn(type,tabName) {
+				this.$parent.toggleComponents( type,tabName )
 			}
 		}
 	}
