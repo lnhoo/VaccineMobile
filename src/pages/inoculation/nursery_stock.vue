@@ -8,16 +8,21 @@
 					<span class="flex-items flex-2">查看全部</span>
 				</div>
 				<div class="flex-items-wrap">
-					<div class="stock-list-item"  @tap="switchTab($event)" v-for="(stock,index) in stockList" :class="{active:index==0}">
+					<div class="stock-list-item"  @tap="switchTab($event,stock.ColdStoreNo)" v-for="(stock,index) in stockList" :class="{active:index==0}">
 						{{stock.ColdStoreName}}
 					</div>
 				</div>
 				<div class="pop-content">
 					<ul class="mui-table-view">
 			            <li class="mui-table-view-cell text-l"  v-for="(item,index)  in items">
-			            	<i class="circular"></i><span v-html="item.name"></span>
-			            	<span class="fl-r" v-html="item.number">刘某某</span>
+			            	<i class="circular"></i><span v-html="item.VaccineName"></span>
+			            	<span class="fl-r" v-html="item.Number"></span>
 			            </li>
+
+			            <li class="mui-table-view-cell text-l" v-if="items.length==0">
+			            	没有育苗数据
+			            </li>
+
 			        </ul>
 				</div>
 			</div>
@@ -34,20 +39,9 @@
         data() {
 			return {
 				headerName : '库房盘点',
-				i : 10,
-				number : 38,
 				stockList : [],
-				items : [
-					{name: '库房信息1',number:10},
-					{name: '库房信息2',number:12},
-					{name: '库房信息3',number:32},
-					{name: '库房信息4',number:42},
-					{name: '库房信息5',number:36},
-					{name: '库房信息6',number:36},
-					{name: '库房信息7',number:36},
-					{name: '库房信息8',number:36},
-					{name: '库房信息9',number:36}
-				]
+				currentColdNo : '',
+				items : []
 			}
 		},
 		mounted(){
@@ -57,7 +51,7 @@
 			mui.ajax({
                 type: "POST",
                 contentType:"application/json; charset=utf-8",
-                url :"http://192.168.1.104:8393/WebService.asmx/CallFun",
+                url :"http://192.168.31.184:8393/WebService.asmx/CallFun",
                 data:{
             	 	strRequest:'{\
             	 		"Request":{\
@@ -73,7 +67,8 @@
                 	 			"Status":"1"\
                 	 		}\
                 	 	}\
-            	 	}'
+            	 	}',
+            	 	RequestFormat:2
             	},
                 dataType:'json',
                 success:function(result){
@@ -81,8 +76,11 @@
                 	if(req.Response.Header.ResultCode=="1"){
                 		mui.toast(req.Response.Header.ResultMsg)           	
                 	}else{
-                		console.log(req)
                 		_self.stockList = req.Response.Body.Items.Item.reverse()
+
+                		_self.$nextTick(() => {
+					        _self.getAccin(_self.stockList[0].ColdStoreNo)
+					    })
                 	}
                 },
 				error:function(xhr,type,errorThrown){
@@ -95,18 +93,55 @@
            	leave() {
 				this.$parent.homeRouter = false
 			},
-			switchTab(e) {
+			switchTab(e,coldStoreNo) {
+				let _self = this;
+				if( _self.currentColdNo == coldStoreNo )return;
+				_self.currentColdNo = coldStoreNo;
 				let flexItems = mui(".stock-list-item")
-
 				for( let i=0; i<flexItems.length; i++ ){
 					flexItems[i].className = "stock-list-item"
 				}
-
 				e.target.className = "stock-list-item active"
-
-				this.items.push({name: '库房信息'+this.i,number:this.number})
-				this.i++
-				this.number++
+				_self.getAccin(coldStoreNo)
+			},
+			getAccin(coldStoreNo){
+				let _self = this;
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url :"http://192.168.31.184:8393/WebService.asmx/CallFun",
+	                data:{
+	            	 	strRequest:'{\
+	            	 		"Request":{\
+	            	 			"Header":{\
+	                	 			"AppCode":"01",\
+	                	 			"AppTypeCode":"01",\
+	                	 			"FunCode":"0008",\
+	                	 			"ResponseFormat":"2"\
+	                	 		},"Body":{\
+	                	 			"ColdNo":"'+coldStoreNo+'"\
+	                	 		}\
+	                	 	}\
+	            	 	}',
+	            	 	RequestFormat:2
+	            	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	console.log(req)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                	}else{
+	                		if(req.Response.Body.Items){
+	                			_self.items = req.Response.Body.Items.Item
+	                		}
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						alert(type);
+					}
+	            }); 
 			}
 		}
     }
