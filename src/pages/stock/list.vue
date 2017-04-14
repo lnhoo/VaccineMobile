@@ -5,7 +5,7 @@
 			<div class="stock-box">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
-						<div class="stock-container" v-for="(item,index) in stockList" @click="toDetail($event)">
+						<div class="stock-container" v-for="(item,index) in stockList" @click="toDetail(item.ColdStoreNo)">
 							<img src="../../assets/images/j17.png"/>
 							<b v-html="item.ColdStoreName"></b>
 							<span class="jz" v-html="customerName"></span>
@@ -43,7 +43,7 @@
             mui.ajax({
                 type: "POST",
                 contentType:"application/json; charset=utf-8",
-                url :"http://192.168.31.184:8393/WebService.asmx/CallFun",
+                url : localStorage.getItem("http"),
                 data:{
             	 	strRequest:'{\
             	 		"Request":{\
@@ -69,7 +69,7 @@
                 		mui.toast(req.Response.Header.ResultMsg)           	
                 	}else{
                 		_self.stockList = req.Response.Body.Items.Item.reverse()
-                		console.log(_self.stockList)
+                		console.log(req)
                 	}
                 },
 				error:function(xhr,type,errorThrown){
@@ -79,9 +79,12 @@
             }); 
 		},
 		methods: {
-			toDetail : function(e){
+			toDetail : function( ColdStoreNo ){
 				this.listRouter = !this.listRouter
-				this.$router.push("/home/cold-chain/cold-detail")
+				this.$router.push({
+					path :"/home/cold-chain/cold-detail",
+					query : { coldNo : ColdStoreNo }
+				})
 			},
 			leave() {
 				this.$parent.homeRouter = false
