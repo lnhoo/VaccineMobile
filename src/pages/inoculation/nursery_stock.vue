@@ -51,7 +51,7 @@
 			mui.ajax({
                 type: "POST",
                 contentType:"application/json; charset=utf-8",
-                url :"http://192.168.31.184:8393/WebService.asmx/CallFun",
+                url :"http://192.168.1.104:8393/WebService.asmx/CallFun",
                 data:{
             	 	strRequest:'{\
             	 		"Request":{\
@@ -109,12 +109,9 @@
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
-	                url :"http://192.168.31.184:8393/WebService.asmx/CallFun",
+	                url : localStorage.getItem("http"),
 	                data:{
-	            	 	strRequest:'{\
-	            	 		"Request":{\
-	            	 			"Header":{\
-	                	 			"AppCode":"01",\
+	            	 	strRequest:'{"Request":{"Header":{"AppCode":"01",\
 	                	 			"AppTypeCode":"01",\
 	                	 			"FunCode":"0008",\
 	                	 			"ResponseFormat":"2"\
