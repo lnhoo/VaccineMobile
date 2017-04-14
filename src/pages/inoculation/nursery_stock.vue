@@ -45,7 +45,7 @@
 			}
 		},
 		mounted(){
-			console.log(this.$route.params.id)
+			//console.log(this.$route.params.id)
 			let _self = this;
 			// 获取库存列表
 			mui.ajax({
