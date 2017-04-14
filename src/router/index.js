@@ -14,7 +14,7 @@ export default new Router({
       component: resolve => require(['@/pages/user/home'], resolve),
       children : [
         {   
-            path: 'nursery-stock/:id', 
+            path: 'nursery-stock', 
             name : 'nurseryStock',
             component: resolve => require(['@/pages/inoculation/nursery_stock'], resolve)
         },
