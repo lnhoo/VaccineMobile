@@ -24,7 +24,7 @@
 			}
 		},
 		mounted(){
-
+			localStorage.setItem("http","http://192.168.1.104:8393/WebService.asmx/CallFun");
 		},
 		methods: {
            	login (){
@@ -32,7 +32,7 @@
            		mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
-	                url :"http://192.168.31.184:8393/WebService.asmx/CallFun",
+	                url : localStorage.getItem("http"),
 	                data:{
                 	 strRequest:'{\
                 	 	"Request":{\
@@ -66,9 +66,6 @@
 	                		localStorage.setItem("customerName",req.Response.Body.CustomerName);
 	                		// 权限列表
 	                		localStorage.setItem("codeList",JSON.stringify(codeList));
-
-
-	                		
 
 	                		_self.$router.push({ name: 'home'})
 	                		

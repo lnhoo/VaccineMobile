@@ -90,12 +90,13 @@
        				mui.alert("你没有该功能权限")
        			}
            	},
-           	toggleComponents( type ) {
+           	toggleComponents( type, tabName ) {
            		var self = this;
            		var tabs = ['home','mine','message','seedlings']
            		tabs.forEach(function(tab){
-           			 tab == type ? self[type] = true : self[tab] = false
+           			tab == type ? self[type] = true : self[tab] = false
            		})
+           		this.headerName = tabName
            	}
            	
 		}
