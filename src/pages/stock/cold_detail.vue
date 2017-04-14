@@ -3,16 +3,14 @@
 		<div class="cold-detail-page">
 			<v-header :headerName="headerName"></v-header>
 			<div class="device-wrap">
+
 				<div class="device-list flex text-c">
 					<span class="flex-items on" @click="switchTab($event)">设备1<br>温度：21<br>湿度：29</span>
 					<span class="flex-items"  @click="switchTab($event)">设备2<br>温度：21<br>湿度：29</span>
 					<span class="flex-items"  @click="switchTab($event)">设备3<br>温度：21<br>湿度：29</span>
 				</div>
-				
 				<div id="temperature" style="width: 96%;height:260px;margin:20px auto;"></div>
-
-				<div id="humidity" style="width: 96%;height:260px;margin:0 auto;"></div>
-
+				<div id="humidity" style="width: 96%;height:260px;margin:0 auto;"></div>	
 			</div>
 		</div>
 	</transition>
@@ -151,15 +149,15 @@
 		width: 100%;
 		left:0;
 		top:0;
-		background: #2D3C71;
+		background: #303F7A;
 		z-index: 3;
-		padding: 45px 10px 0 10px;
+		padding: 0 10px;
 		-webkit-transition:all .3s ease;
  		transition:all .3s ease;
 	}
 	.device-wrap{
 		position: absolute;
-		top:45px;
+		top:95px;
 		width: 96%;
 		bottom: 0;
 		overflow:hidden;
