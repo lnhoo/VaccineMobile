@@ -24,7 +24,7 @@
 			}
 		},
 		mounted(){
-			
+
 		},
 		methods: {
            	login (){
@@ -32,21 +32,21 @@
            		mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
-	                url :"http://192.168.1.104:8393/WebService.asmx/CallFun",
+	                url :"http://192.168.31.184:8393/WebService.asmx/CallFun",
 	                data:{
-                	 	strRequest:'{\
-                	 		"Request":{\
-                	 			"Header":{\
-	                	 			"AppCode":"01",\
-	                	 			"AppTypeCode":"01",\
-	                	 			"FunCode":"0001",\
-	                	 			"ResponseFormat":"2"\
-	                	 		},"Body":{\
-	                	 			"UserNo":"'+this.UserNo+'",\
-	                	 			"UserPwd":"'+md5(this.UserPwd)+'"\
-	                	 		}\
-	                	 	}\
-                	 	}'
+                	 strRequest:'{\
+                	 	"Request":{\
+                	 		"Header":{\
+                	 			"AppCode":"01",\
+                	 			"FunCode":"0001",\
+                	 			"ResponseFormat":"2"\
+                	 		},"Body":{\
+                	 			"UserNo":"'+this.UserNo+'",\
+                	 			"UserPwd":"'+md5(this.UserPwd)+'"\
+                	 		}\
+                	 	}\
+                	 }',
+                	 RequestFormat:2
                 	},
 	                dataType:'json',
 	                success:function(result){
@@ -55,7 +55,6 @@
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
 	                		console.log(JSON.parse(result.d))
-	                		_self.$router.push({ name: 'home'})
 	                		let item = req.Response.Body.Items.Item;
 	                		let codeList = [];
 	                		for(var i = 0 ;i < item.length; i++){
@@ -63,15 +62,23 @@
 	                		}
 	                		// 组织机构代码
 	                		localStorage.setItem("customerCode",req.Response.Body.CustomerCode);
+
+	                		localStorage.setItem("customerName",req.Response.Body.CustomerName);
 	                		// 权限列表
 	                		localStorage.setItem("codeList",JSON.stringify(codeList));
+
+
+	                		
+
+	                		_self.$router.push({ name: 'home'})
+	                		
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){
 						//异常处理；
 						alert(type);
 					}
-	            }); 
+	            })
            	},
            	forgetPwd(){
            		mui.toast("忘记密码");

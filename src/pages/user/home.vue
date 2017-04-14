@@ -84,7 +84,7 @@
            		if(flag){
            			mui.toast("有该权限")
        				this.homeRouter = !this.homeRouter
-       				this.$router.push({path:url+"/"+JSON.stringify({uid:1})})
+       				this.$router.push({path:url})
            		}else{
            			// 不存在该权限
        				mui.alert("你没有该功能权限")
