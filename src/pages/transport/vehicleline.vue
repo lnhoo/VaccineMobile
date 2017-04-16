@@ -37,6 +37,63 @@
 		},
 		mounted() {
 			let _self = this;
+			mui.ajax({
+                type: "POST",
+                contentType:"application/json; charset=utf-8",
+                url : localStorage.getItem("http"),
+                data: {
+	        	 	strRequest:'{\
+	        	 		"Request":{\
+	        	 			"Header":{\
+	            	 			"AppCode":"01",\
+	            	 			"AppTypeCode":"01",\
+	            	 			"FunCode":"0011",\
+	            	 			"ResponseFormat":"2"\
+	            	 		},"Body":{\
+	            	 			"OrgCode":1\
+	            	 		}\
+	            	 	}\
+	        	 	}',
+	        	 	RequestFormat:2
+	        	},
+                dataType:'json',
+                success:function(result){
+                	let req = JSON.parse(result.d)
+                	if(req.Response.Header.ResultCode=="1"){
+                		mui.toast(req.Response.Header.ResultMsg)           	
+                	}else{
+                		/*let items = req.Response.Body.Items.Item
+                		if(!(items instanceof Array)){
+                			_self.items.push( items )
+                		}else{
+                			_self.items = items
+                		}*/
+                		
+
+                		
+                	}
+                },
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					mui.toast(type);
+				}
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			// 百度地图API功能
 			_self.map = new BMap.Map("allmap");
 			_self.map.centerAndZoom("北京",15);
