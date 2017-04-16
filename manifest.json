@@ -64,8 +64,6 @@
             "description": "文件压缩与解压缩"
         },
         
-        
-        
         "Webview":{
         	"description": "窗口管理"
         },
@@ -77,6 +75,9 @@
         },
         "NativeObj":{
         	"description": "原生对象"
+        },
+        "D9Plugin":{
+        	"description": "插件测试"
         }
 	},
 	"plus": {
