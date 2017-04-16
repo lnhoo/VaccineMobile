@@ -10,10 +10,14 @@
 			<input type="password" class="mui-input-clear password" v-model="UserPwd"  placeholder="输入密码">
 			<button type="button" class="mui-btn mui-btn-primary login-btn" @click="login">登录</button>
 			<div class="message"><a href="javascript:;" @click="forgetPwd">忘记密码?</a></div>
+
+
+			<button type="button" class="mui-btn mui-btn-primary login-btn" @click="pluginShow">二维码测试</button>
 		</div>
 	</div>
 </template>
 <script>
+	require('@/assets/js/d9')
 	let md5 = require("@/assets/js/md5")
     export default {
     	name: 'page-login',
@@ -79,6 +83,16 @@
            	},
            	forgetPwd(){
            		mui.toast("忘记密码");
+           	},
+           	pluginShow(){
+           		var content = plus.android.runtimeMainActivity();
+				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
+					//成功
+					alert("成功："+result)
+				}, function(result) {
+					//失败
+					alert("失败")
+				})
            	}
 		}
     }
