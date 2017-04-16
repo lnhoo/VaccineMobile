@@ -15,8 +15,8 @@
 				<div class="pop-content">
 					<ul class="mui-table-view">
 			            <li class="mui-table-view-cell text-l"  v-for="(item,index)  in items">
-			            	<i class="circular"></i><span v-html="item.VaccineName"></span>
-			            	<span class="fl-r" v-html="item.Number"></span>
+			            	<i class="circular"></i><span>{{item.VaccineName}}</span>
+			            	<span class="fl-r">{{item.Number}}</span>
 			            </li>
 
 			            <li class="mui-table-view-cell text-l" v-if="items.length==0">
@@ -125,12 +125,18 @@
 	                dataType:'json',
 	                success:function(result){
 	                	let req = JSON.parse(result.d)
-	                	console.log(req)
+	                	
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
+	                		_self.items = []
 	                		if(req.Response.Body.Items){
-	                			_self.items = req.Response.Body.Items.Item
+	                			var vaccine = req.Response.Body.Items.Item
+	                			if(!(vaccine instanceof Array)){
+		                			_self.items.push( vaccine )
+		                		}else{
+		                			_self.items = vaccine
+		                		}
 	                		}
 	                	}
 	                },
