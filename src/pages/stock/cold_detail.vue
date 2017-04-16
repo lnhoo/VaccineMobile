@@ -67,7 +67,9 @@
                 		}else{
                 			_self.devices = devices
                 		}
-                		_self.getEchatsData(devices[0])
+                		_self.$nextTick(() => {
+					        _self.getEchatsData(_self.devices[0])
+					    })
                 	}
                 },
 				error:function(xhr,type,errorThrown){
@@ -147,7 +149,7 @@
 	                		_self.initEcharts({
 					        	id : 'temperature',
 					        	text : '温度℃',
-					        	lineColor : '#50E8ED', 
+					        	lineColor : '#DC4FD3', 
 					        	max : '最高温度',
 					        	mix : '最低温度',
 					        	xData : StrCollectTime,
@@ -218,7 +220,7 @@
 		                },
 		                lineStyle:{
 		                	normal : {
-		                		width : 2,
+		                		width : 5,
 		                		color : options.lineColor
 		                	}
 		                },
