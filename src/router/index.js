@@ -49,6 +49,11 @@ export default new Router({
             path: 'child-info',
             name: 'childInfo',
             component: resolve => require(['@/pages/inoculation/child_info'], resolve)
+        },
+        {
+            path: 'traceability',
+            name: 'traceability',
+            component: resolve => require(['@/pages/inoculation/traceability'], resolve)
         }
       ]
     },  
