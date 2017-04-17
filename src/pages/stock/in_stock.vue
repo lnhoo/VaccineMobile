@@ -2,78 +2,50 @@
 	<transition name="move" v-on:after-leave="leave">
 		<div class="stock-detail">
 			<v-header :headerName="headerName"></v-header>
-			<div class="stock-detail-content">
-				<div class="grzx">
-					<div class="grzx_top cf">
-			        	<span><img src="../../assets/images/login.jpg"></span>
-			            <i>
-			            	<a href="javascript:;" class="open">入库</a>
-			            	<a href="javascript:;" @click="outStock">出库</a>
-			            </i>
-			        </div>
-			        <div class="grzx_bottom">
-			        	<i>出库单号</i>
-			            <b>CM56133</b>
-			        </div>	
+			<div class="stock-in">
+				<img src="../../assets/images/b1.png" width="100%" alt="">
+				<div class="flex">
+					<span class="flex-items" @click="unload">
+					<img src="../../assets/images/b2.png" alt="" width="40"><br>
+					扫描卸车
+					</span>
+					<span class="flex-items" @click="scanStorage">
+					<img src="../../assets/images/b3.png" alt="" width="40"><br>
+					扫描入库
+					</span>
 				</div>
-				<div class="mui-card">
-			        <ul class="mui-table-view">
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j8.png" class="apply-icon"/>疫苗名称
-			            	<span class="fl-r">流感抗体疫苗</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j9.png" class="apply-icon"/>确认入库日期 
-			            	<span class="fl-r">2017-04-01</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j10.png" class="apply-icon"/>确认入库人姓名 
-			            	<span class="fl-r">xxxxxxx单位</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j11.png" class="apply-icon"/>有效期 
-			            	<span class="fl-r">2017-04-01</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j12.png" class="apply-icon"/>实际入库数量
-			            	<span class="fl-r">30(箱)</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j13.png" class="apply-icon"/>批次号
-			            	<span class="fl-r">4</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j14.png" class="apply-icon"/>批签发合格证明编号
-			            	<span class="fl-r">医疗运输车</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j15.png" class="apply-icon"/>运输车辆
-			            	<span class="fl-r">湘A-ob4345</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j16.png" class="apply-icon"/>车牌号
-			            	<span class="fl-r">张某某</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j16.png" class="apply-icon"/>司机姓名
-			            	<span class="fl-r">56</span>
-			            </li>
-			        </ul>
-			    </div>
+
+				<div class="chosee-order" @click="chooseOrder">
+					<img src="../../assets/images/b4.png" alt="" width="40"><br>
+					选单号入库
+				</div>
+
+				<span class="text-desc">温馨提示：扫描时要对准单号</span>
 			</div>
+
+			<order-detail ref="detail" v-show="detail"></order-detail>
+
+			<order-num v-show="orderNum"></order-num>
+
 		</div>
 	</transition>
 </template>
 <script type="text/javascript">
 	import Header from '@/pages/layout/header'
+	import OrderDetail from '@/pages/stock/order_detail'
+	import OrderNum from '@/pages/stock/order_num'
 	export default {
 		name :'stock-detail',
 		components:{
-			"v-header" : Header
+			"v-header" : Header,
+			"order-detail" : OrderDetail,
+			"order-num" : OrderNum
 		},
 		data() {
 			return {
-				headerName : '入库'	
+				headerName : '入库',
+				detail : false,
+				orderNum : false
 			}
 		},
 		methods : {
@@ -82,10 +54,75 @@
 			},
 			outStock() {
 				this.$router.push('/home/out-stock')
+			},
+			chooseOrder(){
+				this.orderNum = true;
+			},
+			scanStorage() {
+				let _self = this;
+					_self.detail = true;
+				/*let content = plus.android.runtimeMainActivity();
+				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
+					//成功
+					console.log(result);
+
+					_self.orderRouter = true;
+					_self.$router.push({path:'home/in-stock/order-detail'});
+					mui.toast(result)
+				}, function(result) {
+					//失败
+					alert("失败")
+				})*/
+			},
+			unload(){
+				var content = plus.android.runtimeMainActivity();
+				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
+					//成功
+					alert("成功："+result)
+				}, function(result) {
+					//失败
+					alert("失败")
+				})
 			}
 		}
 	}
 </script>
-<style scoped src="@/assets/css/stock/stock-detail">
-	
+<style>
+	.stock-detail{
+		height: 100%;
+		width: 100%;
+		background: #303f7a;
+		-webkit-transition:all .6s ease;
+		transition:all .6s ease;
+	}
+	.stock-in{
+		position: absolute;
+		top:75px;
+		width: 100%;
+		bottom: 0;
+		overflow: hidden;
+		padding: 10px;
+		color:#fff;
+	}
+	.stock-in .flex-items{
+		background: #5160b3;
+		text-align: center;
+		padding: 40px;
+	}
+	.stock-in .flex-items:nth-child(1){
+		margin-right: 10px;
+	} 
+	.chosee-order{
+		background: #5160b3;
+		text-align: center;
+		margin-top: 10px;
+		padding: 40px;
+	}
+	.text-desc{
+		margin:20px auto;
+		display: block;
+		text-align: center; 
+		color:#a7b0f6;
+		font-size: 12px;
+	}
 </style>
