@@ -51,7 +51,7 @@
 			mui.ajax({
                 type: "POST",
                 contentType:"application/json; charset=utf-8",
-                url :"http://192.168.1.104:8393/WebService.asmx/CallFun",
+                url : localStorage.getItem("http"),
                 data:{
             	 	strRequest:'{\
             	 		"Request":{\
