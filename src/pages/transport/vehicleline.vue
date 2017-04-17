@@ -37,7 +37,7 @@
 		},
 		mounted() {
 			let _self = this;
-			mui.ajax({
+			/*mui.ajax({
                 type: "POST",
                 contentType:"application/json; charset=utf-8",
                 url : localStorage.getItem("http"),
@@ -62,13 +62,6 @@
                 	if(req.Response.Header.ResultCode=="1"){
                 		mui.toast(req.Response.Header.ResultMsg)           	
                 	}else{
-                		/*let items = req.Response.Body.Items.Item
-                		if(!(items instanceof Array)){
-                			_self.items.push( items )
-                		}else{
-                			_self.items = items
-                		}*/
-                		
 
                 		
                 	}
@@ -77,22 +70,7 @@
 					//异常处理；
 					mui.toast(type);
 				}
-            });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            });*/
 
 			// 百度地图API功能
 			_self.map = new BMap.Map("allmap");
