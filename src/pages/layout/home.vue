@@ -32,9 +32,9 @@
 		                <span><b>库房盘点</b><i>Warehouse<br/>inventory</i></span>
 		                <img src="../../assets/images/j22.png" class="img2"/>
 		            </a>
-		            <a href="javascript:;" class="cf"  @tap="goPage('home/child-info','QueryStock_005')">
+		            <a href="javascript:;" class="cf"  @tap="goPage('home/traceability','QueryStock_005')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
-		                <span><b>育苗溯源</b><i> registered</i></span>
+		                <span><b>疫苗溯源</b><i> registered</i></span>
 		                <img src="../../assets/images/j23.png" class="img2"/>
 		            </a>
 		        </li>

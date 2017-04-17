@@ -6,6 +6,13 @@
 					<li class="mui-table-view-cell"  @click="scanImg">
 						扫描二维码
 					</li>
+
+					<li class="mui-table-view-cell"  @click="showJDCode">
+						九鼎二维码
+					</li>
+					<li class="mui-table-view-cell"  @click="baiduMap">
+						百度地图
+					</li>
 					<li class="mui-table-view-cell">
 						第一个选项卡子项-2
 					</li>
@@ -123,6 +130,23 @@
 			},
 			scanImg() {
 				this.$router.push('barcode')
+			},
+			showJDCode() {
+				var content = plus.android.runtimeMainActivity();
+				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
+					//成功
+					alert("成功："+result)
+				}, function(result) {
+					//失败
+					alert("失败")
+				})
+			},
+			baiduMap(){
+				// 设置目标位置坐标点和其实位置坐标点
+				var dst = new plus.maps.Point(116.39131928,39.90793074); // 天安门 
+				var src = new plus.maps.Point(116.335,39.966); // 大钟寺
+				// 调用系统地图显示 
+				plus.maps.openSysMap( dst, "天安门", src );
 			}
 		}
 	}
