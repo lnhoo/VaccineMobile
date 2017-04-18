@@ -1,6 +1,6 @@
 <template>
 	<div class="page-home">
-		<v-header :headerName="headerName"></v-header>				
+		<v-header :headerObj="headerObj"></v-header>				
 		<!--首页 begin-->
 		<div v-show="home">
 			<v-home></v-home>	
@@ -55,7 +55,11 @@
     	},
         data() {
 			return {
-				headerName : '首页',
+				headerObj : {
+					title : '首页',
+					hasBack : false,
+					isHome : true
+				},
 				homeRouter : false,
 				tabberName:'选项卡',
 				home : true,
@@ -96,7 +100,7 @@
            		tabs.forEach(function(tab){
            			tab == type ? self[type] = true : self[tab] = false
            		})
-           		this.headerName = tabName
+           		this.headerObj.title = tabName
            	}
            	
 		}
