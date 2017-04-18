@@ -96,6 +96,7 @@
     top:0;
     left:0;
     overflow: hidden;
+    display: table;
 }
 .mask{
     position: absolute;
@@ -111,13 +112,50 @@
 .orderNum-box-content{
     position: absolute;
     width: 90%;
-    height: 50%;
+    height: 60%;
     margin-left: 5%;
-    margin-top: 150px;
-    overflow-y: auto;
-    padding: 10px 0;
-    border-radius: 10px;
+    margin-top: 100px;
+    overflow: hidden;
     z-index: 3;
     background: #fff;
+}
+.conetent-wrap{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.content-header{
+    height:50px;
+    line-height: 50px;
+    border-bottom: 1px solid #c8c7cc;
+    -webkit-box-shadow: 1px 1px 4px #c8c7cc;
+    -box-shadow: 1px 1px 4px #c8c7cc;
+}
+.content-body{
+    position: absolute;
+    top:60px;
+    bottom: 40px;
+    width: 100%;
+    overflow: hidden;
+}
+.content-footer{
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    bottom: 0;
+    left: 0;
+    background:#007AFF;
+    border-top: 1px solid #c8c7cc;
+    -webkit-box-shadow: 1px 3px 4px #c8c7cc;
+    -box-shadow: 1px 3px 4px #c8c7cc;
+}
+.content-footer .flex-items{
+    line-height: 40px;
+    color:#fff;
+} 
+.content-footer .flex-items:nth-child(1){
+    background: #FFFFFF;
+    color:#000;
 }
 
