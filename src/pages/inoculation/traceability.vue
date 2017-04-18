@@ -5,7 +5,7 @@
 			<div class="child-info-box">
 				<p class="tabs">
 					<a href="javascript:;" class="items active">儿童信息</a>
-					<a href="javascript:;" class="items">育苗信息</a>
+					<a href="javascript:;" class="items" @click="vaccineDetail">育苗信息</a>
 				</p>
 				<div class="pop-wrap">
 					<div class="inner-box">
@@ -38,27 +38,36 @@
 					</div>
 				</div>
 			</div>
+			<transition name="move">
+				<v-detail v-show="detail"></v-detail>
+			</transition>
 		</div>
 	</transition>
 </template>
 <script>
 	import header from '@/pages/layout/header'
+	import vaccineDetail from '@/pages/inoculation/vaccine_detail'
 	export default {
 		name:"page-child-info",
 		components :{
-    		'v-header' : header
+    		'v-header' : header,
+    		'v-detail' : vaccineDetail
     	},
 		data() {
 			return {
 				headerObj :{
 					title:'疫苗溯源',
 					hasBack : true
-				}
+				},
+				detail : false
 			}
 		},
 		methods:{
 			leave() {
 				this.$parent.homeRouter = false
+			},
+			vaccineDetail(){
+				this.detail = true
 			}
 		}
 	}
