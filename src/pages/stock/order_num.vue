@@ -9,41 +9,9 @@
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<form class="mui-input-group">
-									<div class="mui-input-row mui-checkbox">
-										<label>订单一</label>
+									<div class="mui-input-row mui-checkbox" v-for="(item,i) in items">
+										<label>{{item.orderNo+i}}</label>
 										<input name="checkbox1" value="Item 3" type="checkbox" >
-									</div>
-									<div class="mui-input-row mui-checkbox">
-										<label>订单二</label>
-										<input name="checkbox1" value="Item 4" type="checkbox" checked>
-									</div>
-									<div class="mui-input-row mui-checkbox">
-										<label>订单二</label>
-										<input name="checkbox1" value="Item 4" type="checkbox" checked>
-									</div>
-									<div class="mui-input-row mui-checkbox">
-										<label>订单二</label>
-										<input name="checkbox1" value="Item 4" type="checkbox" checked>
-									</div>
-									<div class="mui-input-row mui-checkbox">
-										<label>订单二</label>
-										<input name="checkbox1" value="Item 4" type="checkbox" checked>
-									</div>
-									<div class="mui-input-row mui-checkbox">
-										<label>订单二</label>
-										<input name="checkbox1" value="Item 4" type="checkbox" checked>
-									</div>
-									<div class="mui-input-row mui-checkbox">
-										<label>订单二</label>
-										<input name="checkbox1" value="Item 4" type="checkbox" checked>
-									</div>
-									<div class="mui-input-row mui-checkbox">
-										<label>订单二</label>
-										<input name="checkbox1" value="Item 4" type="checkbox" checked>
-									</div>
-									<div class="mui-input-row mui-checkbox">
-										<label>订单二</label>
-										<input name="checkbox1" value="Item 4" type="checkbox" checked>
 									</div>
 								</form>
 							</div>
@@ -51,7 +19,7 @@
 					</div>
 					<div class="content-footer flex">
 						<span class="flex-items" @click="closeMask">取消</span>
-						<span class="flex-items" @click="closeMask">确定</span>
+						<span class="flex-items" @click="submit">确定</span>
 					</div>	
 				</div>
 			</div>
@@ -62,7 +30,46 @@
 	export default {
 		name :'order-num',
 		data() {
-			return {}
+			return {
+				items : [
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'},
+					{orderNo : '订单号'}
+				]
+			}
 		},
 		mounted(){
 			mui('.mui-scroll-wrapper').scroll({
@@ -73,6 +80,11 @@
 		methods : {
 			closeMask(){
 				this.$parent.orderNum = false;
+			},
+			submit(){
+				let num = mui(".content-body input[type=checkbox]:checked")
+				alert("你选中了"+num.length+"个单号")
+				this.closeMask()
 			}
 		}
 	}
