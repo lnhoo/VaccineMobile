@@ -1,7 +1,7 @@
 <template>
 	<transition name="move" v-on:after-leave="leave">
 		<div class="page-child-info">
-			<v-header :headerName="headerName"></v-header>
+			<v-header :headerObj="headerObj"></v-header>
 			<div class="child-info-box">
 				<p class="tabs">
 					<a href="javascript:;" class="items active">儿童信息</a>
@@ -50,7 +50,10 @@
     	},
 		data() {
 			return {
-				headerName : '接种登记'
+				headerObj :{
+					title:'设备温湿度',
+					hasBack : true
+				}
 			}
 		},
 		methods:{

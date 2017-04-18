@@ -1,7 +1,7 @@
 <template>
 	<transition name="move"  v-on:after-leave="leave">
 		<div class="page-nursery">
-			<v-header :headerName="headerName"></v-header>
+			<v-header :headerObj="headerObj"></v-header>
 			<div class="nursery-content">
 				<div class="flex">
 					<span class="flex-items flex-1"><i></i><b>库房育苗信息</b></span>
@@ -38,7 +38,10 @@
     	},
         data() {
 			return {
-				headerName : '库房盘点',
+				headerObj :{
+					title:'库房盘点',
+					hasBack : true
+				}, 
 				stockList : [],
 				currentColdNo : '',
 				items : []
