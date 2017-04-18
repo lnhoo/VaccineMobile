@@ -1,24 +1,31 @@
 <template>
 	<transition name="move" v-on:after-leave="leave">
 		<div class="maps">
-			<v-header :headerName="headerName"></v-header>
-			<div id="allmap"></div>
-			<div class="footer-box">
-				<table class="tb">
-					<tr>
-						<td width="70"><span class="car-card no-bg">行驶车辆：</span></td>
-						<td>
-							<span class="car-card" @click="switchTab(1)">湘A103455</span>
-							<span class="car-card" @click="switchTab(2)">湘A103455</span>
-							<span class="car-card" @click="switchTab(3)">湘A103455</span>
-							<span class="car-card" @click="switchTab(4)">湘A103455</span>
-							<span class="car-card" @click="switchTab(5)">湘A103455</span>
-							<span class="car-card" @click="switchTab(6)">湘A103455</span>
-							<span class="car-card" @click="switchTab(7)">湘A103455</span>
-						</td>
-					</tr>
-				</table>
-			</div> 
+			<v-header :headerObj="headerObj"></v-header>
+			<div v-if="hasData">
+				<div id="allmap"></div>
+				<div class="footer-box">
+					<table class="tb">
+						<tr>
+							<td width="70"><span class="car-card no-bg">行驶车辆：</span></td>
+							<td>
+								<span class="car-card" @click="switchTab(1)">湘A103455</span>
+								<span class="car-card" @click="switchTab(2)">湘A103455</span>
+								<span class="car-card" @click="switchTab(3)">湘A103455</span>
+								<span class="car-card" @click="switchTab(4)">湘A103455</span>
+								<span class="car-card" @click="switchTab(5)">湘A103455</span>
+								<span class="car-card" @click="switchTab(6)">湘A103455</span>
+								<span class="car-card" @click="switchTab(7)">湘A103455</span>
+							</td>
+						</tr>
+					</table>
+				</div> 	
+			</div>
+			<div class="no-data-msg" v-if="noData">
+				<div class="ds-table">
+					<div class="ds-tell">无数据</div>
+				</div>
+			</div>
 		</div>
 	</transition>
 </template>
@@ -31,13 +38,18 @@
 		},
 		data() {
 			return {
-				headerName:'运输监控',
-				map : null
+				headerObj :{
+					title:'运输监控',
+					hasBack : true
+				}, 
+				map : null,
+				hasData :　true,
+				noData : false
 			}
 		},
 		mounted() {
 			let _self = this;
-			/*mui.ajax({
+			mui.ajax({
                 type: "POST",
                 contentType:"application/json; charset=utf-8",
                 url : localStorage.getItem("http"),
@@ -62,7 +74,13 @@
                 	if(req.Response.Header.ResultCode=="1"){
                 		mui.toast(req.Response.Header.ResultMsg)           	
                 	}else{
+                		let items = req.Response.Body.Items;
+                		if(items){
 
+                		}else{
+                			_self.hasData  = false
+                			_self.noData = true
+                		}
                 		
                 	}
                 },
@@ -70,10 +88,10 @@
 					//异常处理；
 					mui.toast(type);
 				}
-            });*/
+            });
 
 			// 百度地图API功能
-			_self.map = new BMap.Map("allmap");
+			/*_self.map = new BMap.Map("allmap");
 			_self.map.centerAndZoom("北京",15);
 			var geolocation = new BMap.Geolocation();
 			geolocation.getCurrentPosition(function(r){
@@ -81,6 +99,7 @@
 					var mk = new BMap.Marker(r.point);
 					_self.map.addOverlay(mk);
 					_self.map.panTo(r.point);
+					alert(JSON.stringify(r.point));
 					var infoWindow = new BMap.InfoWindow("湘A435223<br>温度：27<br>湿度：27", { 
 						offset : new BMap.Size(0,-25)
 					});    // 创建信息窗口对象
@@ -93,14 +112,14 @@
 				else {
 					alert('failed'+this.getStatus());
 				}        
-			},{enableHighAccuracy: true})
+			},{enableHighAccuracy: true})*/
 		},
 		methods:{
 			leave() {
 				this.$parent.homeRouter = false
 			},
 			switchTab(num) {
-				let _self = this
+				/*let _self = this
 				let lng = 124.43279092
 				let lat = 43.80864478
 				if(num==2){
@@ -129,7 +148,7 @@
 				
 				mk.addEventListener('click',function(){
 					_self.map.openInfoWindow(infoWindow,new_point); 
-				})
+				})*/
 			}
 		}
 	}
@@ -143,6 +162,7 @@
 		bottom: 120px;
 		overflow: hidden;
 	}
+	
 	.maps{
 		position: fixed;
 		top:0;
