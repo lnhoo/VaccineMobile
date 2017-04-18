@@ -82,7 +82,7 @@ html,body{
 .ds-tell{
 	vertical-align:middle;display:table-cell;width:100%;text-align:center;color:gray;
 }
-.mui-scroll-wrapper{
+.mui-scroll-wrapper,.mui-control-content{
 	background: #fff;
 }
     
