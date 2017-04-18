@@ -3,15 +3,11 @@
 		<div class="stock-list">
 			<v-header :headerObj="headerObj"></v-header>
 			<div class="stock-box">
-				<div class="mui-scroll-wrapper">
-					<div class="mui-scroll">
-						<div class="stock-container" v-for="(item,index) in stockList" @click="toDetail(item.ColdStoreNo)">
-							<img src="../../assets/images/j17.png"/>
-							<b v-html="item.ColdStoreName"></b>
-							<span class="jz" v-html="customerName"></span>
-						</div>	
-					</div>
-				</div>
+				<div class="stock-container" v-for="(item,index) in stockList" @click="toDetail(item.ColdStoreNo)">
+					<img src="../../assets/images/j17.png"/>
+					<b v-html="item.ColdStoreName"></b>
+					<span class="jz" v-html="customerName"></span>
+				</div>	
 			</div>
 			<div :class="{'list-router-active':listRouter}" class="list-router" v-show="listRouter">
 				<router-view></router-view>	
