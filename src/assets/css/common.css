@@ -43,7 +43,7 @@ html,body{
 .midden-tab{
 	position: absolute;
 	top:75px;
-	bottom: 48px; 
+	bottom: 40px; 
 	left: 0;
 	right: 0;
 	overflow: hidden;
@@ -73,6 +73,14 @@ html,body{
 .border-1px{
 	position:relative;
 }
-
+.no-data-msg{
+	position:absolute;top:75px;width:100%;bottom:0;overflow:hidden;background:#fff;
+}
+.ds-table{
+	height:100%;width:100%;display:table;
+}
+.ds-tell{
+	vertical-align:middle;display:table-cell;width:100%;text-align:center;color:gray;
+}
  
     
