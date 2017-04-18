@@ -1,7 +1,7 @@
 <template>
 	<transition name="move">
 		<div class="order-detail-page">
-			<header class="mui-bar mui-bar-nav" style="background-color: #303f7a;">
+			<header class="mui-bar mui-bar-nav" style="background-color: rgb(48, 63, 122);padding-top:30px;height:75px;">
 				<a class="mui-icon mui-icon-left-nav mui-pull-left" @click="toggleBack"></a>
 				<p class="mui-title" style="font-weight: normal;color:#fff">{{ headerName }}</p>
 				<span class="mui-icon mui-icon-contact mui-pull-right" style="color:#fff;"></span>
@@ -95,12 +95,16 @@
 		width: 100%;
 		left:0;
 		top:0;
-		background: #303F7A;
+		background: #394889;
 		z-index: 3;
 		padding: 0 10px;
 		-webkit-transition:all .3s ease;
  		transition:all .3s ease;
  		font-size: 12px;
+	}
+	.order-detail-page .mui-bar {
+	    -webkit-box-shadow:none;
+	    box-shadow:none;
 	}
 	.device-wrap{
 		position: absolute;
@@ -138,7 +142,7 @@
 	}
 	.btn-group{
 		text-align: center;
-		padding-top: 20px;
+		padding-top: 60px;
 	}
 	.border-btn{
 		display: inline-block;

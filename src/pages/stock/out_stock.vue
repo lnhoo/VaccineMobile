@@ -1,7 +1,7 @@
 <template>
 	<transition name="move" v-on:after-leave="leave">
 		<div class="stock-detail">
-			<v-header :headerName="headerName"></v-header>
+			<v-header :headerObj="headerObj"></v-header>
 			<div class="stock-detail-content">
 				<div class="grzx">
 			        <div class="grzx_bottom">
@@ -53,7 +53,10 @@
 		},
 		data() {
 			return {
-				headerName : '出库信息',
+				headerObj :{
+					title:'出库信息',
+					hasBack : true
+				}, 
 				orderNum :　false	
 			}
 		},

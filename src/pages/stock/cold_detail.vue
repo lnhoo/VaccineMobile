@@ -1,8 +1,8 @@
 <template>
 	<transition name="move" v-on:after-leave="leave">
 		<div class="cold-detail-page">
-			<v-header :headerName="headerName"></v-header>
-			<div class="device-wrap">
+			<v-header :headerObj="headerObj"></v-header>
+			<div class="device-wrap" v-if="hasData">
 				<div class="device-list flex text-c">
 					<span class="flex-items" :class="{'on':index==0}" @click="switchTab($event,device)" v-for="(device,index) in devices">
 						{{device.ShowName}}<br>温度：{{device.Temperature}}℃<br>湿度：{{device.Humidity}}℃
@@ -11,6 +11,13 @@
 				<div id="temperature" style="width: 96%;height:260px;margin:20px auto;"></div>
 				<div id="humidity" style="width: 96%;height:260px;margin:0 auto;"></div>	
 			</div>
+
+			<div class="no-data-msg" v-if="noData">
+				<div class="ds-table">
+					<div class="ds-tell">无数据</div>
+				</div>
+			</div>
+
 		</div>
 	</transition>
 </template>
@@ -30,7 +37,12 @@
 		},
 		data() {
 			return {
-				headerName : '设备温湿度',
+				headerObj :{
+					title:'设备温湿度',
+					hasBack : true
+				}, 
+				noData : false,
+				hasData : true,
 				devices : []
 			}
 		},
@@ -61,15 +73,21 @@
                 	if(req.Response.Header.ResultCode=="1"){
                 		mui.toast(req.Response.Header.ResultMsg)           	
                 	}else{
-                		let devices = req.Response.Body.Items.Item
-                		if(!(devices instanceof Array)){
-                			_self.devices.push( devices )
+                		let items = req.Response.Body.Items;
+                		if(items){
+                			let devices = items.Item
+	                		if(!(devices instanceof Array)){
+	                			_self.devices.push( devices )
+	                		}else{
+	                			_self.devices = devices
+	                		}
+	                		_self.$nextTick(() => {
+						        _self.getEchatsData(_self.devices[0])
+						    })	
                 		}else{
-                			_self.devices = devices
+                			_self.hasData = false
+                			_self.noData = true
                 		}
-                		_self.$nextTick(() => {
-					        _self.getEchatsData(_self.devices[0])
-					    })
                 	}
                 },
 				error:function(xhr,type,errorThrown){
@@ -119,6 +137,7 @@
 	                dataType:'json',
 	                success:function(result){
 	                	let req = JSON.parse(result.d)
+	                	console.log(req)
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
@@ -241,7 +260,6 @@
 		top:0;
 		background: #303F7A;
 		z-index: 3;
-		padding: 0 10px;
 		-webkit-transition:all .3s ease;
  		transition:all .3s ease;
 	}

@@ -1,7 +1,7 @@
 <template>
 	<transition name="move" v-on:after-leave="leave">
 		<div class="stock-list">
-			<v-header :headerName="headerName"></v-header>
+			<v-header :headerObj="headerObj"></v-header>
 			<div class="stock-box">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
@@ -29,7 +29,10 @@
 		name : 'stock-list',
 		data() {
 			return {
-				headerName : '冷链监控',
+				headerObj :{
+					title:'冷链监控',
+					hasBack : true
+				},
 				listRouter : false,
 				stockList : [],
 				customerName : localStorage.getItem("customerName")

@@ -1,7 +1,7 @@
 <template>
 	<transition name="move" v-on:after-leave="leave">
 		<div class="stock-detail">
-			<v-header :headerName="headerName"></v-header>
+			<v-header :headerObj="headerObj"></v-header>
 			<div class="stock-in">
 				<img src="../../assets/images/b1.png" width="100%" alt="">
 				<div class="flex">
@@ -43,7 +43,10 @@
 		},
 		data() {
 			return {
-				headerName : '入库',
+				headerObj :{
+					title:'入库',
+					hasBack : true
+				}, 
 				detail : false,
 				orderNum : false
 			}
