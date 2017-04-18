@@ -21,8 +21,8 @@
 		mounted() {
 			// 百度地图API功能
 			var map = new BMap.Map("allmap");
-			map.centerAndZoom('济南',12);
-
+			var point = new BMap.Point(116.39131928,39.90793074);
+			map.centerAndZoom(point,12);
 			var geolocation = new BMap.Geolocation();
 			geolocation.getCurrentPosition(function(r){
 				if(this.getStatus() == BMAP_STATUS_SUCCESS){

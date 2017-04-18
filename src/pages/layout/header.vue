@@ -1,14 +1,14 @@
 <template>
 	<header class="mui-bar mui-bar-nav" style="background-color: #303f7a;">
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		<p class="mui-title" style="font-weight: normal;">{{ headerName }}</p>
-		<span class="mui-icon mui-icon-contact mui-pull-right" style="color:#fff;" @tap="toHome"></span>
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" v-if="headerObj.hasBack"></a>
+		<p class="mui-title" style="font-weight: normal;">{{ headerObj.title }}</p>
+		<span v-if="headerObj.isHome?false:true" class="mui-icon mui-icon-contact mui-pull-right" style="color:#fff;" @tap="toHome"></span>
 	</header>
 </template>
 <script>
 	export default {
 		name:"page-header",
-		props : [ 'headerName' ],
+		props : [ 'headerObj' ],
 		data() {
 			return {}
 		},

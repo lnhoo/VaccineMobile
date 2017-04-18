@@ -57,7 +57,7 @@
 	            	 		},"Body":{\
 	            	 			"Page":1,\
 	            	 			"PageSize":10,\
-	            	 			"type" : 1,\
+	            	 			"type" : 2,\
 	            	 			"Status":1\
 	            	 		}\
 	            	 	}\
@@ -70,6 +70,7 @@
                 	if(req.Response.Header.ResultCode=="1"){
                 		mui.toast(req.Response.Header.ResultMsg)           	
                 	}else{
+                		console.log(req);
                 		let items = req.Response.Body.Items.Item
                 		if(!(items instanceof Array)){
                 			_self.items.push( items )
