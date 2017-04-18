@@ -94,9 +94,7 @@
 </script>
 
 <style>
-	.midden-tab{
-		bottom: 60px;
-	}
+	
 	.mui-card .mui-control-content {
 		padding: 10px;
 	}
