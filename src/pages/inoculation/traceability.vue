@@ -1,5 +1,5 @@
 <template>
-	<transition name="move" v-on:after-leave="leave">
+	<transition name="move">
 		<div class="page-child-info">
 			<v-header :headerObj="headerObj"></v-header>
 			<div class="child-info-box">
@@ -63,9 +63,6 @@
 			}
 		},
 		methods:{
-			leave() {
-				this.$parent.homeRouter = false
-			},
 			vaccineDetail(){
 				this.detail = true
 			}

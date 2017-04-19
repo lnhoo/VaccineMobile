@@ -1,11 +1,11 @@
 <template>
-	<transition name="move"  v-on:after-leave="leave">
+	<transition name="move">
 		<div class="page-nursery">
 			<v-header :headerObj="headerObj"></v-header>
-			<div class="nursery-content">
+			<div class="nursery-content" v-show="hasData">
 				<div class="flex">
 					<span class="flex-items flex-1"><i></i><b>库房育苗信息</b></span>
-					<span class="flex-items flex-2">查看全部</span>
+					<!-- <span class="flex-items flex-2">查看全部</span> -->
 				</div>
 				<div class="flex-items-wrap">
 					<div class="stock-list-item"  @tap="switchTab($event,stock.ColdStoreNo)" v-for="(stock,index) in stockList" :class="{active:index==0}">
@@ -13,17 +13,21 @@
 					</div>
 				</div>
 				<div class="pop-content">
-					<ul class="mui-table-view">
-			            <li class="mui-table-view-cell text-l"  v-for="(item,index)  in items">
-			            	<i class="circular"></i><span>{{item.VaccineName}}</span>
-			            	<span class="fl-r">{{item.Number}}</span>
+					<ul class="mui-table-view"  >
+			        	<li class="mui-table-view-cell text-l"  v-for="(item,index)  in items">
+				          	<i class="circular"></i><span>{{item.VaccineName}}</span>
+				          	<span class="fl-r">{{item.Number}}</span>
+			          	</li>
+			            <li class="mui-table-view-cell text-l"  v-if="items.length==0">
+			            	<span class="gray">没有数据</span>
 			            </li>
-
-			            <li class="mui-table-view-cell text-l" v-if="items.length==0">
-			            	没有育苗数据
-			            </li>
-
 			        </ul>
+				</div>
+			</div>
+
+			<div v-if="noData" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#fff;">
+				<div class="ds-table">
+					<div class="ds-tell"><span class="mui-spinner"></span></div>
 				</div>
 			</div>
 		</div>
@@ -44,6 +48,8 @@
 				}, 
 				stockList : [],
 				currentColdNo : '',
+				noData : true,
+				hasData : false,
 				items : []
 			}
 		},
@@ -83,6 +89,10 @@
 
                 		_self.$nextTick(() => {
 					        _self.getAccin(_self.stockList[0].ColdStoreNo)
+					        setTimeout(function(){
+								_self.noData = false
+								_self.hasData = true
+					        },200)
 					    })
                 	}
                 },
@@ -93,9 +103,6 @@
             }); 
 		},
 		methods: {
-           	leave() {
-				this.$parent.homeRouter = false
-			},
 			switchTab(e,coldStoreNo) {
 				let _self = this;
 				if( _self.currentColdNo == coldStoreNo )return;
@@ -105,7 +112,9 @@
 					flexItems[i].className = "stock-list-item"
 				}
 				e.target.className = "stock-list-item active"
+
 				_self.getAccin(coldStoreNo)
+
 			},
 			getAccin(coldStoreNo){
 				let _self = this;
