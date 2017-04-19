@@ -31,18 +31,19 @@
 .page-nursery .flex-1{
 	flex: 8;
 	text-align: left;
-	padding: 14px 0;
 	position: relative;
 	color:#ccc;
 }
 .page-nursery .flex-1 b{
 	font-size: 15px;
+	padding: 0;
 }
 .page-nursery .flex-1 i{
 	float: left;
 	margin-right: 5px; 
 	margin-top: 2px;
-	width: 6px;
+	margin-left: -5px;
+	width: 2px;
 	height: 17px;
 	background: #fff;
 }
@@ -65,27 +66,16 @@
 .page-nursery .nursery-flex{
 	flex: 1;
 }
-
 .page-nursery .pop-content{
 	background:#fff;
-	margin: 6px;
 	border-radius: 10px;
-	margin-top: 26px;
-	padding: 20px;
+	margin-top: 12px;
+	padding: 10px 0;
+	width: 97%;
+
 	position: relative;
-	-webkit-box-shadow: 0px 0px 10px #E5C6C6;
-	box-shadow: 0px 0px 10px #E5C6C6;
-}
-.page-nursery .pop-content:after{
-	content: '';
-	width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 20px solid #fff;
-    position: absolute;
-    left: 34px;
-    top: -14px;
+	-webkit-box-shadow: 0px 0px 2px #E5C6C6;
+	box-shadow: 0px 0px 2px #E5C6C6;
 }
 .page-nursery .circular{
 	float: left;
@@ -98,11 +88,13 @@
 }
 .stock-list-item{
 	display: inline-block;
-	width: 86px;
+	width: 94px;
 	background: #fff;
 	padding: 5px 10px;
 	text-align: center;
-	padding-left: 6px;
-	margin-right: 1em;
+	margin-right: 5px;
 	margin-bottom: 1em;
+}
+.page-nursery .mui-table-view:after {
+    height: 0;
 }

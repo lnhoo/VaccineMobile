@@ -1,11 +1,13 @@
 .page-child-info{
 	height: 100%;
+	width: 100%;
+	position: absolute;
 	overflow: hidden;
-	position: relative;
 	-webkit-transition:all .6s ease;
 	transition:all .6s ease;
 	background: #303f7a;
 	font-size: 12px;
+	background: #303f7a;
 }
 .child-info-box{
 	position: fixed;
