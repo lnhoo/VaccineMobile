@@ -9,13 +9,11 @@
 						<tr>
 							<td width="70"><span class="car-card no-bg">行驶车辆：</span></td>
 							<td>
-								<span class="car-card" @click="switchTab(1)">湘A103455</span>
-								<span class="car-card" @click="switchTab(2)">湘A103455</span>
-								<span class="car-card" @click="switchTab(3)">湘A103455</span>
-								<span class="car-card" @click="switchTab(4)">湘A103455</span>
-								<span class="car-card" @click="switchTab(5)">湘A103455</span>
-								<span class="car-card" @click="switchTab(6)">湘A103455</span>
-								<span class="car-card" @click="switchTab(7)">湘A103455</span>
+								<span class="car-card" @click="switchTab(1,'湘A103455','24','27')">湘A103455</span>
+								<span class="car-card" @click="switchTab(2,'湘A103339','21','26')">湘A103339</span>
+								<span class="car-card" @click="switchTab(3,'湘A102251','21.2','27.1')">湘A102251</span>
+								<span class="car-card" @click="switchTab(4,'湘A101455','24.2','27.4')">湘A101455</span>
+								<span class="car-card" @click="switchTab(5,'湘A133457','18.4','26.4')">湘A133457</span>
 							</td>
 						</tr>
 					</table>
@@ -78,10 +76,9 @@
                 		if(items){
 
                 		}else{
-                			_self.hasData  = false
-                			_self.noData = true
+                			_self.hasData  = true
+                			_self.noData = false
                 		}
-                		
                 	}
                 },
 				error:function(xhr,type,errorThrown){
@@ -90,36 +87,14 @@
 				}
             });
 
-			// 百度地图API功能
-			/*_self.map = new BMap.Map("allmap");
-			_self.map.centerAndZoom("北京",15);
-			var geolocation = new BMap.Geolocation();
-			geolocation.getCurrentPosition(function(r){
-				if(this.getStatus() == BMAP_STATUS_SUCCESS){
-					var mk = new BMap.Marker(r.point);
-					_self.map.addOverlay(mk);
-					_self.map.panTo(r.point);
-					alert(JSON.stringify(r.point));
-					var infoWindow = new BMap.InfoWindow("湘A435223<br>温度：27<br>湿度：27", { 
-						offset : new BMap.Size(0,-25)
-					});    // 创建信息窗口对象
-					_self.map.openInfoWindow(infoWindow,r.point); 
-
-					mk.addEventListener('click',function(){
-						_self.map.openInfoWindow(infoWindow,r.point); 
-					})
-				}
-				else {
-					alert('failed'+this.getStatus());
-				}        
-			},{enableHighAccuracy: true})*/
+            this.initMaps()
 		},
 		methods:{
 			leave() {
 				this.$parent.homeRouter = false
 			},
-			switchTab(num) {
-				/*let _self = this
+			switchTab(num,carName,wd,sd) {
+				let _self = this
 				let lng = 124.43279092
 				let lat = 43.80864478
 				if(num==2){
@@ -134,21 +109,45 @@
 					lng = lng - 0.3
 					lat = lat - 0.03
 				}
-
 				_self.map.clearOverlays()
 				let new_point = new BMap.Point(lng,lat)
 				let mk = new BMap.Marker(new_point);
 				_self.map.addOverlay(mk);
 				_self.map.panTo(new_point);
 
-				var infoWindow = new BMap.InfoWindow("湘A4EE3<br>温度：25<br>湿度：23", { 
+				var infoWindow = new BMap.InfoWindow(carName+"<br>温度："+wd+"℃<br>湿度："+sd+"℃", { 
 					offset : new BMap.Size(0,-25)
 				});    // 创建信息窗口对象
 				_self.map.openInfoWindow(infoWindow,new_point); 
 				
 				mk.addEventListener('click',function(){
 					_self.map.openInfoWindow(infoWindow,new_point); 
-				})*/
+				})
+			},
+			initMaps(){
+				let _self = this;
+				// 百度地图API功能
+				_self.map = new BMap.Map("allmap");
+				_self.map.centerAndZoom("北京",12);
+				var geolocation = new BMap.Geolocation();
+				geolocation.getCurrentPosition(function(r){
+					if(this.getStatus() == BMAP_STATUS_SUCCESS){
+						var mk = new BMap.Marker(r.point);
+						_self.map.addOverlay(mk);
+						_self.map.panTo(r.point);
+						var infoWindow = new BMap.InfoWindow("湘A435223<br>温度：27<br>湿度：27", { 
+							offset : new BMap.Size(0,-25)
+						});    // 创建信息窗口对象
+						_self.map.openInfoWindow(infoWindow,r.point); 
+
+						mk.addEventListener('click',function(){
+							_self.map.openInfoWindow(infoWindow,r.point); 
+						})
+					}
+					else {
+						alert('failed'+this.getStatus());
+					}        
+				},{enableHighAccuracy: true})
 			}
 		}
 	}
@@ -162,7 +161,6 @@
 		bottom: 120px;
 		overflow: hidden;
 	}
-	
 	.maps{
 		position: fixed;
 		top:0;

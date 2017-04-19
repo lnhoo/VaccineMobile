@@ -7,65 +7,118 @@
 				<span class="mui-icon mui-icon-contact mui-pull-right" style="color:#fff;"></span>
 			</header>
 			<div class="device-wrap">
-				<div class="caption-text">入库单号：43127号</div>
-				<div class="flex mt10">
-					<span class="flex-items accept-text">接受单位</span>
-					<span class="flex-items text-r">xxxxx单位</span>
+				<div class="order-list">
+					<div class="caption-text">入库单号：43127号</div>
+					<div class="flex mt10">
+						<span class="flex-items accept-text">接受单位</span>
+						<span class="flex-items text-r">xxxxx单位</span>
+					</div>
+					<div class="flex">
+						<span class="flex-items gh-text">供货单位</span>
+						<span class="flex-items text-r">xxxxx单位</span>
+					</div>
+					<div class="flex">
+						<span class="flex-items trans-text">运输单号</span>
+						<span class="flex-items text-r">123号</span>
+					</div>
+					<div class="flex">
+						<span class="flex-items car-text">车牌号</span>
+						<span class="flex-items text-r">湘A32896</span>
+					</div>
+					<div class="order-table">	
+						<table>
+							<tr>
+								<th>批&nbsp;&nbsp;号</th>
+								<th>有效期</th>
+								<th>数量</th>
+								<th>已卸车数量</th>
+							</tr>
+							<tr>
+								<td>00123</td>
+								<td>2017-03-31</td>
+								<td>100支</td>
+								<td>2箱</td>
+							</tr>
+							<tr>
+								<td>00123</td>
+								<td>2017-03-31</td>
+								<td>100支</td>
+								<td>2箱</td>
+							</tr>
+							<tr>
+								<td>00123</td>
+								<td>2017-03-31</td>
+								<td>100支</td>
+								<td>2箱</td>
+							</tr>
+							<tr>
+								<td>00123</td>
+								<td>2017-03-31</td>
+								<td>100支</td>
+								<td>2箱</td>
+							</tr>
+						</table>
+					</div>
 				</div>
-				<div class="flex">
-					<span class="flex-items gh-text">供货单位</span>
-					<span class="flex-items text-r">xxxxx单位</span>
-				</div>
-				<div class="flex">
-					<span class="flex-items trans-text">运输单号</span>
-					<span class="flex-items text-r">123号</span>
-				</div>
-				<div class="flex">
-					<span class="flex-items car-text">车牌号</span>
-					<span class="flex-items text-r">湘A32896</span>
-				</div>
-				<div class="order-table">	
-					<table>
-						<tr>
-							<th>批&nbsp;&nbsp;号</th>
-							<th>有效期</th>
-							<th>数量</th>
-							<th>已卸车数量</th>
-						</tr>
-						<tr>
-							<td>00123</td>
-							<td>2017-03-31</td>
-							<td>100支</td>
-							<td>2箱</td>
-						</tr>
-						<tr>
-							<td>00123</td>
-							<td>2017-03-31</td>
-							<td>100支</td>
-							<td>2箱</td>
-						</tr>
-						<tr>
-							<td>00123</td>
-							<td>2017-03-31</td>
-							<td>100支</td>
-							<td>2箱</td>
-						</tr>
-						<tr>
-							<td>00123</td>
-							<td>2017-03-31</td>
-							<td>100支</td>
-							<td>2箱</td>
-						</tr>
-					</table>
+				<div class="order-list">
+					<div class="caption-text">入库单号：43127号</div>
+					<div class="flex mt10">
+						<span class="flex-items accept-text">接受单位</span>
+						<span class="flex-items text-r">xxxxx单位</span>
+					</div>
+					<div class="flex">
+						<span class="flex-items gh-text">供货单位</span>
+						<span class="flex-items text-r">xxxxx单位</span>
+					</div>
+					<div class="flex">
+						<span class="flex-items trans-text">运输单号</span>
+						<span class="flex-items text-r">123号</span>
+					</div>
+					<div class="flex">
+						<span class="flex-items car-text">车牌号</span>
+						<span class="flex-items text-r">湘A32896</span>
+					</div>
+					<div class="order-table">	
+						<table>
+							<tr>
+								<th>批&nbsp;&nbsp;号</th>
+								<th>有效期</th>
+								<th>数量</th>
+								<th>已卸车数量</th>
+							</tr>
+							<tr>
+								<td>00123</td>
+								<td>2017-03-31</td>
+								<td>100支</td>
+								<td>2箱</td>
+							</tr>
+							<tr>
+								<td>00123</td>
+								<td>2017-03-31</td>
+								<td>100支</td>
+								<td>2箱</td>
+							</tr>
+							<tr>
+								<td>00123</td>
+								<td>2017-03-31</td>
+								<td>100支</td>
+								<td>2箱</td>
+							</tr>
+							<tr>
+								<td>00123</td>
+								<td>2017-03-31</td>
+								<td>100支</td>
+								<td>2箱</td>
+							</tr>
+						</table>
+					</div>
 				</div>
 				
-				<div class="btn-group">
-					<span class="border-btn">扫描入库</span>
-					<span class="border-btn gray-btn">再扫一次</span>
-				</div>
 			</div>
-
-			
+			<div class="btn-group">
+				<span class="border-btn" @click="toStock">扫描入库</span>
+				<span class="border-btn gray-btn" @click="againScan">再扫一次</span>
+			</div>
 		</div>
 	</transition>
 </template>
@@ -90,6 +143,14 @@
 		methods : {
 			toggleBack(){
 				this.$parent.detail = false
+			},
+			toStock(){
+				mui.toast("入库成功")
+				this.$parent.detail = false
+			},
+			againScan(){
+				this.$parent.detail = false
+				this.$parent.scanStorage()
 			}
 		}
 	}
@@ -116,7 +177,7 @@
 		position: absolute;
 		top:75px;
 		width: 96%;
-		bottom: 0;
+		bottom: 67px;
 		overflow:hidden;
 		overflow-y: auto;
 		padding-bottom: 20px;
@@ -149,7 +210,11 @@
 	}
 	.btn-group{
 		text-align: center;
-		padding-top: 25px;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background: #394889;
 	}
 	.border-btn{
 		display: inline-block;
@@ -207,6 +272,9 @@
 	    -webkit-transform: scaleY(.2);
 	    transform: scaleY(.2);
 	    background-color: #c8c7cc;
+	}
+	.order-list{
+		margin-bottom: 20px;
 	}
 </style>
 

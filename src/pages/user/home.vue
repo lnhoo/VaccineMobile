@@ -84,7 +84,6 @@
            			}
            		}
            		if(flag){
-           			mui.toast("有该权限")
        				this.$router.push({path:url})
            		}else{
            			// 不存在该权限
@@ -99,7 +98,6 @@
            		})
            		this.headerObj.title = tabName
            	}
-           	
 		}
     }
 </script>

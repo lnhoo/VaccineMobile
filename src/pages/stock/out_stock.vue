@@ -36,6 +36,8 @@
 			        </ul> 
 			    </div>
 			</div>
+			
+			<order-detail ref="detail" v-show="detail"></order-detail>
 
 			<order-num v-show="orderNum"></order-num>
 
@@ -45,11 +47,13 @@
 <script type="text/javascript">
 	import Header from '@/pages/layout/header'
 	import OrderNum from '@/pages/stock/order_num'
+	import OrderDetail from '@/pages/stock/order_detail'
 	export default {
 		name :'stock-detail',
 		components:{
 			"v-header" : Header,
-			"order-num" : OrderNum
+			"order-num" : OrderNum,
+			"order-detail" : OrderDetail
 		},
 		data() {
 			return {
@@ -57,7 +61,8 @@
 					title:'出库信息',
 					hasBack : true
 				}, 
-				orderNum :　false	
+				orderNum :　false,
+				detail : false	
 			}
 		},
 		methods : {

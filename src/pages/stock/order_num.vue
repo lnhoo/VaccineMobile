@@ -83,8 +83,10 @@
 			},
 			submit(){
 				let num = mui(".content-body input[type=checkbox]:checked")
-				alert("你选中了"+num.length+"个单号")
+				//alert("你选中了"+num.length+"个单号")
 				this.closeMask()
+
+				this.$parent.detail = true;
 			}
 		}
 	}

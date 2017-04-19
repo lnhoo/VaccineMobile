@@ -72,9 +72,7 @@
 	export default {
     	name: 'page-home-tab',
         data() {
-			return {
-
-			}
+			return {}
 		},
 		mounted(){
 			//获得slider插件对象
@@ -82,8 +80,6 @@
 		},
 		methods : {
            	goPage( url,obj ) {
-
-
            		this.$parent.goPage( url , obj )
            	}
 		}

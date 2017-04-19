@@ -64,25 +64,24 @@
 			},
 			scanStorage() {
 				let _self = this;
-					_self.detail = true;
-				/*let content = plus.android.runtimeMainActivity();
+				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					//成功
 					console.log(result);
-
-					_self.orderRouter = true;
-					_self.$router.push({path:'home/in-stock/order-detail'});
-					mui.toast(result)
+					_self.detail = true;
 				}, function(result) {
 					//失败
 					alert("失败")
-				})*/
+				})
 			},
 			unload(){
+				let _self = this;
 				var content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					//成功
-					alert("成功："+result)
+					//alert("成功："+result)
+					_self.detail = true;
+					
 				}, function(result) {
 					//失败
 					alert("失败")
