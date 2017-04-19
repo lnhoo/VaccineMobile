@@ -8,7 +8,7 @@
 			</header>
 			<div class="device-wrap">
 				<div class="caption-text">入库单号：43127号</div>
-				<div class="flex">
+				<div class="flex mt10">
 					<span class="flex-items accept-text">接受单位</span>
 					<span class="flex-items text-r">xxxxx单位</span>
 				</div>
@@ -153,20 +153,21 @@
 	}
 	.border-btn{
 		display: inline-block;
-		padding: 12px 22px;
+		padding: 12px 30px;
 		border: 1px solid #1c94f1;
     	color: #1c94f1;
 		border-radius: 16px;
-		margin-right: 2em;
+		font-size: 14px;
 		background: url("../../assets/images/b11.png") 13% center no-repeat;
-		background-size: 16px;
-		padding-left: 36px;
+		margin: 10px;
+		background-size: 15px;
+		text-indent: 10px;
 	}
 	.gray-btn{
 		border: 1px solid #5a70c1;
 	    color: #5a70c1;	
 	    background: url("../../assets/images/b12.png") 13% center no-repeat;
-	    background-size: 16px;
+	    background-size: 15px;
 	}
 	.accept-text{
 		padding-left: 40px;

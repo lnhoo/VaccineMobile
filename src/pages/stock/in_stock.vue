@@ -97,6 +97,9 @@
 		background: #303f7a;
 		-webkit-transition:all .6s ease;
 		transition:all .6s ease;
+		position: absolute;
+		top: 0;
+		left: 0;
 	}
 	.stock-in{
 		position: absolute;
