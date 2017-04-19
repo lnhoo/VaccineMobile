@@ -1,5 +1,5 @@
 <template>
-	<div class="midden-tab">
+	<div class="midden-tab home-page">
 	    <div id="mui-slider" class="mui-slider" >
 			<div class="mui-slider-group mui-slider-loop">
 				<div class="mui-slider-item mui-slider-item-duplicate">
@@ -78,10 +78,7 @@
 		},
 		mounted(){
 			//获得slider插件对象
-			var gallery = mui('.mui-slider');
-			
-
-			gallery.slider({ interval:2000 });
+			mui('.home-page .mui-slider').slider({ interval:2000 });
 		},
 		methods : {
            	goPage( url,obj ) {
