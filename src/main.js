@@ -4,7 +4,6 @@ import mui from '../js/mui.min.js'
 import App from './App'
 import '@/assets/css/common'
 
-
 Vue.config.productionTip = false
 window.mui=mui
 
