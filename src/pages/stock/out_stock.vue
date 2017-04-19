@@ -2,42 +2,28 @@
 	<transition name="move" v-on:after-leave="leave">
 		<div class="stock-detail">
 			<v-header :headerObj="headerObj"></v-header>
-			<div class="stock-detail-content">
-				<div class="grzx">
-			        <div class="grzx_bottom">
-			        	<i>出库单号</i>
-			            <b>CM56133</b>
-						<span class="order-number" @click="chooseOrder">选择单号</span>
-			        </div>	
+			<div class="stock-in">
+				<img src="../../assets/images/b1.png" width="100%" alt="">
+				<div class="flex">
+					<span class="flex-items" @click="unload">
+					<img src="../../assets/images/b2.png" alt="" width="40"><br>
+					扫描装车车
+					</span>
+					<span class="flex-items" @click="scanStorage">
+					<img src="../../assets/images/b3.png" alt="" width="40"><br>
+					扫描出库
+					</span>
 				</div>
-				<div class="mui-card">
-			        <ul class="mui-table-view">
-			            <li class="mui-table-view-cell  text-l">
-			            	<img src="../../assets/images/j9.png" class="apply-icon"/>确认出库日期 
-			            	<span class="fl-r">2017-04-01</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j10.png" class="apply-icon"/>下级接受单位 
-			            	<span class="fl-r">xxxxxxx单位</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j11.png" class="apply-icon"/>有效期 
-			            	<span class="fl-r">2017-04-01</span>
-			            </li>
-			           
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j13.png" class="apply-icon"/>批次号
-			            	<span class="fl-r">4</span>
-			            </li>
-			            <li class="mui-table-view-cell text-l">
-			            	<img src="../../assets/images/j15.png" class="apply-icon"/>车牌号
-			            	<span class="fl-r">湘A-ob4345</span>
-			            </li>
-			        </ul> 
-			    </div>
+
+				<div class="chosee-order" @click="chooseOrder">
+					<img src="../../assets/images/b4.png" alt="" width="40"><br>
+					选单号出库
+				</div>
+
+				<span class="text-desc">温馨提示：扫描时要对准单号</span>
 			</div>
-			
-			<order-detail ref="detail" v-show="detail"></order-detail>
+
+			<order-detail ref="detail" :detailObj="detailObj" v-show="detail"></order-detail>
 
 			<order-num v-show="orderNum"></order-num>
 
@@ -46,38 +32,111 @@
 </template>
 <script type="text/javascript">
 	import Header from '@/pages/layout/header'
-	import OrderNum from '@/pages/stock/order_num'
 	import OrderDetail from '@/pages/stock/order_detail'
+	import OrderNum from '@/pages/stock/order_num'
+	
 	export default {
 		name :'stock-detail',
 		components:{
 			"v-header" : Header,
-			"order-num" : OrderNum,
-			"order-detail" : OrderDetail
+			"order-detail" : OrderDetail,
+			"order-num" : OrderNum
 		},
 		data() {
 			return {
 				headerObj :{
-					title:'出库信息',
+					title:'出库',
 					hasBack : true
 				}, 
-				orderNum :　false,
-				detail : false	
+				detailObj:{
+					title:'出库单信息',
+					btn1 : '扫描出库',
+					btn2 : '再次扫描'
+				},
+				detail : false,
+				orderNum : false
 			}
 		},
 		methods : {
 			leave() {
 				this.$parent.homeRouter = false
 			},
+			outStock() {
+				this.$router.push('/home/out-stock')
+			},
 			chooseOrder(){
 				this.orderNum = true;
 			},
-			closeMask(){
-				this.orderNum = false;
+			scanStorage() {
+				let _self = this;
+				let content = plus.android.runtimeMainActivity();
+				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
+					//成功
+					console.log(result);
+					_self.detail = true;
+				}, function(result) {
+					//失败
+					alert("失败")
+				})
+			},
+			unload(){
+				let _self = this;
+				var content = plus.android.runtimeMainActivity();
+				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
+					//成功
+					//alert("成功："+result)
+					_self.detail = true;
+					
+				}, function(result) {
+					//失败
+					alert("失败")
+				})
+			},
+			toStock(){
+				mui.toast("出库成功")
 			}
 		}
 	}
 </script>
-<style scoped src="@/assets/css/stock/stock-detail">
-	
+<style>
+	.stock-detail{
+		height: 100%;
+		width: 100%;
+		background: #303f7a;
+		-webkit-transition:all .6s ease;
+		transition:all .6s ease;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.stock-in{
+		position: absolute;
+		top:75px;
+		width: 100%;
+		bottom: 0;
+		overflow: hidden;
+		padding: 10px;
+		color:#fff;
+	}
+	.stock-in .flex-items{
+		background: #5160b3;
+		text-align: center;
+		padding: 40px;
+	}
+	.stock-in .flex-items:nth-child(1){
+		margin-right: 10px;
+	} 
+	.chosee-order{
+		background: #5160b3;
+		text-align: center;
+		margin-top: 10px;
+		padding: 40px;
+	}
+	.text-desc{
+		margin:20px auto;
+		display: block;
+		text-align: center; 
+		color:#a7b0f6;
+		font-size: 12px;
+	}
 </style>

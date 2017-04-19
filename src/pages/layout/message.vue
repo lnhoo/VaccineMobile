@@ -10,9 +10,6 @@
 					<li class="mui-table-view-cell"  @click="showJDCode">
 						九鼎二维码
 					</li>
-					<li class="mui-table-view-cell"  @click="baiduMap">
-						百度地图
-					</li>
 					<li class="mui-table-view-cell">
 						第一个选项卡子项-2
 					</li>
@@ -84,17 +81,6 @@
 			});
 		},
 		methods :{
-			maps() {
-				if('Android'===plus.os.name&&navigator.userAgent.indexOf('StreamApp')>0){
-					plus.nativeUI.toast('当前环境暂不支持地图插件');
-					return;
-				}
-				// 设置目标位置坐标点和其实位置坐标点
-				let dst = new plus.maps.Point(116.39131928,39.90793074); // 天安门 
-				let src = new plus.maps.Point(116.335,39.966); // 大钟寺
-				// 调用系统地图显示 
-				plus.maps.openSysMap( dst, "天安门", src );
-			},
 			getImage() {
 				mui.toast('开始拍照：')
 
@@ -132,6 +118,7 @@
 				this.$router.push('barcode')
 			},
 			showJDCode() {
+				mui.toast("d9")
 				var content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					//成功
@@ -140,12 +127,6 @@
 					//失败
 					alert("失败")
 				})
-			},
-			baiduMap(){
-				// 百度地图API功能
-				
-
-				this.$router.push('map')
 			}
 		}
 	}

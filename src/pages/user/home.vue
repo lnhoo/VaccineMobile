@@ -2,27 +2,19 @@
 	<div class="page-home">
 		<v-header :headerObj="headerObj"></v-header>				
 		<!--首页 begin-->
-		<div v-show="home">
-			<v-home></v-home>	
-		</div>
+		<v-home  v-show="home"></v-home>	
 		<!--首页 end-->
 		
 		<!--消息 begin-->
-		<div v-show="message">
-			<v-message></v-message>	
-		</div>
+		<v-message v-show="message"></v-message>	
 		<!--消息 end-->
 			
 		<!--育苗 begin-->
-		<div v-show="seedlings">
-			<v-seedlings></v-seedlings>	
-		</div>
+		<v-seedlings v-show="seedlings"></v-seedlings>	
 		<!--育苗 end-->
 		
 		<!--我的 begin-->
-		<div v-show="mine">
-			<v-mine></v-mine>	
-		</div>
+		<v-mine v-show="mine"></v-mine>	
 		<!--我的 end-->
 		
 		<v-tabber :tabberName="tabberName"></v-tabber>
@@ -98,6 +90,7 @@
            		})
            		this.headerObj.title = tabName
            	}
+           	
 		}
     }
 </script>

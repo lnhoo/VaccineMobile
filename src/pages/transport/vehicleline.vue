@@ -3,7 +3,7 @@
 		<div class="maps">
 			<v-header :headerObj="headerObj"></v-header>
 			<div v-if="hasData">
-				<div id="allmap"></div>
+				<div id="myLocation"></div>
 				<div class="footer-box">
 					<table class="tb">
 						<tr>
@@ -127,7 +127,7 @@
 			initMaps(){
 				let _self = this;
 				// 百度地图API功能
-				_self.map = new BMap.Map("allmap");
+				_self.map = new BMap.Map("myLocation");
 				_self.map.centerAndZoom("北京",12);
 				var geolocation = new BMap.Geolocation();
 				geolocation.getCurrentPosition(function(r){
@@ -153,7 +153,7 @@
 	}
 </script>
 <style scoped="scoped">
-	#allmap{
+	#myLocation{
 		position: absolute;
 		top:75px;
 		left: 0;

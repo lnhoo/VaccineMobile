@@ -23,7 +23,7 @@
 				<span class="text-desc">温馨提示：扫描时要对准单号</span>
 			</div>
 
-			<order-detail ref="detail" v-show="detail"></order-detail>
+			<order-detail ref="detail" :detailObj="detailObj" v-show="detail"></order-detail>
 
 			<order-num v-show="orderNum"></order-num>
 
@@ -34,7 +34,7 @@
 	import Header from '@/pages/layout/header'
 	import OrderDetail from '@/pages/stock/order_detail'
 	import OrderNum from '@/pages/stock/order_num'
-	require('@/assets/js/d9')
+	
 	export default {
 		name :'stock-detail',
 		components:{
@@ -48,6 +48,11 @@
 					title:'入库',
 					hasBack : true
 				}, 
+				detailObj:{
+					title:'入库单信息',
+					btn1 : '扫描入库',
+					btn2 : '再次扫描'
+				},
 				detail : false,
 				orderNum : false
 			}
@@ -86,6 +91,9 @@
 					//失败
 					alert("失败")
 				})
+			},
+			toStock(){
+				mui.toast("入库成功")
 			}
 		}
 	}

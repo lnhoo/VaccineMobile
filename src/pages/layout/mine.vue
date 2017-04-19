@@ -1,5 +1,8 @@
 <template>
-	<div class="page-mine midden-tab" id="allMap">
+	<div class="mine-page">
+		<div class="box">
+			<div class="aaaas" id="allMap"></div>	
+		</div>
 	</div>
 </template>
 <script>
@@ -18,16 +21,6 @@
 					var mk = new BMap.Marker(r.point);
 						map.addOverlay(mk);
 						map.panTo(r.point);
-					
-					var infoWindow = new BMap.InfoWindow("湘A435223<br>温度：27<br>湿度：27",{ 
-						offset : new BMap.Size(0,-25)
-					});    
-						// 创建信息窗口对象
-						map.openInfoWindow(infoWindow,r.point); 
-
-					mk.addEventListener('click',function(){
-						map.openInfoWindow(infoWindow,r.point); 
-					})
 				}
 				else {
 					mui.toast('failed'+this.getStatus());
@@ -38,7 +31,19 @@
 </script>
 
 <style>
-	.maps{
+	.mine-page{
+		position: fixed;
+		top: 75px;
+		left: 0;
+		bottom: 0;
+		right: 0;
+	}
+	.box{
 		height: 100%;
+		width: 100%;
+	}
+	.aaaas{
+		height: 100%;
+		width: 100%;
 	}
 </style>

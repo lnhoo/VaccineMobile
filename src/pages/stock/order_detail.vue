@@ -3,7 +3,7 @@
 		<div class="order-detail-page">
 			<header class="mui-bar mui-bar-nav" style="background-color: rgb(48, 63, 122);padding-top:30px;height:75px;">
 				<a class="mui-icon mui-icon-left-nav mui-pull-left" @click="toggleBack"></a>
-				<p class="mui-title" style="font-weight: normal;color:#fff">{{ headerName }}</p>
+				<p class="mui-title" style="font-weight: normal;color:#fff">{{detailObj.title}}</p>
 				<span class="mui-icon mui-icon-contact mui-pull-right" style="color:#fff;"></span>
 			</header>
 			<div class="device-wrap">
@@ -116,8 +116,8 @@
 				
 			</div>
 			<div class="btn-group">
-				<span class="border-btn" @click="toStock">扫描入库</span>
-				<span class="border-btn gray-btn" @click="againScan">再扫一次</span>
+				<span class="border-btn" @click="toStock">{{detailObj.btn1}}</span>
+				<span class="border-btn gray-btn" @click="againScan">{{detailObj.btn2}}</span>
 			</div>
 		</div>
 	</transition>
@@ -127,12 +127,12 @@
 
 	export default {
 		name :'order-detail-page',
+		props:['detailObj'],
 		components:{
 			"v-header" : Header
 		},
 		data() {
 			return {
-				headerName : '入库详情',
 				devices : []
 			}
 		},
@@ -145,8 +145,8 @@
 				this.$parent.detail = false
 			},
 			toStock(){
-				mui.toast("入库成功")
 				this.$parent.detail = false
+				this.$parent.toStock()
 			},
 			againScan(){
 				this.$parent.detail = false
