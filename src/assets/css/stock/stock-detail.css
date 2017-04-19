@@ -1,6 +1,6 @@
 .stock-detail{
 	background: #303f7a;
-	position: fixed;
+	position: absolute;
 	width: 100%;
     height: 100%;
 	overflow: hidden;
