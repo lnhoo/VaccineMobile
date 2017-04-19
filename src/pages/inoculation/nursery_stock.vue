@@ -8,8 +8,12 @@
 					<!-- <span class="flex-items flex-2">查看全部</span> -->
 				</div>
 				<div class="flex-items-wrap">
-					<div class="stock-list-item"  @tap="switchTab($event,stock.ColdStoreNo)" v-for="(stock,index) in stockList" :class="{active:index==0}">
-						{{stock.ColdStoreName}}
+					<div class="box">
+						<div class="flex">
+							<span class="flex-items stock-list-item"  @tap="switchTab($event,stock.ColdStoreNo)" v-for="(stock,index) in stockList" :class="{active:index==0}">
+								{{stock.ColdStoreName}}
+							</span>
+						</div>	
 					</div>
 				</div>
 				<div class="pop-content">
@@ -109,9 +113,9 @@
 				_self.currentColdNo = coldStoreNo;
 				let flexItems = mui(".stock-list-item")
 				for( let i=0; i<flexItems.length; i++ ){
-					flexItems[i].className = "stock-list-item"
+					flexItems[i].className = "flex-items stock-list-item"
 				}
-				e.target.className = "stock-list-item active"
+				e.target.className = "flex-items stock-list-item active"
 
 				_self.getAccin(coldStoreNo)
 
