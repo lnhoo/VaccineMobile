@@ -34,6 +34,7 @@
 	import Header from '@/pages/layout/header'
 	import OrderDetail from '@/pages/stock/order_detail'
 	import OrderNum from '@/pages/stock/order_num'
+	require('@/assets/js/d9')
 	export default {
 		name :'stock-detail',
 		components:{
