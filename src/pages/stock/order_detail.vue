@@ -27,10 +27,16 @@
 				<div class="order-table">	
 					<table>
 						<tr>
-							<th>批号</th>
+							<th>批&nbsp;&nbsp;号</th>
 							<th>有效期</th>
 							<th>数量</th>
 							<th>已卸车数量</th>
+						</tr>
+						<tr>
+							<td>00123</td>
+							<td>2017-03-31</td>
+							<td>100支</td>
+							<td>2箱</td>
 						</tr>
 						<tr>
 							<td>00123</td>
@@ -126,7 +132,8 @@
 		background: #fff;
 		color:#000;
 		border-radius: 10px;
-		padding: 10px 0;
+		padding: 10px 0 10px 15px;
+		margin-top: 20px;
 	}
 	.order-table table{
 		width: 100%;
@@ -134,7 +141,7 @@
 	}
 	.order-table th{
 		color:#9da2b6;
-		font-size: 14px;
+		font-size: 13px;
 	}
 	.order-table td{
 		padding: 8px 0;
@@ -142,11 +149,11 @@
 	}
 	.btn-group{
 		text-align: center;
-		padding-top: 60px;
+		padding-top: 25px;
 	}
 	.border-btn{
 		display: inline-block;
-		padding: 4px 16px;
+		padding: 12px 22px;
 		border: 1px solid #1c94f1;
     	color: #1c94f1;
 		border-radius: 16px;
