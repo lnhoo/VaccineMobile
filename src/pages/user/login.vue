@@ -14,7 +14,6 @@
 	</div>
 </template>
 <script>
-	require('@/assets/js/d9')
 	let md5 = require("@/assets/js/md5")
     export default {
     	name: 'page-login',
