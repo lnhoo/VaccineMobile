@@ -38,7 +38,7 @@
 					</div>
 				</div>
 			</div>
-			<transition name="move">
+			<transition name="silder">
 				<v-detail v-show="detail"></v-detail>
 			</transition>
 		</div>
