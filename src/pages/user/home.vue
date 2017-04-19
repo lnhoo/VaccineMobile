@@ -42,7 +42,8 @@
 	import seedlings from '@/pages/layout/seedlings'
 	import message from '@/pages/layout/message'
 	import mine from '@/pages/layout/mine'
-    
+    require('@/assets/js/mui.pullToRefresh')
+	require('@/assets/js/mui.pullToRefresh.material')
     export default {
     	name: 'page-home',
     	components :{
