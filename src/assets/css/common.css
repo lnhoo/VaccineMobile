@@ -39,6 +39,17 @@ html,body{
 	transform:translate3d(100%,0,0);
 } 
 
+.silder-enter-avtive,
+.silder-leave-active{
+	-webkit-transform:translate3d(0,0,0);
+	transform:translate3d(0,0,0);
+}
+.silder-enter,
+.silder-leave-active{
+	-webkit-transform:translate3d(0,100%,0);
+	transform:translate3d(0,100%,0);
+} 
+
 .midden-tab{
 	position: absolute;
 	top:75px;
