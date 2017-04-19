@@ -26,12 +26,9 @@
 		<!--我的 end-->
 		
 		<v-tabber :tabberName="tabberName"></v-tabber>
-		
-		<transition name="move">
-			<div :class="{'home-router-active':homeRouter}" class="home-router" v-show="homeRouter">
-				<router-view></router-view>	
-			</div>
-		</transition>
+
+		<router-view></router-view>	
+
 	</div>
 </template>
 
@@ -88,7 +85,6 @@
            		}
            		if(flag){
            			mui.toast("有该权限")
-       				this.homeRouter = !this.homeRouter
        				this.$router.push({path:url})
            		}else{
            			// 不存在该权限
@@ -108,20 +104,5 @@
     }
 </script>
 <style >
-	.home-router{
-		height:100%;
-		width:100%;
-		background:transparent;
-		position:absolute;
-		left:0;
-		top:0;
-		-webkit-transform:translate3d(100%,0,0);
-		transform:translate3d(100%,0,0);
-	}
-	.home-router-active{
-		-webkit-transition:all .3s ease;
-		transition:all .3s ease;
-		-webkit-transform:translate3d(0,0,0);
-		transform:translate3d(0,0,0);
-	}
+	
 </style>
