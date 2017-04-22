@@ -183,6 +183,9 @@
 		padding-bottom: 20px;
 		padding: 10px;
 	}
+	.device-wrap .flex-items{
+		line-height: 22px;
+	}
 	.device-wrap .flex{
 		padding: 10px 0;
 		padding-right: 5px;

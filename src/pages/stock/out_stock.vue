@@ -4,23 +4,25 @@
 			<v-header :headerObj="headerObj"></v-header>
 			<div class="stock-in">
 				<img src="../../assets/images/b1.png" width="100%" alt="">
-				<div class="flex">
-					<span class="flex-items" @click="unload">
-					<img src="../../assets/images/b2.png" alt="" width="40"><br>
-					扫描装车车
-					</span>
-					<span class="flex-items" @click="scanStorage">
-					<img src="../../assets/images/b3.png" alt="" width="40"><br>
-					扫描出库
-					</span>
-				</div>
+				<div class="sub-div">
+					<div class="flex">
+						<span class="flex-items" @click="unload">
+						<img src="../../assets/images/b2.png" alt="" width="40"><br>
+						扫描装车车
+						</span>
+						<span class="flex-items" @click="scanStorage">
+						<img src="../../assets/images/b3.png" alt="" width="40"><br>
+						扫描出库
+						</span>
+					</div>
 
-				<div class="chosee-order" @click="chooseOrder">
-					<img src="../../assets/images/b4.png" alt="" width="40"><br>
-					选单号出库
-				</div>
+					<div class="chosee-order" @click="chooseOrder">
+						<img src="../../assets/images/b4.png" alt="" width="40"><br>
+						选单号出库
+					</div>
 
-				<span class="text-desc">温馨提示：扫描时要对准单号</span>
+					<span class="text-desc">温馨提示：扫描时要对准单号</span>
+				</div>
 			</div>
 
 			<order-detail ref="detail" :detailObj="detailObj" v-show="detail"></order-detail>
@@ -115,22 +117,26 @@
 		width: 100%;
 		bottom: 0;
 		overflow: hidden;
-		padding: 10px;
 		color:#fff;
 	}
 	.stock-in .flex-items{
 		background: #5160b3;
+		display: inline-block;
 		text-align: center;
-		padding: 40px;
+		width: 48%;
+		padding: 32px;
+	}
+	.stock-in .sub-div{
+		padding: 10px;
 	}
 	.stock-in .flex-items:nth-child(1){
-		margin-right: 10px;
+		margin-right: 2%;
 	} 
 	.chosee-order{
 		background: #5160b3;
 		text-align: center;
 		margin-top: 10px;
-		padding: 40px;
+		padding: 32px;
 	}
 	.text-desc{
 		margin:20px auto;

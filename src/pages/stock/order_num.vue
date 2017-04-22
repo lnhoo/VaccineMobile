@@ -18,8 +18,8 @@
 						</div>
 					</div>
 					<div class="content-footer flex">
-						<span class="flex-items" @click="closeMask">取消</span>
-						<span class="flex-items" @click="submit">确定</span>
+						<span class="float-span" @click="closeMask">取消</span>
+						<span class="float-span" @click="submit">确定</span>
 					</div>	
 				</div>
 			</div>
