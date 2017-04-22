@@ -129,25 +129,21 @@
 				// 百度地图API功能
 				_self.map = new BMap.Map("myLocation");
 				_self.map.centerAndZoom("北京",12);
-				var geolocation = new BMap.Geolocation();
-				geolocation.getCurrentPosition(function(r){
-					if(this.getStatus() == BMAP_STATUS_SUCCESS){
-						var mk = new BMap.Marker(r.point);
-						_self.map.addOverlay(mk);
-						_self.map.panTo(r.point);
-						var infoWindow = new BMap.InfoWindow("湘A435223<br>温度：27<br>湿度：27", { 
-							offset : new BMap.Size(0,-25)
-						});    // 创建信息窗口对象
-						_self.map.openInfoWindow(infoWindow,r.point); 
-
-						mk.addEventListener('click',function(){
-							_self.map.openInfoWindow(infoWindow,r.point); 
-						})
-					}
-					else {
-						alert('failed'+this.getStatus());
-					}        
-				},{enableHighAccuracy: true})
+				plus.geolocation.getCurrentPosition( function ( p ) {
+					var lo = new BMap.Point(p.coords.longitude,p.coords.latitude);
+					var mk = new BMap.Marker( lo );
+					_self.map.addOverlay( mk );
+					_self.map.panTo( lo );
+					var infoWindow = new BMap.InfoWindow("湘A435223<br>温度：27<br>湿度：27", { 
+						offset : new BMap.Size(0,-25)
+					});    // 创建信息窗口对象
+					_self.map.openInfoWindow(infoWindow,lo); 
+					mk.addEventListener('click',function(){
+						_self.map.openInfoWindow( infoWindow,lo ); 
+					})
+				}, function ( e ) {
+					mui.toast( "Geolocation error: " + e.message );
+				} );	
 			}
 		}
 	}

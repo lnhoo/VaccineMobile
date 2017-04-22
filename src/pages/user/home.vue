@@ -1,26 +1,25 @@
 <template>
-	<div class="page-home">
-		<v-header :headerObj="headerObj"></v-header>				
-		<!--首页 begin-->
-		<v-home  v-show="home"></v-home>	
-		<!--首页 end-->
-		
-		<!--消息 begin-->
-		<v-message v-show="message"></v-message>	
-		<!--消息 end-->
+	<div>
+			<v-header :headerObj="headerObj"></v-header>				
+			<!--首页 begin-->
+			<v-home  v-show="home"></v-home>	
+			<!--首页 end-->
 			
-		<!--育苗 begin-->
-		<v-seedlings v-show="seedlings"></v-seedlings>	
-		<!--育苗 end-->
-		
-		<!--我的 begin-->
-		<v-mine v-show="mine"></v-mine>	
-		<!--我的 end-->
-		
-		<v-tabber :tabberName="tabberName"></v-tabber>
+			<!--消息 begin-->
+			<v-message v-show="message"></v-message>	
+			<!--消息 end-->
+				
+			<!--育苗 begin-->
+			<v-seedlings v-show="seedlings"></v-seedlings>	
+			<!--育苗 end-->
+			
+			<!--我的 begin-->
+			<v-mine v-show="mine" ref="mylocation"></v-mine>	
+			<!--我的 end-->
+			
+			<v-tabber :tabberName="tabberName"></v-tabber>
 
-		<router-view></router-view>	
-
+			<router-view></router-view>		
 	</div>
 </template>
 
@@ -61,7 +60,6 @@
 		mounted(){
 			// 获取用户菜单权限集合
 			this.codeList = JSON.parse(localStorage.getItem("codeList"))
-
 		},
 		methods : {
            	goPage( url,obj ) {
@@ -89,11 +87,15 @@
            			tab == type ? self[type] = true : self[tab] = false
            		})
            		this.headerObj.title = tabName
+				if(this.mine){
+           		 	this.$refs.mylocation.initMap()
+           	    }else{
+           	    	this.$refs.mylocation.hideMap()
+           	    }
            	}
-           	
 		}
     }
 </script>
 <style >
-	
+
 </style>

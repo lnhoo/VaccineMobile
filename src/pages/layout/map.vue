@@ -19,29 +19,25 @@
 			}
 		},
 		mounted() {
-			// 百度地图API功能
-			var map = new BMap.Map("allmap");
-			var point = new BMap.Point(116.39131928,39.90793074);
-			map.centerAndZoom(point,12);
-			var geolocation = new BMap.Geolocation();
-			geolocation.getCurrentPosition(function(r){
-				if(this.getStatus() == BMAP_STATUS_SUCCESS){
-					var mk = new BMap.Marker(r.point);
-					map.addOverlay(mk);
-					map.panTo(r.point);
-					alert('您的位置：'+r.point.lng+','+r.point.lat);
-				}
-				else {
-					alert('failed'+this.getStatus());
-				}        
-			},{enableHighAccuracy: true})
+			var map = null;
+			var pcenter = new plus.maps.Point(116.3975,39.9074);
+			setTimeout(function(){
+				map=new plus.maps.Map("allmap");
+				map.centerAndZoom(pcenter,15);
+				map.showUserLocation( true );
+				map.getUserLocation(function(state,pos){
+					if(0==state){
+						map.setCenter(pos);
+					}
+				});
+			},300);	
 		}
 	}
 </script>
 <style scoped="scoped">
 	#allmap{
 		position: absolute;
-		top:40px;
+		top:0;
 		left: 0;
 		right: 0;
 		bottom: 0;

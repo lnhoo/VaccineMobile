@@ -14,18 +14,19 @@
 	    mounted() {
 	    	let map = new BMap.Map("allMap");
 	    	var point = new BMap.Point(116.331398,39.897445);
-				map.centerAndZoom(point,15);
-			var geolocation = new BMap.Geolocation();
-			geolocation.getCurrentPosition(function(r){
-				if(this.getStatus() == BMAP_STATUS_SUCCESS){
-					var mk = new BMap.Marker(r.point);
-						map.addOverlay(mk);
-						map.panTo(r.point);
-				}
-				else {
-					mui.toast('failed'+this.getStatus());
-				}        
-			},{enableHighAccuracy: true})	
+				map.centerAndZoom(point,12);
+			plus.geolocation.getCurrentPosition( function ( p ) {
+				var lo = new BMap.Point(p.coords.longitude,p.coords.latitude);
+				var mk = new BMap.Marker( lo );
+					map.addOverlay( mk );
+					map.panTo( lo );
+					var infoWindow = new BMap.InfoWindow("我的位置", { 
+						offset : new BMap.Size(0,-25)
+					});    // 创建信息窗口对象
+					map.openInfoWindow(infoWindow,lo); 
+			}, function ( e ) {
+				mui.toast( "Geolocation error: " + e.message );
+			} );	
 	    }
 	}
 </script>

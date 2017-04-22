@@ -1,27 +1,16 @@
 <template>
-	<div class="midden-tab home-page">
-	    <div id="mui-slider" class="mui-slider" >
+	<div class="home-index">
+	    <div class="mui-slider home-slider" >
 			<div class="mui-slider-group mui-slider-loop">
-				<div class="mui-slider-item mui-slider-item-duplicate">
-					<a href="#"><img class="sliderImg" src="../../assets/images/banner.jpg"></a>
+				<div class="mui-slider-item">
+					<a href="javascript:;"><img class="sliderImg" src="../../assets/images/banner.jpg"></a>
 				</div>
 				<div class="mui-slider-item">
-					<a href="#"><img class="sliderImg" src="../../assets/images/banner.jpg"></a>
+					<a  href="javascript:;"><img class="sliderImg" src="../../assets/images/b1.png"></a>
 				</div>
 				<div class="mui-slider-item">
-					<a href="#"><img class="sliderImg" src="../../assets/images/banner.jpg"></a>
+					<a  href="javascript:;"><img class="sliderImg" src="../../assets/images/bg.jpg"></a>
 				</div>
-				<div class="mui-slider-item">
-					<a href="#"><img class="sliderImg" src="../../assets/images/banner.jpg"></a>
-				</div>
-				<div class="mui-slider-item mui-slider-item-duplicate">
-					<a href="#"><img class="sliderImg" src="../../assets/images/banner.jpg"></a>
-				</div>
-			</div>
-			<div class="mui-slider-indicator">
-				<div class="mui-indicator mui-active"></div>
-				<div class="mui-indicator"></div>
-				<div class="mui-indicator"></div>
 			</div>
 		</div>
 	    <div id="divMenu">
@@ -62,7 +51,6 @@
 		                <img src="../../assets/images/j27.png" class="img2"/>
 		            </a>
 		        </li>
-
 		    </ul>
         </div>
 	</div>
@@ -76,7 +64,7 @@
 		},
 		mounted(){
 			//获得slider插件对象
-			mui('.home-page .mui-slider').slider({ interval:2000 });
+			mui('.home-index .home-slider').slider();
 		},
 		methods : {
            	goPage( url,obj ) {

@@ -10,6 +10,10 @@
 					<li class="mui-table-view-cell"  @click="showJDCode">
 						九鼎二维码
 					</li>
+					<li class="mui-table-view-cell"  @click="goMap">
+						百度定位
+					</li>
+
 					<li class="mui-table-view-cell">
 						第一个选项卡子项-2
 					</li>
@@ -70,15 +74,23 @@
 				</ul>
 			</div>
 		</div>
+
+		<div v-show="showMap" style="position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;z-index:9999" id="map">地图加载中...</div>
 	</div>
 </template>
 <script>
 	export default {
 		name : 'page-message',
+		data(){
+			return {
+				showMap:false
+			}
+		},
 		mounted() {
 			mui('.mui-scroll-wrapper').scroll({
 				indicators: true //是否显示滚动条
 			});
+
 		},
 		methods :{
 			getImage() {
@@ -111,11 +123,11 @@
 
 				mui.toast(entry);
 			},
-			callMap() {
-				this.$router.push('map')
-			},
 			scanImg() {
 				this.$router.push('barcode')
+			},
+			goMap(){
+				this.$router.push('map')
 			},
 			showJDCode() {
 				mui.toast("d9")

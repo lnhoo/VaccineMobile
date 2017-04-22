@@ -4,7 +4,7 @@
 			<v-header :headerObj="headerObj"></v-header>
 			<div class="nursery-content" v-show="hasData">
 				<div class="flex">
-					<span class="flex-items flex-1"><i></i><b>库房育苗信息</b></span>
+					<span class="flex-items flex-1" style="width:100%;padding:11px 0;"><i></i><b>库房疫苗信息</b></span>
 					<!-- <span class="flex-items flex-2">查看全部</span> -->
 				</div>
 				<div class="flex-items-wrap">
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 
-			<div v-if="noData" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#fff;">
+			<div v-if="noData" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#303f7a;">
 				<div class="ds-table">
 					<div class="ds-tell"><span class="mui-spinner"></span></div>
 				</div>

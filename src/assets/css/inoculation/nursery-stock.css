@@ -24,8 +24,10 @@
 }
 .page-nursery .flex-items{
 	text-align: center;
+	display: inline-block;
+	width: 31%;
 	padding: 6px 0;
-	margin: 6px;
+	margin-right: 2%;
 	font-size: 12px;
 }
 .page-nursery .flex-1{
@@ -42,7 +44,6 @@
 	float: left;
 	margin-right: 5px; 
 	margin-top: 2px;
-	margin-left: -5px;
 	width: 2px;
 	height: 17px;
 	background: #fff;

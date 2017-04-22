@@ -150,11 +150,13 @@
     -webkit-box-shadow: 1px 3px 4px #c8c7cc;
     -box-shadow: 1px 3px 4px #c8c7cc;
 }
-.content-footer .flex-items{
+.content-footer .float-span{
+    float: left;
+    width: 50%;
     line-height: 40px;
     color:#fff;
 } 
-.content-footer .flex-items:nth-child(1){
+.content-footer .float-span:nth-child(1){
     background: #FFFFFF;
     color:#000;
 }

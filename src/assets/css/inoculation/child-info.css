@@ -3,11 +3,10 @@
 	width: 100%;
 	position: absolute;
 	overflow: hidden;
-	-webkit-transition:all .6s ease;
-	transition:all .6s ease;
+	-webkit-transition:all .3s ease;
+	transition:all .3s ease;
 	background: #303f7a;
 	font-size: 12px;
-	background: #303f7a;
 }
 .child-info-box{
 	position: fixed;

@@ -1,13 +1,10 @@
-.page-home{
-	background: transparent;
-	position: fixed;
-	top:0;
-	left:0;
-	right:0;
-	bottom: 40px;
-	overflow: hidden;
+.home-index{
+	position: absolute;
+	top:75px;
+	width: 100%;
+	bottom: 45px;
 	overflow-y: auto;
-} 
+}
 .title-img{width: 28px;}
 .sliderImg{height: 180px;}
 .shye_ul{ padding:10px;}

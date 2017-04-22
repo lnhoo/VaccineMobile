@@ -48,3 +48,6 @@
 .mui-fullscreen{
 	background: #fff;
 }
+.mui-fullscreen .mui-segmented-control ~ .mui-slider-group{
+	top:38px;
+}
