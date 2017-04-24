@@ -33,7 +33,14 @@ export default new Router({
         {
             path: 'in-stock',
             name: 'inStock',
-            component: resolve => require(['@/pages/stock/in_stock'], resolve)
+            component: resolve => require(['@/pages/stock/in_stock'], resolve),
+            children : [
+                {
+                  path: 'barcode',
+                  name: 'barcode',
+                  component: resolve => require(['@/pages/layout/barcode'], resolve)
+                }
+            ]
         },
         {
             path: 'out-stock',
@@ -66,11 +73,6 @@ export default new Router({
       path: '/map',
       name: 'map',
       component: resolve => require(['@/pages/layout/map'], resolve)
-    },
-    {
-      path: '/barcode',
-      name: 'barcode',
-      component: resolve => require(['@/pages/layout/barcode'], resolve)
     }
   ]
 })
