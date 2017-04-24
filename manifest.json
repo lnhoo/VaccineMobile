@@ -17,8 +17,6 @@
 		"url": "http://www.dcloud.io"
 	},
 	"permissions": {
-		
-        
         "Cache": {
             "description": "管理应用缓存"
         },
@@ -37,8 +35,9 @@
         "File": {
             "description": "访问本地文件系统"
         },
-        
-        
+        "Geolocation": {
+			"description": "位置信息"
+		},
          "Invocation": {
             "description": "使用Native.js能力"
         },
