@@ -6,14 +6,14 @@
 				<img src="../../assets/images/b1.png" width="100%" alt="">
 				<div class="sub-div">
 					<div class="flex">
-						<span class="flex-items" @click="unload">
+						<a class="flex-items" @click="unload">
 							<img src="../../assets/images/b2.png" alt="" width="40"><br>
 							扫描卸车
-						</span>
-						<span class="flex-items" @click="scanStorage">
+						</a>
+						<a  class="flex-items" @click="showAction">
 						<img src="../../assets/images/b3.png" alt="" width="40"><br>
 						扫描入库
-						</span>
+						</a>
 					</div>
 
 					<div class="chosee-order" @click="chooseOrder">
@@ -29,6 +29,16 @@
 
 			<order-num v-show="orderNum"></order-num>
 
+			<div class="custom-action-sheet" :class="{'select':selected}">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" @click="scanStorage">二维码</li>
+					<li class="mui-table-view-cell" @click="scanTXM">条形码</li>
+					<li class="mui-table-view-cell" @click="hideMask"><b>取消</b></li>
+				</ul>
+			</div>
+			<div class="mui-backdrop" :class="{'show-drop':selected}" @click="hideMask"></div>
+
+			<router-view></router-view>		
 		</div>
 	</transition>
 </template>
@@ -44,6 +54,9 @@
 			"order-detail" : OrderDetail,
 			"order-num" : OrderNum
 		},
+		mounted(){
+		
+		},
 		data() {
 			return {
 				headerObj :{
@@ -56,6 +69,7 @@
 					btn2 : '再次扫描'
 				},
 				detail : false,
+				selected:false,
 				orderNum : false
 			}
 		},
@@ -80,6 +94,13 @@
 					mui.toast("失败")
 				})
 			},
+			scanTXM(){
+				this.selected = !this.selected
+				this.$router.push('/home/in-stock/barcode')
+			},
+			showAction(){
+				this.selected = !this.selected
+			},
 			unload(){
 				let _self = this;
 				var content = plus.android.runtimeMainActivity();
@@ -93,6 +114,9 @@
 			},
 			toStock(){
 				mui.toast("入库成功")
+			},
+			hideMask(){
+				this.selected = false
 			}
 		}
 	}
@@ -107,6 +131,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
+		overflow: hidden;
 	}
 	.stock-in{
 		position: absolute;
@@ -141,5 +166,27 @@
 		text-align: center; 
 		color:#a7b0f6;
 		font-size: 12px;
+	}
+	.custom-action-sheet{
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: auto;
+		z-index: 999;
+		text-align: center;
+		-webkit-transition: -webkit-transform .3s;
+		transition: transform .3s;
+	    -webkit-transform: translate3d(0,100%,0);
+	    transform: translate3d(0,100%,0);
+	}
+	.select{
+		-webkit-transform: translate3d(0,0,0);
+	    transform: translate3d(0,0,0);
+	}
+	.mui-backdrop{
+		display: none;
+	}
+	.show-drop{
+		display: block;
 	}
 </style>
