@@ -2308,7 +2308,7 @@ input[type='submit']:enabled:active, input[type='submit'].mui-active:enabled,
 }
 .mui-table-view-cell > a:not(.mui-btn).mui-active
 {
-    background-color: #eee;
+    background-color: transparent;
 }
 .mui-table-view-cell p
 {

@@ -1,148 +1,182 @@
 <template>
-	<transition name="move" v-on:after-leave="leave">
-		<div class="stock-detail">
+	<transition name="move">
+		<div class="order-num">
 			<v-header :headerObj="headerObj"></v-header>
-			<div class="stock-in">
-				<img src="../../assets/images/b1.png" width="100%" alt="">
-				<div class="sub-div">
-					<div class="flex">
-						<span class="flex-items" @click="unload">
-						<img src="../../assets/images/b2.png" alt="" width="40"><br>
-						扫描装车车
-						</span>
-						<span class="flex-items" @click="scanStorage">
-						<img src="../../assets/images/b3.png" alt="" width="40"><br>
-						扫描出库
-						</span>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
+					<a class="mui-navigate-right" href="javascript:;">{{batch.BatchNo}}</a>
+					<div class="mui-collapse-content">
+						<div class="flex pd10">
+							<span class="flex-items">出库单号</span>
+							<span class="flex-items text-r">{{batch.RecipeNo}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">疫苗名称</span>
+							<span class="flex-items text-r">{{batch.VaccineName}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">生产企业</span>
+							<span class="flex-items text-r">{{batch.ManufactureName}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">接收单位</span>
+							<span class="flex-items text-r">{{batch.RevOrgName}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">出库总数量</span>
+							<span class="flex-items text-r">{{batch.Number}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">已出库数量</span>
+							<span class="flex-items text-r">{{batch.OutStorageNumber}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">有效期</span>
+							<span class="flex-items text-r">{{batch.ShelfLife}}</span>
+						</div>
+						<div class="mui-button-row pd10">
+							<button class="mui-btn mui-btn-primary" type="button"  @click="directStorage(batch)">直接出库</button>&nbsp;&nbsp;
+							<button class="mui-btn mui-btn-primary" type="button"  @click="codeOutStorage(batch.SerialNo)">扫码出库</button>&nbsp;&nbsp;
+							<button class="mui-btn mui-btn-primary" type="button"  @click="codeOutCar(batch.SerialNo)">扫码卸车</button>
+						</div>
 					</div>
-
-					<div class="chosee-order" @click="chooseOrder">
-						<img src="../../assets/images/b4.png" alt="" width="40"><br>
-						选单号出库
-					</div>
-
-					<span class="text-desc">温馨提示：扫描时要对准单号</span>
-				</div>
-			</div>
-
-			<order-detail ref="detail" :detailObj="detailObj" v-show="detail"></order-detail>
-
-			<order-num v-show="orderNum"></order-num>
-
+				</li>
+			</ul>
+			<router-view></router-view>
 		</div>
 	</transition>
 </template>
 <script type="text/javascript">
 	import Header from '@/pages/layout/header'
-	import OrderDetail from '@/pages/stock/order_detail'
-	import OrderNum from '@/pages/stock/order_num'
-	
 	export default {
-		name :'stock-detail',
+		name :'order-num',
 		components:{
-			"v-header" : Header,
-			"order-detail" : OrderDetail,
-			"order-num" : OrderNum
+			"v-header" : Header
 		},
 		data() {
 			return {
 				headerObj :{
-					title:'出库',
+					title:'批次单号列表',
 					hasBack : true
-				}, 
-				detailObj:{
-					title:'出库单信息',
-					btn1 : '扫描出库',
-					btn2 : '再次扫描'
 				},
-				detail : false,
-				orderNum : false
+				batchList:[]
 			}
 		},
+		mounted(){
+			let _self = this;
+			mui.ajax({
+                type: "POST",
+                contentType:"application/json; charset=utf-8",
+                url : localStorage.getItem("http"),
+                data: {
+	        	 	strRequest:'{\
+	        	 		"Request":{\
+	        	 			"Header":{\
+	            	 			"AppCode":"01",\
+	            	 			"AppTypeCode":"01",\
+	            	 			"FunCode":"0015",\
+	            	 			"ResponseFormat":"2"\
+	            	 		},"Body":{\
+	            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
+	            	 			"RecipeNo":"",\
+	            	 			"BatchNo":"",\
+	            	 			"Page":1,\
+	            	 			"PageSize":200,\
+	            	 			"Status":1\
+	            	 		}\
+	            	 	}\
+	        	 	}',
+	        	 	RequestFormat:2
+	        	},
+                dataType:'json',
+                success:function(result){
+                	let req = JSON.parse(result.d)
+                	if(req.Response.Header.ResultCode=="1"){
+                		mui.toast(req.Response.Header.ResultMsg)           	
+                	}else{
+                		let items = req.Response.Body.Items;
+                		console.log(items)
+                		if(items){
+                			let batch = items.Item
+	                		if(!(batch instanceof Array)){
+	                			_self.batchList.push( batch )
+	                		}else{
+	                			_self.batchList = batch
+	                		}
+                		}else{
+                			_self.hasData  = false
+                			_self.noData = true
+                		}
+                	}
+                },
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					mui.toast(type);
+				}
+            });
+		},
 		methods : {
-			leave() {
-				this.$parent.homeRouter = false
+			directStorage( batch ) {
+				this.$router.push({
+					path : "/home/out-stock/stock-list",
+					query:{
+						batchNo : batch.BatchNo,
+						productCode : batch.ProductCode,
+						serialNo : batch.SerialNo,
+						shelfLife : batch.ShelfLife
+					}
+				})
 			},
-			outStock() {
-				this.$router.push('/home/out-stock')
-			},
-			chooseOrder(){
-				this.orderNum = true;
-			},
-			scanStorage() {
+			codeOutStorage() {
 				let _self = this;
 				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					//成功
-					console.log(result);
-					_self.detail = true;
+					mui.toast("入库成功");
 				}, function(result) {
 					//失败
-					alert("失败")
+					mui.toast("失败")
 				})
 			},
-			unload(){
+			codeOutCar() {
 				let _self = this;
-				var content = plus.android.runtimeMainActivity();
+				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					//成功
-					//alert("成功："+result)
-					_self.detail = true;
-					
+					mui.toast("卸车成功");
 				}, function(result) {
 					//失败
-					alert("失败")
+					mui.toast("失败")
 				})
-			},
-			toStock(){
-				mui.toast("出库成功")
 			}
 		}
 	}
 </script>
-<style>
-	.stock-detail{
+<style scoped>
+	.order-num{
 		height: 100%;
 		width: 100%;
 		background: #303f7a;
-		-webkit-transition:all .6s ease;
-		transition:all .6s ease;
 		position: absolute;
-		top: 0;
-		left: 0;
+		color:#fff;
+		-webkit-transition:all .3s ease;
+ 		transition:all .3s ease;
 	}
-	.stock-in{
+	.order-num .mui-table-view{
 		position: absolute;
 		top:75px;
-		width: 100%;
 		bottom: 0;
-		overflow: hidden;
-		color:#fff;
+		left:0;
+		right: 0;
+		background: #303f7a;
 	}
-	.stock-in .flex-items{
-		background: #5160b3;
-		display: inline-block;
-		text-align: center;
-		width: 48%;
-		padding: 32px;
-	}
-	.stock-in .sub-div{
-		padding: 10px;
-	}
-	.stock-in .flex-items:nth-child(1){
-		margin-right: 2%;
-	} 
-	.chosee-order{
-		background: #5160b3;
-		text-align: center;
-		margin-top: 10px;
-		padding: 32px;
-	}
-	.text-desc{
-		margin:20px auto;
-		display: block;
-		text-align: center; 
-		color:#a7b0f6;
+	.order-num .mui-collapse-content .flex-items{
 		font-size: 12px;
+	}
+	.order-num .mui-table-view-cell.mui-active{
+		background: transparent;
+	}
+	.order-num .mui-table-view-cell.mui-collapse .mui-collapse-content{
+		background: transparent;
 	}
 </style>

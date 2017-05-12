@@ -16,7 +16,14 @@ export default new Router({
         {   
             path: 'nursery-stock', 
             name : 'nurseryStock',
-            component: resolve => require(['@/pages/inoculation/nursery_stock'], resolve)
+            component: resolve => require(['@/pages/inoculation/nursery_stock'], resolve),
+            children : [
+                {
+                    path: 'stock-detail',
+                    name: 'stockDetail',
+                    component: resolve => require(['@/pages/inoculation/stock_detail'], resolve) 
+                }
+            ]
         },
         {   
             path: 'cold-chain', 
@@ -39,13 +46,25 @@ export default new Router({
                   path: 'barcode',
                   name: 'barcode',
                   component: resolve => require(['@/pages/layout/barcode'], resolve)
+                },
+                {
+                  path: 'cold-list',
+                  name: 'coldList',
+                  component: resolve => require(['@/pages/stock/cold_list'], resolve)
                 }
             ]
         },
         {
             path: 'out-stock',
             name: 'outStock',
-            component: resolve => require(['@/pages/stock/out_stock'], resolve)
+            component: resolve => require(['@/pages/stock/out_stock'], resolve),
+            children : [
+                {
+                  path: 'stock-list',
+                  name: 'stockList',
+                  component: resolve => require(['@/pages/stock/stock_list'], resolve)
+                }
+            ]
         },
         {
             path: 'vehicleline',

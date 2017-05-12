@@ -5,6 +5,7 @@ import App from './App'
 import '@/assets/css/common'
 
 Vue.config.productionTip = false
+
 window.mui=mui
 
 mui.init()
@@ -21,7 +22,7 @@ mui.plusReady(function(){
 		mui.toast("网络异常，请检查网络设置！")
 	}
 })
-// 扩展API加载完毕后调用onPlusReady回调函数 
+/*// 扩展API加载完毕后调用onPlusReady回调函数 
 document.addEventListener("plusready", onPlusReady, false); 
 
 function onPlusReady(){
@@ -31,7 +32,7 @@ function onPlusReady(){
 function onAppPause(){
     mui.toast("程序切换到后台"); 
 }
-
+*/
 if(process.env.NODE_ENV==="development"){
 	require('@/assets/css/mui.css') 
 }

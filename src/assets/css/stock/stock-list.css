@@ -83,3 +83,6 @@
     height: 0;
     overflow: hidden;
 }
+.mui-table-view-cell > a:not(.mui-btn) {
+    background: red;
+}

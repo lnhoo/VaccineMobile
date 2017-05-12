@@ -65,6 +65,9 @@
 	                		localStorage.setItem("customerCode",req.Response.Body.CustomerCode);
 
 	                		localStorage.setItem("customerName",req.Response.Body.CustomerName);
+
+	                		localStorage.setItem("userName",req.Response.Body.UserName);
+
 	                		// 权限列表
 	                		localStorage.setItem("codeList",JSON.stringify(codeList));
 

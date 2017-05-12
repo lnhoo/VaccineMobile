@@ -76,6 +76,7 @@
                 		let items = req.Response.Body.Items;
                 		if(items){
                 			let devices = items.Item
+                			console.log(devices)
 	                		if(!(devices instanceof Array)){
 	                			_self.devices.push( devices )
 	                		}else{
@@ -92,7 +93,7 @@
                 },
 				error:function(xhr,type,errorThrown){
 					//异常处理；
-					alert(type);
+					mui.toast(type);
 				}
             });
 		},
@@ -171,6 +172,8 @@
 					        	lineColor : '#DC4FD3', 
 					        	max : '最高温度',
 					        	mix : '最低温度',
+					        	maxValue: device.MaxTemperature,
+					        	minValue: device.MinTemperature,
 					        	xData : StrCollectTime,
 					        	data : Temperature
 					        })
@@ -180,6 +183,8 @@
 					        	text : '湿度℃',
 					        	max : '最高湿度',
 					        	mix : '最低湿度',
+					        	maxValue: device.MaxHumidity,
+					        	minValue: device.MinHumidity,
 					        	lineColor : '#50E8ED', 
 					        	xData : StrCollectTime,
 					        	data : Humidity
@@ -188,12 +193,14 @@
 	                },
 					error:function(xhr,type,errorThrown){
 						//异常处理；
-						alert(type);
+						mui.toast(type);
 					}
 	            });
 			},
 			initEcharts(options) {
 		        var echart = echarts.init(document.getElementById(options.id));
+		        console.log(options.maxValue)
+		        console.log(options.minValue)
 		        var option = {
 		            title: {
 		                text: options.text,
@@ -216,24 +223,34 @@
 		            yAxis: {
                         splitLine:{  
                     		show:false  
-                    	}  
+                    	},
+                    	max: Math.floor(options.maxValue) + 3
 				    },
 		            series: [{
 		                name: options.text,
 		                type: 'line',
 		                markLine: {
+		                	itemStyle : {
+		                		normal : { lineStyle:{ type:'dashed',color:options.lineColor,width:'1'}}
+		                	},
 		                    data: [
-		                    	{type: 'max', name: options.max,lineStyle:{
+		                    	{
+		                    		name: options.max,
+		                    		lineStyle:{
 		                    			normal:{
-				                			color:"#F4599C"
+		                    				lineStyle : {type:'dashed',width:'1'}
 				                		}
-		                    		}
+		                    		},
+		                    		yAxis:options.maxValue
 		                    	},
-		                    	{type: 'min', name: options.mix,lineStyle:{
+		                    	{
+		                    		name: options.mix,
+		                    		lineStyle:{
 		                    			normal:{
-				                			color:"#1588D2"
+		                    				lineStyle : {type:'dashed',width:'1'}
 				                		}
-		                    		}
+		                    		},
+		                    		yAxis:options.minValue
 		                    	}
 		                    ]
 		                },
