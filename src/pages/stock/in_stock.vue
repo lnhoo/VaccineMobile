@@ -4,7 +4,7 @@
 			<v-header :headerObj="headerObj"></v-header>
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
-					<a class="mui-navigate-right" href="javascript:;">{{batch.BatchNo}}</a>
+					<a class="mui-navigate-right" href="javascript:;">{{batch.VaccineName}}&nbsp;&nbsp;{{batch.BatchNo}}</a>
 					<div class="mui-collapse-content">
 						<div class="flex pd10">
 							<span class="flex-items">入库单号</span>
@@ -35,7 +35,7 @@
 							<span class="flex-items text-r">{{batch.ShelfLife}}</span>
 						</div>
 						<div class="mui-button-row pd10">
-							<button class="mui-btn mui-btn-primary" type="button" @click="directStorage(batch.SerialNo)">直接入库</button>&nbsp;&nbsp;
+							<button class="mui-btn mui-btn-primary" type="button" @click="directStorage(batch,index)">直接入库</button>&nbsp;&nbsp;
 							<button class="mui-btn mui-btn-primary" type="button" @click="codeInStorage(batch.SerialNo)">扫码入库</button>&nbsp;&nbsp;
 							<button class="mui-btn mui-btn-primary" type="button" @click="codeInCar(batch.SerialNo)">扫码卸货</button>
 						</div>
@@ -56,10 +56,11 @@
 		data() {
 			return {
 				headerObj :{
-					title:'入库批次号列表',
+					title:'疫苗入库批号列表',
 					hasBack : true
 				},
-				batchList:[]
+				batchList:[],
+				idx : 0
 			}
 		},
 		mounted(){
@@ -117,10 +118,14 @@
 	            });
 			},
 			// 直接入库 recipeNo入库单号
-			directStorage(serialNo) {
+			directStorage( batch,idx ) {
+				if(Math.floor(batch.InStorageNumber)>=Math.floor(batch.Number)){
+					mui.toast("入库数量已满");return;
+				}
+				this.idx = idx;
 	            this.$router.push({
 	            	path  :'/home/in-stock/cold-list',
-	            	query : { serialNo : serialNo, type : '0' }
+	            	query : { serialNo : batch.SerialNo, type : '0' }
 	            });
 			},
 			codeInStorage(serialNo) {
@@ -132,8 +137,10 @@
 			codeInCar() {
 				mui.toast("扫码装车")
 			},
-			roloadData() {
-				this.initData();
+			roloadData( number ) {
+				let data = this.batchList[this.idx];
+				data.InStorageNumber = Math.floor(data.InStorageNumber)+Math.floor(number);
+				this.batchList.$set(this.idx,this.batchList[this.idx]);
 			}
 		}
 	}

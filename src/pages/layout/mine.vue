@@ -38,9 +38,6 @@
 				};
 				function error(err) {
 				  	switch(error.code){
-			            case error.TIMEOUT:
-			                mui.toast("连接超时，请重试");
-			                break;
 			            case error.PERMISSION_DENIED:
 			                mui.toast("您拒绝了使用位置共享服务，查询已取消");
 			                break;

@@ -30,6 +30,7 @@
 		methods: {
            	login (){
            		let _self = this;
+           		plus.nativeUI.showWaiting( "登录中..." );
            		mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -72,6 +73,7 @@
 	                		localStorage.setItem("codeList",JSON.stringify(codeList));
 
 	                		_self.$router.push({ name: 'home'})
+	                		plus.nativeUI.closeWaiting();
 	                		
 	                	}
 	                },

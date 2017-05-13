@@ -4,7 +4,7 @@
 			<v-header :headerObj="headerObj"></v-header>
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
-					<a class="mui-navigate-right" href="javascript:;">{{batch.BatchNo}}</a>
+					<a class="mui-navigate-right" href="javascript:;">{{batch.VaccineName}}&nbsp;&nbsp;{{batch.BatchNo}}</a>
 					<div class="mui-collapse-content">
 						<div class="flex pd10">
 							<span class="flex-items">出库单号</span>
@@ -56,7 +56,7 @@
 		data() {
 			return {
 				headerObj :{
-					title:'批次单号列表',
+					title:'疫苗出库批号列表',
 					hasBack : true
 				},
 				batchList:[]
@@ -117,6 +117,9 @@
 		},
 		methods : {
 			directStorage( batch ) {
+				if(Math.floor(batch.OutStorageNumber)>=Math.floor(batch.Number)){
+					mui.toast("出库数量已达上限");return;
+				}
 				this.$router.push({
 					path : "/home/out-stock/stock-list",
 					query:{

@@ -3,16 +3,6 @@
 		<div class="page-child-info">
 			<v-header :headerObj="headerObj"></v-header>
 			<div class="child-info-box">
-				<!-- <ul class="mui-table-view">
-					<li class="mui-table-view-cell" v-for="item in items">
-						<p>{{item.BatchNo}}</p>
-						<p>{{item.ManufactureName}}</p>
-						<p>{{item.Number}}</p>
-						<p>{{item.ShelfLife}}</p>
-						<p>{{item.VaccineCode}}</p>
-						<p>{{item.VaccineName}}</p>
-					</li>
-				</ul> -->
 				<div class="xjyem">
 			    	<table v-for="item in items">
 			    		<tr>
@@ -22,8 +12,11 @@
 			    				<br>所在库房
 			    				<br>{{coldName}}
 			    			</td>
-			    			<td>库存量<br>
-			    				<span class="font-color">4000</span><br>
+			    			<td>
+			    				库存量<br>
+			    				<span class="font-color">{{item.Number}}</span><br>
+			    				生产企业<br>
+			    				<span class="font-color">{{item.ManufactureName}}</span>
 			    			</td>
 			    		</tr>
 			    	</table>
