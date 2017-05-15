@@ -37,7 +37,7 @@
 						<div class="mui-button-row pd10">
 							<button class="mui-btn mui-btn-primary" type="button" @click="directStorage(batch,index)">直接入库</button>&nbsp;&nbsp;
 							<button class="mui-btn mui-btn-primary" type="button" @click="codeInStorage(batch.SerialNo)">扫码入库</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary" type="button" @click="codeInCar(batch.SerialNo)">扫码卸货</button>
+							<button class="mui-btn mui-btn-primary" type="button" @click="codeOutCar(batch.SerialNo)">扫码卸苗</button>
 						</div>
 					</div>
 				</li>
@@ -134,13 +134,61 @@
 	            	query : { serialNo : serialNo, type : '1' }
 	            });
 			},
-			codeInCar() {
-				mui.toast("扫码装车")
+			// 扫码卸苗
+			codeOutCar() {
+				let _self = this;
+				let content = plus.android.runtimeMainActivity();
+				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
+					//成功
+					_self.unCar(1)
+				}, function(result) {
+					//失败
+					mui.toast("失败")
+				})
+				//_self.unCar("LN201705141115468")
+			},
+			// 扫码卸苗
+			unCar(coldValue){
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data: {
+		        	 	strRequest:'{\
+		        	 		"Request":{\
+		        	 			"Header":{\
+		            	 			"AppCode":"01",\
+		            	 			"AppTypeCode":"01",\
+		            	 			"FunCode":"0006",\
+		            	 			"ResponseFormat":"2"\
+		            	 		},"Body":{\
+		            	 			"CodeValue":"'+coldValue+'",\
+		            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
+		            	 			"OperatorName":"'+localStorage.getItem("userName")+'"\
+		            	 		}\
+		            	 	}\
+		        	 	}',
+		        	 	RequestFormat:2
+		        	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                	}else{
+	                		mui.toast(req.Response.Header.ResultMsg) 
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            });
 			},
 			roloadData( number ) {
 				let data = this.batchList[this.idx];
 				data.InStorageNumber = Math.floor(data.InStorageNumber)+Math.floor(number);
-				this.batchList.$set(this.idx,this.batchList[this.idx]);
+				this.$set(this.batchList[this.idx],data);
 			}
 		}
 	}

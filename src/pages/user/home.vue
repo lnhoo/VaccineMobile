@@ -82,24 +82,31 @@
            	},
            	toggleComponents( type, tabName ) {
            		var self = this;
-           		if(type=="mine"){
-           			if(plus.os.name=="Android"){   
-					    var context = plus.android.importClass("android.content.Context"); 
-					    var locationManager=plus.android.importClass("android.location.LocationManager"); 
-					    var main = plus.android.runtimeMainActivity(); 
-					    var mainSvr = main.getSystemService(context.LOCATION_SERVICE); 
-					    var androidIsOpen = mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER); 
-					    if(!androidIsOpen){ 
-					    	mui.toast("请手动开启GPS"); return;
-					    }else{
-					    	self.$refs.mylocation.initData();
-					    } 
-					} 
-           		}
            		var tabs = ['home','mine','message','seedlings']
            		tabs.forEach(function(tab){
            			tab == type ? self[type] = true : self[tab] = false
            		})
+           	},
+           	refreMineData(){
+           		this.$refs.mylocation.updateData();
+           	},
+           	openLocation( vehicleId ) {
+           		let _self = this;
+           		if(plus.os.name=="Android"){   
+				    var context = plus.android.importClass("android.content.Context"); 
+				    var locationManager=plus.android.importClass("android.location.LocationManager"); 
+				    var main = plus.android.runtimeMainActivity(); 
+				    var mainSvr = main.getSystemService(context.LOCATION_SERVICE); 
+				    var androidIsOpen = mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER); 
+				    if(!androidIsOpen){ 
+				    	mui.toast("请手动开启GPS"); return;
+				    }
+				} 
+           		setTimeout(function(){
+					_self.$router.push({
+		    			path:'/home/maps'
+		    		})	
+           		},2000);
            	}
 		}
     }

@@ -30,7 +30,7 @@
 		methods: {
            	login (){
            		let _self = this;
-           		plus.nativeUI.showWaiting( "登录中..." );
+           		//plus.nativeUI.showWaiting( "登录中..." );
            		mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -62,24 +62,26 @@
 	                		for(var i = 0 ;i < item.length; i++){
 	                			codeList.push(item[i].ResourceCode)
 	                		}
+	                		let data = req.Response.Body;
 	                		// 组织机构代码
-	                		localStorage.setItem("customerCode",req.Response.Body.CustomerCode);
+	                		localStorage.setItem("customerCode",data.CustomerCode);
 
-	                		localStorage.setItem("customerName",req.Response.Body.CustomerName);
+	                		localStorage.setItem("customerName",data.CustomerName);
 
-	                		localStorage.setItem("userName",req.Response.Body.UserName);
+	                		localStorage.setItem("userName",data.UserName);
 
+	                		localStorage.setItem("userId",data.UserID);
 	                		// 权限列表
 	                		localStorage.setItem("codeList",JSON.stringify(codeList));
-
+	                		
 	                		_self.$router.push({ name: 'home'})
-	                		plus.nativeUI.closeWaiting();
+	                		//plus.nativeUI.closeWaiting();
 	                		
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){
 						//异常处理；
-						alert(type);
+						mui.toast(type);
 					}
 	            })
            	},

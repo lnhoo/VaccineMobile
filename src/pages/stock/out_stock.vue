@@ -37,7 +37,7 @@
 						<div class="mui-button-row pd10">
 							<button class="mui-btn mui-btn-primary" type="button"  @click="directStorage(batch)">直接出库</button>&nbsp;&nbsp;
 							<button class="mui-btn mui-btn-primary" type="button"  @click="codeOutStorage(batch.SerialNo)">扫码出库</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary" type="button"  @click="codeOutCar(batch.SerialNo)">扫码卸车</button>
+							<button class="mui-btn mui-btn-primary" type="button"  @click="codeInCar(batch)">扫码装苗</button>
 						</div>
 					</div>
 				</li>
@@ -130,27 +130,110 @@
 					}
 				})
 			},
-			codeOutStorage() {
+			codeOutStorage( serialNo ) {
 				let _self = this;
 				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					//成功
-					mui.toast("入库成功");
+					_self.outData( serialNo,'LN20170509911117' )
 				}, function(result) {
 					//失败
 					mui.toast("失败")
 				})
+				//_self.outData( serialNo,'LN20170509911117' )
 			},
-			codeOutCar() {
+			// 扫码装苗
+			codeInCar( item ) {
 				let _self = this;
 				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					//成功
-					mui.toast("卸车成功");
+					this.inCar( item,'LN20170509911117' )
 				}, function(result) {
 					//失败
 					mui.toast("失败")
 				})
+
+				//this.inCar( item,'LN20170509911117' )
+			},
+			// 扫描出库
+			outData(serialNo,coldValue){
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data: {
+		        	 	strRequest:'{\
+		        	 		"Request":{\
+		        	 			"Header":{\
+		            	 			"AppCode":"01",\
+		            	 			"AppTypeCode":"01",\
+		            	 			"FunCode":"0013",\
+		            	 			"ResponseFormat":"2"\
+		            	 		},"Body":{\
+		            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
+		            	 			"SerialNo":"'+serialNo+'",\
+		            	 			"CodeValue":"'+coldValue+'",\
+		            	 			"OperatorName":"'+localStorage.getItem("userName")+'"\
+		            	 		}\
+		            	 	}\
+		        	 	}',
+		        	 	RequestFormat:2
+		        	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                	}else{
+	                		mui.toast(req.Response.Header.ResultMsg)        
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            });
+			},
+			// 扫码装苗
+			inCar( item, coldValue ){
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data: {
+		        	 	strRequest:'{\
+		        	 		"Request":{\
+		        	 			"Header":{\
+		            	 			"AppCode":"01",\
+		            	 			"AppTypeCode":"01",\
+		            	 			"FunCode":"0014",\
+		            	 			"ResponseFormat":"2"\
+		            	 		},"Body":{\
+		            	 			"CodeValue":"'+coldValue+'",\
+		            	 			"SerialNo":"'+item.SerialNo+'",\
+		            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
+		            	 			"OperatorName":"'+localStorage.getItem("userName")+'"\
+		            	 		}\
+		            	 	}\
+		        	 	}',
+		        	 	RequestFormat:2
+		        	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                	}else{
+	                		console.log(req);
+	                		mui.toast(req.Response.Header.ResultMsg)     
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            });
 			}
 		}
 	}
