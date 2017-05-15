@@ -73,6 +73,7 @@
                 		mui.toast(req.Response.Header.ResultMsg)           	
                 	}else{
                 		let items = req.Response.Body.Items;
+                		console.log(items)
                 		if(items){
 
                 		}else{

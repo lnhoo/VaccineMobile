@@ -1,52 +1,92 @@
 <template>
 	<div class="mine-page">
-		<div class="box">
-			<div class="aaaas" id="allMap"></div>	
-		</div>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell" v-for="(car,index) in carList">
+				{{car.PlateNo}}
+				<span style="float:right" class="gray" v-if="car.Status==2" @click="startYS(car.VehicleID,index)">运输中</span>
+				<span style="float:right" v-if="car.Status==1" @click="startYS(car.VehicleID,index)">待运输</span>
+				<span style="float:right" v-if="car.Status==0">装车未完成</span>
+			</li>
+		</ul>
 	</div>
 </template>
 <script>
   	export default {
   		name : 'page-mine',
 	    data() {
-	      	return {}
+	      	return {
+	      		idx : 1,
+	      		carList : []
+	      	}
 	    },
 	    mounted() {
-			this.initData()
+			// this.initData()
+			this.getMineCarList()
 	    },
 	    methods:{
-	    	initData(){
-	    		var options = {
-				  	enableHighAccuracy: true,
-				  	timeout: 5000,
-				  	maximumAge: 0
-				};
-				function success(pos) {
-				  	var crd = pos.coords;
-				  	var a = new BMap.Point(crd.longitude,crd.latitude);
-				  	let map = new BMap.Map("allMap");
-		    		var point = new BMap.Point(116.331398,39.897445);
-					map.centerAndZoom(point,15);
-					BMap.Convertor.translate( a , 0, function(data){
-						var lo = new BMap.Point(data.lng,data.lat);
-						var mk = new BMap.Marker( lo );
-							var label = new BMap.Label("我的位置",{offset:new BMap.Size(20,-10)});
-    						mk.setLabel(label);
-    						map.addOverlay( mk );
-    						map.panTo( lo );
-					})	
-				};
-				function error(err) {
-				  	switch(error.code){
-			            case error.PERMISSION_DENIED:
-			                mui.toast("您拒绝了使用位置共享服务，查询已取消");
-			                break;
-			            case error.POSITION_UNAVAILABLE:
-			                mui.toast("定位失败，请查看应用是否授权");
-			                break;
-			        }
-				};
-				navigator.geolocation.getCurrentPosition(success, error, options);
+	    	getMineCarList(){
+	    		let _self = this;
+	    		mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data:{
+	            	 	strRequest:'{\
+	            	 		"Request":{\
+	            	 			"Header":{\
+	                	 			"AppCode":"01",\
+	                	 			"AppTypeCode":"01",\
+	                	 			"FunCode":"0021",\
+	                	 			"ResponseFormat":"2"\
+	                	 		},"Body":{\
+	                	 			"UserID":"'+localStorage.getItem("userId")+'"\
+	                	 		}\
+	                	 	}\
+	            	 	}',
+	            	 	RequestFormat:2
+	            	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                	}else{
+	                		let items = req.Response.Body.Items;
+	                		console.log(items)
+	                		if(items){
+	                			let carList = items.Item
+		                		if(!(carList instanceof Array)){
+		                			_self.carList.push( carList )
+		                		}else{
+		                			_self.carList = carList
+		                		}
+	                		}
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            }); 
+	    	},
+	    	startYS( vehicleID,idx ) {
+	    		this.idx = idx;
+	    		this.$router.push({
+	    			path : '/home/actionSheet',
+	    			query:{
+	    				arr    : ["开始运输"],
+	    				vehicleID : vehicleID
+	    			}
+	    		})
+	    	},
+	    	updateData(){
+	    		let _self = this;
+	    		let newData = this.carList[this.idx];
+	    		newData.Status = 2;
+	    		this.$set(this.carList[this.idx],newData);
+	    		_self.$nextTick(() => {
+	    			_self.$parent.openLocation(newData.VehicleID);
+			    })
 	    	}
 	    }
 	}
