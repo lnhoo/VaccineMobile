@@ -19,6 +19,7 @@
 					title:'车辆位置',
 					hasBack : true
 				},
+				timer : null
 			}
 		},
 		mounted() {
@@ -39,6 +40,7 @@
 		    		var point = new BMap.Point(116.331398,39.897445);
 					map.centerAndZoom(point,15);
 					BMap.Convertor.translate( a , 0, function(data){
+						_self.uploadLoction(data.lng,data.lat);
 						var lo = new BMap.Point(data.lng,data.lat);
 						var mk = new BMap.Marker( lo );
 							var label = new BMap.Label("我的位置",{offset:new BMap.Size(20,-10)});
@@ -59,6 +61,40 @@
 				};
 				navigator.geolocation.getCurrentPosition(success, error, options);
 	    	},
+	    	uploadLoction(lnt,lat){
+	    		let _this = this;
+	    		mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data: {
+		        	 	strRequest:'{\
+		        	 		"Request":{\
+		        	 			"Header":{\
+		            	 			"AppCode":"01",\
+		            	 			"AppTypeCode":"01",\
+		            	 			"FunCode":"0012",\
+		            	 			"ResponseFormat":"2"\
+		            	 		},"Body":{\
+		            	 			"VehicleNo":"'+this.$route.query.vehicleId+'",\
+		            	 			"GPSY":"'+lnt+'",\
+		            	 			"GPSX":"'+lat+'"\
+		            	 		}\
+		            	 	}\
+		        	 	}',
+		        	 	RequestFormat:2
+		        	},
+	                dataType:'json',
+	                success:function(result){
+	                	clearInterval(_this.timer)
+	                	_this.timer = setInterval(_this.initData,3000)
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            });
+	    	}
 		}
 	}
 </script>
