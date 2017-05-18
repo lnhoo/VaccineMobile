@@ -21,7 +21,12 @@ gulp.task('concatCss', function() {
         .pipe(gulp.dest('./dist/assets/css'));                                  
 })
 
-gulp.task('default', [ 'concatCss'])
+gulp.task('copy',  function() {
+  return gulp.src('./src/assets/fonts/*')
+    .pipe(gulp.dest('./dist/assets/fonts'))
+});
+
+gulp.task('default', [ 'concatCss','copy'])
 
 gulp.start()
 
