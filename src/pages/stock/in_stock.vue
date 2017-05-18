@@ -2,7 +2,7 @@
 	<transition name="move">
 		<div class="order-num">
 			<v-header :headerObj="headerObj"></v-header>
-			<ul class="mui-table-view">
+			<ul class="mui-table-view" v-if="batchList.length>0">
 				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
 					<a class="mui-navigate-right" href="javascript:;">{{batch.VaccineName}}&nbsp;&nbsp;{{batch.BatchNo}}</a>
 					<div class="mui-collapse-content">
@@ -42,6 +42,11 @@
 					</div>
 				</li>
 			</ul>
+			<div v-if="batchList.length==0" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#303f7a;">
+				<div class="ds-table">
+					<div class="ds-tell">暂无数据</div>
+				</div>
+			</div>
 			<router-view></router-view>	
 		</div>
 	</transition>
