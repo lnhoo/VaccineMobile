@@ -2,24 +2,22 @@
 	<transition name="move" v-on:after-leave="leave">
 		<div class="maps">
 			<v-header :headerObj="headerObj"></v-header>
-			<div v-if="hasData">
-				<div id="myLocation"></div>
+			<div id="allmapss"></div>
+			<div v-if="carList.length>0">
 				<div class="footer-box">
 					<table class="tb">
 						<tr>
 							<td width="70"><span class="car-card no-bg">行驶车辆：</span></td>
 							<td>
-								<span class="car-card" @click="switchTab(1,'湘A103455','24','27')">湘A103455</span>
-								<span class="car-card" @click="switchTab(2,'湘A103339','21','26')">湘A103339</span>
-								<span class="car-card" @click="switchTab(3,'湘A102251','21.2','27.1')">湘A102251</span>
-								<span class="car-card" @click="switchTab(4,'湘A101455','24.2','27.4')">湘A101455</span>
-								<span class="car-card" @click="switchTab(5,'湘A133457','18.4','26.4')">湘A133457</span>
+								<span class="car-card car-item" v-for="car in carList" @click="switchTab(car)">
+									{{car.PlateNo}}
+								</span>
 							</td>
 						</tr>
 					</table>
 				</div> 	
 			</div>
-			<div class="no-data-msg" v-if="noData">
+			<div class="no-data-msg" v-if="carList.length==0">
 				<div class="ds-table">
 					<div class="ds-tell">无数据</div>
 				</div>
@@ -41,8 +39,7 @@
 					hasBack : true
 				}, 
 				map : null,
-				hasData :　true,
-				noData : false
+				carList : []
 			}
 		},
 		mounted() {
@@ -60,7 +57,7 @@
 	            	 			"FunCode":"0011",\
 	            	 			"ResponseFormat":"2"\
 	            	 		},"Body":{\
-	            	 			"OrgCode":1\
+	            	 			"OrgCode":"'+localStorage.getItem("customerCode")+'"\
 	            	 		}\
 	            	 	}\
 	        	 	}',
@@ -75,10 +72,13 @@
                 		let items = req.Response.Body.Items;
                 		console.log(items)
                 		if(items){
-
-                		}else{
-                			_self.hasData  = false
-                			_self.noData = true
+                			let item = items.Item
+	                		if(!(item instanceof Array)){
+	                			_self.carList.push( item )
+	                		}else{
+	                			_self.carList = item
+	                		}
+	                		_self.initMap(_self.carList[0])
                 		}
                 	}
                 },
@@ -87,74 +87,38 @@
 					mui.toast(type);
 				}
             });
-
-            this.initMaps()
 		},
 		methods:{
 			leave() {
 				this.$parent.homeRouter = false
 			},
-			switchTab(num,carName,wd,sd) {
-				let _self = this
-				let lng = 124.43279092
-				let lat = 43.80864478
-				if(num==2){
-					lng = lng - 0.1
-					lat = lat - 0.01
+			switchTab(car) {
+				if(!car.GPSY){
+					mui.toast("该车辆暂无坐标信息");return;
 				}
-				if(num==3){
-					lng = lng - 0.2
-					lat = lat - 0.02
-				}
-				if(num==4){
-					lng = lng - 0.3
-					lat = lat - 0.03
-				}
-				_self.map.clearOverlays()
-				let new_point = new BMap.Point(lng,lat)
-				let mk = new BMap.Marker(new_point);
-				_self.map.addOverlay(mk);
-				_self.map.panTo(new_point);
-
-				var infoWindow = new BMap.InfoWindow(carName+"<br>温度："+wd+"℃<br>湿度："+sd+"℃", { 
+				this.initMap( car )
+			},
+			initMap( carObj ){
+				var map = new BMap.Map("allmapss");
+				var point = new BMap.Point(116.331398,39.897445);
+				map.centerAndZoom(point,12);
+				var cur = new BMap.Point(carObj.GPSY,carObj.GPSX);
+				var mk = new BMap.Marker(cur);
+					map.addOverlay(mk);
+					map.panTo(cur);
+				var infoWindow = new BMap.InfoWindow(carObj.PlateNo+"<br>温度："+carObj.MaxTemperature+"℃<br>湿度："+carObj.MinHumidity+"℃", { 
 					offset : new BMap.Size(0,-25)
 				});    // 创建信息窗口对象
-				_self.map.openInfoWindow(infoWindow,new_point); 
-				
+				map.openInfoWindow(infoWindow,cur); 
 				mk.addEventListener('click',function(){
-					_self.map.openInfoWindow(infoWindow,new_point); 
+					map.openInfoWindow(infoWindow,cur); 
 				})
-			},
-			initMaps(){
-				let _self = this;
-				// 百度地图API功能
-				_self.map = new BMap.Map("myLocation");
-				_self.map.centerAndZoom("北京",15);
-				var geolocation = new BMap.Geolocation();
-				geolocation.getCurrentPosition(function(r){
-					if(this.getStatus() == BMAP_STATUS_SUCCESS){
-						var mk = new BMap.Marker(r.point);
-						_self.map.addOverlay(mk);
-						_self.map.panTo(r.point);
-						var infoWindow = new BMap.InfoWindow("湘A435223<br>温度：27<br>湿度：27", { 
-							offset : new BMap.Size(0,-25)
-						});    // 创建信息窗口对象
-						_self.map.openInfoWindow(infoWindow,r.point); 
-
-						mk.addEventListener('click',function(){
-							_self.map.openInfoWindow(infoWindow,r.point); 
-						})
-					}
-					else {
-						alert('failed'+this.getStatus());
-					}        
-				},{enableHighAccuracy: true})	
 			}
 		}
 	}
 </script>
 <style scoped="scoped">
-	#myLocation{
+	#allmapss{
 		position: absolute;
 		top:75px;
 		left: 0;
@@ -190,6 +154,9 @@
 		border-radius: 20px;
 		font-size: 12px;
 		margin-bottom: 10px;
+	}
+	.car-item{
+		margin-left: 6px;
 	}
 	.no-bg{
 		background: none;
