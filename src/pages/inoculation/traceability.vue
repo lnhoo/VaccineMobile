@@ -62,6 +62,41 @@
 				detail : false
 			}
 		},
+		mounted(){
+			mui.ajax({
+                type: "POST",
+                contentType:"application/json; charset=utf-8",
+                url : localStorage.getItem("http"),
+                data: {
+	        	 	strRequest:'{\
+	        	 		"Request":{\
+	        	 			"Header":{\
+	            	 			"AppCode":"01",\
+	            	 			"AppTypeCode":"01",\
+	            	 			"FunCode":"0020",\
+	            	 			"ResponseFormat":"2"\
+	            	 		},"Body":{\
+	            	 			"CodeValue":"LN201705091115102"\
+	            	 		}\
+	            	 	}\
+	        	 	}',
+	        	 	RequestFormat:2
+	        	},
+                dataType:'json',
+                success:function(result){
+                	let req = JSON.parse(result.d)
+                	if(req.Response.Header.ResultCode=="1"){
+                		mui.toast(req.Response.Header.ResultMsg)           	
+                	}else{
+                		console.log(req)
+                	}
+                },
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					mui.toast(type);
+				}
+            });
+		},
 		methods:{
 			vaccineDetail(){
 				this.detail = true
