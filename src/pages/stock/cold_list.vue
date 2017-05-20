@@ -133,15 +133,16 @@
 				let _self = this;
 				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
-					//成功
-					//_self.scanCodeInStock(codeValue,coldStoreNo)
-					_self.scanCodeInStock("LN201705141115468",coldStoreNo)
-
+					var codeValue = result.split("|")[0];
+					if(codeValue){
+						_self.scanCodeInStock(codeValue,coldStoreNo)
+					}else{
+						mui.toast("无效二维码");
+					}
 				}, function(result) {
 					//失败
 					mui.toast("失败")
 				})
-				//_self.scanCodeInStock("LN201705141115468",coldStoreNo)
 			},
 			// 处理扫码入库
 			scanCodeInStock( codeValue , coldStoreNo){

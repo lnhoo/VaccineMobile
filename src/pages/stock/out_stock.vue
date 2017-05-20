@@ -140,12 +140,16 @@
 				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					//成功
-					_self.outData( serialNo,'LN20170509911117' )
+					var codeValue = result.split("|")[0];
+					if(codeValue){
+						_self.outData( serialNo,codeValue )
+					}else{
+						mui.toast("无效二维码");
+					}
 				}, function(result) {
 					//失败
 					mui.toast("失败")
 				})
-				//_self.outData( serialNo,'LN20170509911117' )
 			},
 			// 扫码装苗
 			codeInCar( item ) {
@@ -153,13 +157,16 @@
 				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					//成功
-					this.inCar( item,'LN20170509911117' )
+					var codeValue = result.split("|")[0];
+					if(codeValue){
+						_self.inCar( item,codeValue )
+					}else{
+						mui.toast("无效二维码");
+					}
 				}, function(result) {
 					//失败
 					mui.toast("失败")
 				})
-
-				//this.inCar( item,'LN20170509911117' )
 			},
 			// 扫描出库
 			outData(serialNo,coldValue){
@@ -230,7 +237,6 @@
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
-	                		console.log(req);
 	                		mui.toast(req.Response.Header.ResultMsg)     
 	                	}
 	                },
