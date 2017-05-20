@@ -4,13 +4,14 @@
 			<span class="mui-icon"><img width="30" class="icon" src="../../assets/images/j32.png" /></span>
 			<span class="mui-tab-label">首页</span>
 		</a>
-		<a  class="mui-tab-item" @tap="callSupFn('message','消息')">
-			<span class="mui-icon"><img width="30" class="icon" src="../../assets/images/j33.png" /></span>
-			<span class="mui-tab-label">消息</span>
-		</a>
+		
 		<a  class="mui-tab-item" @tap="callSupFn('seedlings','疫苗')">
 			<span class="mui-icon"><img width="30" class="icon" src="../../assets/images/j34.png" /></span>
 			<span class="mui-tab-label">疫苗</span>
+		</a>
+		<a  class="mui-tab-item" @tap="callSupFn('gps','GPS')">
+			<span class="mui-icon mui-icon mui-icon-location"></span>
+			<span class="mui-tab-label">GPS</span>
 		</a>
 		<a  class="mui-tab-item" @tap="callSupFn('mine','我的')">
 			<span class="mui-icon"><img width="30" class="icon" src="../../assets/images/j35.png" /></span>

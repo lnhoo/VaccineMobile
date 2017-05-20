@@ -14,7 +14,7 @@
 			    			</td>
 			    			<td>库存量<br>
 			    				<span class="font-color">{{item.Number}}</span><br>
-			    				<span class="out-btn" @click="outStock(item.ColdStoreNo)">出库</span>
+			    				<span class="out-btn" @click="outStock(item)">出库</span>
 			    			</td>
 			    		</tr>
 			    	</table>
@@ -97,11 +97,14 @@
 			leave() {
 				this.$parent.homeRouter = false
 			},
-			outStock( coldStoreNo ){
+			outStock( item ){
 				let _self = this;
-				plus.nativeUI.prompt( "出库数量", function(e){
+				plus.nativeUI.prompt( "可出库数量："+item.Number, function(e){
 					if(e.index == 0){
-						_self.outCold( coldStoreNo,e.value);
+						if(Math.floor(e.value)>Math.floor(item.Number)){
+							mui.toast("没有足够的出库数量");return;
+						}
+						_self.outCold( item.coldStoreNo,e.value);
 					}
 				},"提示", "请输入出库数量", ["确定","取消"]);
 			},

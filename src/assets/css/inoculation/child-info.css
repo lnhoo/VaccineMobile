@@ -1,12 +1,14 @@
 .page-child-info{
-	height: 100%;
-	width: 100%;
 	position: absolute;
 	overflow: hidden;
 	-webkit-transition:all .3s ease;
 	transition:all .3s ease;
 	background: #303f7a;
 	font-size: 12px;
+	top:75px;
+	bottom: 44px;
+	left: 0;
+	right: 0;
 }
 .child-info-box{
 	position: fixed;
@@ -14,13 +16,13 @@
 	top: 75px;
 	left: 0;
 	right: 0;
-	bottom: 0;
+	bottom: 50px;
 	z-index: 10;
 	background: rgba(72,88,170,0.6);
 }
-.page-child-info:after{
+/* .page-child-info:after{
 	position: absolute;
-	top:75px;
+	top:0;
 	left: 0;
 	content: '';
 	width: 100%;
@@ -28,7 +30,7 @@
 	background: url("../../images/bg.jpg") no-repeat;
 	background-size:cover;
 	z-index: 9;
-} 
+}  */
 .child-info-box .tabs{
 	height: 40px;
 	margin-top: 20px;
@@ -57,7 +59,7 @@
 	height: auto;
 	width: 90%;
 	position: absolute;
-	top: 155px;
+	top: 70px;
 	padding: 20px;
 	border-radius: 10px;
 	-webkit-box-shadow: 0px 0px 2px #E5C6C6;

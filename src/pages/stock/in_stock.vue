@@ -144,13 +144,16 @@
 				let _self = this;
 				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
-					//成功
-					_self.unCar(1)
+					var codeValue = result.split("|")[0];
+					if(codeValue){
+						_self.unCar(codeValue)	
+					}else{
+						mui.toast("无效二维码");
+					}
 				}, function(result) {
 					//失败
 					mui.toast("失败")
 				})
-				//_self.unCar("LN201705141115468")
 			},
 			// 扫码卸苗
 			unCar(coldValue){

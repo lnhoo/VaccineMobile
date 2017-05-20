@@ -15,6 +15,9 @@
 		methods : {
 			toHome() {
 				this.$router.push("/home")
+			},
+			changeTitle( title ){
+				this.headerObj.title = title;
 			}
 		}
 	}

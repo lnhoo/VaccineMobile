@@ -92,11 +92,6 @@ export default new Router({
                 component: resolve => require(['@/pages/layout/map'], resolve)
             }
           ]
-        },  
-        {
-          path: '/search',
-          name: 'search',
-          component: resolve => require(['@/pages/stock/search'], resolve)
         }
     ]
 })

@@ -10,18 +10,10 @@
 		<div class="popMsg" v-show="showForm">
 			<div class="mask" v-show="showForm" @click="closeMask"></div>
 			<div class="popMsgBox">
-				<label>最高温度:</label><input type="number"  v-model="params.MaxTemperature"/>
-				<label>最低温度:</label><input type="number"  v-model="params.MinTemperature"/>
-				<label>最高湿度:</label><input type="number"  v-model="params.MaxHumidity"/>
-				<label>最低湿度:</label><input type="number"  v-model="params.MinHumidity"/>
-				<!-- <ul class="mui-table-view mui-table-view-radio">
-					<li class="mui-table-view-cell" status="1">
-						<a class="mui-navigate-right">停止运输</a>
-					</li>
-					<li class="mui-table-view-cell mui-selected" status="2">
-						<a class="mui-navigate-right">开始运输</a>
-					</li>
-				</ul> -->
+				<label>最高温度:</label><input type="number" maxlength="6" v-model="params.MaxTemperature"/>
+				<label>最低温度:</label><input type="number" maxlength="6" v-model="params.MinTemperature"/>
+				<label>最高湿度:</label><input type="number" maxlength="6" v-model="params.MaxHumidity"/>
+				<label>最低湿度:</label><input type="number" maxlength="6" v-model="params.MinHumidity"/>
 				<button type="button" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" @click="toSubmit">提交</button>
 			</div>
 		</div>
@@ -39,23 +31,25 @@
 					MaxHumidity : 26,
 					MinHumidity : 12
 				},
-				showForm : false
+				showForm : false,
+				status : 1
 			}
 		},
 		mounted() {
 			this.items = this.$route.query.arr;
-			/*setTimeout(function(){
-				document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected',function(e){
-					console.log(e.detail.el.innerText);
-				});
-			},2000);*/
 		},
 		methods :{
 			cancel() {
 				this.$router.go(-1)
 			},
 			dealData(item,index) {
-				this.showForm = true;
+				this.status = (item=="完成运输"?1:2);
+				if(item=="上传当前位置"){
+					this.$router.go(-1);
+	               	this.$parent.refreMineData();
+				}else{
+					this.showForm = true;
+				}
 			},
 			closeMask() {
 				this.showForm = false;
@@ -76,7 +70,7 @@
 	                	 			"ResponseFormat":"2"\
 	                	 		},"Body":{\
 	                	 			"VehicleID" : "'+_self.$route.query.vehicleID+'",\
-	                	 			"Status" : "2",\
+	                	 			"Status" : "'+_self.status+'",\
 	                	 			"UserID" : "'+localStorage.getItem("userId")+'",\
 	                	 			"MaxTemperature" : "'+_self.params.MaxTemperature+'",\
 	                	 			"MinTemperature" : "'+_self.params.MinTemperature+'",\

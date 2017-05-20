@@ -52,7 +52,7 @@
 				function error(err) {
 				  	switch(error.code){
 			            case error.PERMISSION_DENIED:
-			                mui.toast("您拒绝了使用位置共享服务，查询已取消");
+			                mui.toast("请开启手机定位功能");
 			                break;
 			            case error.POSITION_UNAVAILABLE:
 			                mui.toast("定位失败，请查看应用是否授权");
@@ -87,7 +87,7 @@
 	                dataType:'json',
 	                success:function(result){
 	                	clearInterval(_this.timer)
-	                	_this.timer = setInterval(_this.initData,3000)
+	                	_this.timer = setInterval(_this.initData,1000*60*3)
 	                },
 					error:function(xhr,type,errorThrown){
 						//异常处理；

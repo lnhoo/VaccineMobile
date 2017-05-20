@@ -20,12 +20,12 @@
     	name: 'page-login',
         data() {
 			return {
-				'UserNo' : 'test',
+				'UserNo' : 'Manager',
 				'UserPwd' : '123456'
 			}
 		},
 		mounted(){
-			localStorage.setItem("http","http://114.55.90.253:10999/WebService.asmx/CallFun");
+			localStorage.setItem("http","http://61.189.37.57:10004/WebService.asmx/CallFun");
 		},
 		methods: {
            	login (){
@@ -69,6 +69,8 @@
 	                		localStorage.setItem("customerName",data.CustomerName);
 
 	                		localStorage.setItem("userName",data.UserName);
+
+	                		localStorage.setItem("account",_self.UserNo);
 
 	                		localStorage.setItem("userId",data.UserID);
 	                		// 权限列表

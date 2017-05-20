@@ -6,10 +6,10 @@
 					<a href="javascript:;"><img class="sliderImg" src="../../assets/images/banner.jpg"></a>
 				</div>
 				<div class="mui-slider-item">
-					<a  href="javascript:;"><img class="sliderImg" src="../../assets/images/b1.png"></a>
+					<a  href="javascript:;"><img class="sliderImg" src="../../assets/images/banner.jpg"></a>
 				</div>
 				<div class="mui-slider-item">
-					<a  href="javascript:;"><img class="sliderImg" src="../../assets/images/bg.jpg"></a>
+					<a  href="javascript:;"><img class="sliderImg" src="../../assets/images/banner.jpg"></a>
 				</div>
 			</div>
 		</div>

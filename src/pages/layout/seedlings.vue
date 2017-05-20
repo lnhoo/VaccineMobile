@@ -4,13 +4,13 @@
 			<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 				<div class="mui-scroll">
 					<a class="mui-control-item mui-active" href="#item1mobile">
-						一类疫苗
+						全部疫苗
 					</a>
 					<a class="mui-control-item" href="#item2mobile">
-						二类疫苗
+						一类疫苗
 					</a>
 					<a class="mui-control-item" href="#item3mobile">
-						全部疫苗
+						二类疫苗
 					</a>
 				</div>
 			</div>
@@ -30,8 +30,8 @@
 					<div class="mui-scroll-wrapper">
 						<div class="mui-scroll">
 							<ul class="mui-table-view">
-								<li class="mui-table-view-cell" v-for="(item,i) in items">
-									二类疫苗{{i}}
+								<li class="mui-table-view-cell" v-for="(item,i) in firstData">
+									{{item.VaccineName}}
 								</li>
 							</ul>
 						</div>
@@ -41,8 +41,8 @@
 					<div class="mui-scroll-wrapper">
 						<div class="mui-scroll">
 							<ul class="mui-table-view">
-								<li class="mui-table-view-cell" v-for="(item,i) in items">
-									全部疫苗{{i}}
+								<li class="mui-table-view-cell" v-for="(item,i) in secondData">
+									{{item.VaccineName}}
 								</li>
 							</ul>
 						</div>
@@ -57,7 +57,9 @@
 		name : 'page-seedlings',
 		data(){
 			return {
-				items : []
+				items : [],
+				firstData : [],
+				secondData : []
 			}
 		},
 		mounted() {
@@ -75,43 +77,38 @@
 						indicators: true, //是否显示滚动条
 						deceleration:deceleration
 					});
+					var that = "";
 					$.ready(function() {
-						//循环初始化所有下拉刷新，上拉加载。
-						$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
-							$(pullRefreshEl).pullToRefresh({
+						var slider = document.querySelectorAll('.mui-slider-group .mui-scroll');
+						document.getElementById('slider').addEventListener('slide', function(e) {
+							var num = e.detail?e.detail.slideNumber:0;
+							$(slider[num]).pullToRefresh({
 								down: {
 									callback: function() {
-										var self = this;
+										that = this;
 										setTimeout(function() {
-											_self.getSeedlingData(1,index,self,"down")
+											_self.getSeedlingData(1,num,that,"down")
 										}, 1000);
 									}
 								},
 								up: {
 									auto: true,
 									callback: function() {
-										var self = this;
+										that = this;
 										setTimeout(function() {
-											let length = self.element.querySelector('.mui-table-view').querySelectorAll('li').length;
-											_self.getSeedlingData(length==0?1:length,index,self,"up")
-										}, 1000);
+											let length = that.element.querySelector('.mui-table-view').querySelectorAll('li').length;
+											console.log(length)
+											_self.getSeedlingData(length==0?1:length,num,that,"up")
+										}, 1000);	
 									}
 								}
-							});
+							});	
 						});
-						var createFragment = function(ul, index, count, reverse) {
-							var length = ul.querySelectorAll('li').length;
-							var fragment = document.createDocumentFragment();
-							var li;
-							for (var i = 0; i < count; i++) {
-								li = document.createElement('li');
-								li.className = 'mui-table-view-cell';
-								li.innerHTML = '第' + (index + 1) + '个选项卡子项-' + (length + (reverse ? (count - i) : (i + 1)));
-								fragment.appendChild(li);
-							}
-							return fragment;
-						};
+						setTimeout(function(){
+							mui.trigger(slider[0],'slide');
+						},2000);
 					});
+
 				})(mui);
 			},
 			getSeedlingData(page,index,obj,type){
@@ -131,7 +128,7 @@
 		            	 		},"Body":{\
 		            	 			"Page":'+page+',\
 		            	 			"PageSize":10,\
-		            	 			"type" : '+index+',\
+		            	 			"Type" : '+index+',\
 		            	 			"Status":1\
 		            	 		}\
 		            	 	}\
@@ -148,11 +145,22 @@
 	                		if(items){
 	                			let item = items.Item;
 		                		if(!(item instanceof Array)){
-		                			_self.items.push( item )
+		                			if(index==0){
+		                				_self.items.push( item )
+		                			}else if(index==1){
+		                				_self.firstData.push( item )
+		                			}else if(index==2){
+		                				_self.secondData.push( item )
+		                			}
 		                		}else{
-		                			_self.items = item
+		                			if(index==0){
+		                				_self.items = item
+		                			}else if(index==1){
+		                				_self.firstData = item
+		                			}else if(index==2){
+		                				_self.secondData = item
+		                			}
 		                		}
-
 		                		if(type == "up"){
 		                			obj.endPullUpToRefresh(item.length<=10)	
 		                		}else{
@@ -169,7 +177,7 @@
 	                },
 					error:function(xhr,type,errorThrown){
 						//异常处理；
-						alert(type);
+						mui.toast(type);
 					}
 	            });
 			}
