@@ -1,10 +1,17 @@
 <template>
 	<div class="gps">
 		<ul class="mui-table-view" v-if="carList.length>0">
+<<<<<<< HEAD
 			<li class="mui-table-view-cell" v-for="(car,index) in carList" @click="startYS(car.VehicleID,index,car.Status)">
 				{{car.PlateNo}}
 				<span style="float:right" class="gray" v-if="car.Status==2" >运输中</span>
 				<span style="float:right" v-if="car.Status==1">待运输</span>
+=======
+			<li class="mui-table-view-cell" v-for="(car,index) in carList">
+				{{car.PlateNo}}
+				<span style="float:right" class="gray" v-if="car.Status==2" @click="startYS(car.VehicleID,index,car.Status)">运输中</span>
+				<span style="float:right" v-if="car.Status==1" @click="startYS(car.VehicleID,index,car.Status)">待运输</span>
+>>>>>>> 5faad20d2da2e06064dc584cfd9c9e9e056c1e73
 				<span style="float:right" v-if="car.Status==0">装车未完成</span>
 			</li>
 		</ul>
@@ -83,10 +90,18 @@
 	    		this.$router.push({
 	    			path : '/home/actionSheet',
 	    			query:{
+<<<<<<< HEAD
 	    				arr    : [status,"完成运输"],
 	    				vehicleID : vehicleID
 	    			}
 	    		})	
+=======
+	    				arr    : [status,"停止运输"],
+	    				vehicleID : vehicleID,
+	    				status : _self.sts
+	    			}
+	    		})
+>>>>>>> 5faad20d2da2e06064dc584cfd9c9e9e056c1e73
 	    	},
 	    	updateData(){
 	    		let _self = this;

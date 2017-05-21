@@ -70,7 +70,11 @@
 	                	 			"ResponseFormat":"2"\
 	                	 		},"Body":{\
 	                	 			"VehicleID" : "'+_self.$route.query.vehicleID+'",\
+<<<<<<< HEAD
 	                	 			"Status" : "'+_self.status+'",\
+=======
+	                	 			"Status" : "'+_self.$route.query.status+'",\
+>>>>>>> 5faad20d2da2e06064dc584cfd9c9e9e056c1e73
 	                	 			"UserID" : "'+localStorage.getItem("userId")+'",\
 	                	 			"MaxTemperature" : "'+_self.params.MaxTemperature+'",\
 	                	 			"MinTemperature" : "'+_self.params.MinTemperature+'",\
