@@ -10,11 +10,7 @@
 			<!--育苗 end-->
 
 			<!--gps begin-->
-<<<<<<< HEAD
 			<v-gps v-show="gps" ref="gps"></v-gps>	
-=======
-			<v-gps v-show="gps"></v-gps>	
->>>>>>> 5faad20d2da2e06064dc584cfd9c9e9e056c1e73
 			<!--gps end-->
 
 			<!--我的 begin-->
