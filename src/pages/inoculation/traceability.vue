@@ -2,13 +2,12 @@
 	<transition name="move" v-on:after-leave="leave">
 		<div class="page-vaccine-detail">
 			<v-header :headerObj="headerObj"></v-header>
-			<div class="vaccine-detail" v-if="detailList.length>0">
+		 	<div class="vaccine-detail" v-if="detailList.length>0">
 				<section class="main" style="position:relative;">
 					<div class="wuza1 cf">
-				    	<i><img src="../../assets/images/b34.png">{{orderObj.QRCodeValue}}</i>
-				        <span>&nbsp;&nbsp;{{orderObj.VaccineName}}</span>
+				    	<i><img src="../../assets/images/b34.png">{{orderObj.VaccineName}}</i>
 				    </div>
-				    
+				    <p class="title">{{orderObj.QRCodeValue}}</p>
 				    <div class="wuza2">
 				    	<div v-for="(item,index) in detailList">
 					    	<div class="wuza2_a">
@@ -19,13 +18,12 @@
 				    	</div>
 				    </div>
 				</section>
-			</div>	
-
+			</div> 
 			<div v-if="detailList.length==0" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#303f7a;">
 				<div class="ds-table">
 					<div class="ds-tell">暂无数据</div>
 				</div>
-			</div>
+			</div> 
 
 		</div>
 	</transition>
@@ -133,5 +131,10 @@
 	.wuza2_a span{color:#a3a3a3; display:block; padding:10px 0; }
 	.wuza2_a span img{width:15px; height:auto;margin-top: 5px;float: left;margin-top: 2px;margin-right: 10px;}
 	.wuza2_a i{color:#a3a3a3; padding-left:15px;}
+	.vaccine-detail .title{
+		position: absolute;
+		top:20px;
+		left: 80px;
+	}
 
 </style>

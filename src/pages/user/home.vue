@@ -10,11 +10,11 @@
 			<!--育苗 end-->
 
 			<!--gps begin-->
-			<v-gps v-show="gps"></v-gps>	
+			<v-gps v-show="gps" ref="gps"></v-gps>	
 			<!--gps end-->
 
 			<!--我的 begin-->
-			<v-mine v-show="mine" ref="mylocation"></v-mine>	
+			<v-mine v-show="mine"></v-mine>	
 			<!--我的 end-->
 
 			<v-tabber :tabberName="tabberName"></v-tabber>
@@ -110,7 +110,7 @@
            		this.$refs.header.changeTitle(tabName);
            	},
            	refreMineData(){
-           		this.$refs.mylocation.updateData();
+           		this.$refs.gps.updateData();
            	},
            	openLocation( vehicleId ) {
            		let _self = this;
@@ -123,7 +123,7 @@
 				    if(!androidIsOpen){ 
 				    	mui.toast("请手动开启GPS"); return;
 				    }
-				} */
+				}*/ 
            		setTimeout(function(){
 					_self.$router.push({
 		    			path :'/home/maps',

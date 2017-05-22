@@ -173,7 +173,8 @@
 	                success:function(result){
 	                	let req = JSON.parse(result.d)
 	                	if(req.Response.Header.ResultCode=="1"){
-	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                		mui.toast(req.Response.Header.ResultMsg)
+	                		_self.$router.go(-1)           	
 	                	}else{
 	                		mui.toast(req.Response.Header.ResultMsg)  
 	                	}

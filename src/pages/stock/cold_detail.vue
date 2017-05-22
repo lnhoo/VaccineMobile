@@ -2,7 +2,7 @@
 	<transition name="move" v-on:after-leave="leave">
 		<div class="cold-detail-page">
 			<v-header :headerObj="headerObj"></v-header>
-			<div class="device-wrap" v-if="hasData">
+			<div class="device-wrap" v-if="devices.length>0">
 				<div class="device-list flex text-c">
 					<span class="flex-items" :class="{'on':index==0}" @click="switchTab($event,device)" v-for="(device,index) in devices">
 						{{device.ShowName}}<br>温度：{{device.Temperature}}℃<br>湿度：{{device.Humidity}}℃
@@ -12,12 +12,11 @@
 				<div id="humidity" style="width: 96%;height:260px;margin:0 auto;"></div>	
 			</div>
 
-			<div class="no-data-msg" v-if="noData">
+			<div class="no-data-msg" v-if="devices.length==0">
 				<div class="ds-table">
 					<div class="ds-tell">无数据</div>
 				</div>
 			</div>
-
 		</div>
 	</transition>
 </template>
@@ -40,9 +39,7 @@
 				headerObj :{
 					title:'设备温湿度',
 					hasBack : true
-				}, 
-				noData : false,
-				hasData : true,
+				},
 				devices : []
 			}
 		},
@@ -85,9 +82,6 @@
 	                		_self.$nextTick(() => {
 						        _self.getEchatsData(_self.devices[0])
 						    })	
-                		}else{
-                			_self.hasData = false
-                			_self.noData = true
                 		}
                 	}
                 },

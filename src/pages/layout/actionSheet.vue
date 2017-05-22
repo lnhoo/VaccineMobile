@@ -31,7 +31,8 @@
 					MaxHumidity : 26,
 					MinHumidity : 12
 				},
-				showForm : false
+				showForm : false,
+				status : 1
 			}
 		},
 		mounted() {
@@ -42,7 +43,13 @@
 				this.$router.go(-1)
 			},
 			dealData(item,index) {
-				this.showForm = true;
+				this.status = (item=="完成运输"?1:2);
+				if(item=="上传当前位置"){
+					this.$router.go(-1);
+	               	this.$parent.refreMineData();
+				}else{
+					this.showForm = true;
+				}
 			},
 			closeMask() {
 				this.showForm = false;
@@ -63,7 +70,7 @@
 	                	 			"ResponseFormat":"2"\
 	                	 		},"Body":{\
 	                	 			"VehicleID" : "'+_self.$route.query.vehicleID+'",\
-	                	 			"Status" : "'+_self.$route.query.status+'",\
+	                	 			"Status" : "'+_self.status+'",\
 	                	 			"UserID" : "'+localStorage.getItem("userId")+'",\
 	                	 			"MaxTemperature" : "'+_self.params.MaxTemperature+'",\
 	                	 			"MinTemperature" : "'+_self.params.MinTemperature+'",\
