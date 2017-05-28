@@ -53,6 +53,7 @@
 	</div>
 </template>
 <script>
+	import '@/assets/scss/seedlings';
 	export default {
 		name : 'page-seedlings',
 		data(){
@@ -184,4 +185,4 @@
 		}
 	}
 </script>
-<style src="@/assets/css/pull"></style>
+<style scoped></style>

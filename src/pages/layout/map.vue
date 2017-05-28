@@ -99,14 +99,6 @@
 	}
 </script>
 <style scoped="scoped">
-	#allMap{
-		position: absolute;
-		top:75px;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		overflow: hidden;
-	}
 	.maps{
 		position: absolute;
 		z-index: 9;
@@ -115,5 +107,13 @@
 		background: #303f7a;
 		-webkit-transition:all .3s ease;
 		transition:all .3s ease;
+	}
+	#allMap{
+		position: absolute;
+		top:75px;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		overflow: hidden;
 	}
 </style>

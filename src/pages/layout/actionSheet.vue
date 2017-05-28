@@ -20,6 +20,7 @@
 	</div>
 </template>
 <script>
+	import '@/assets/scss/actionSheet'
 	export default {
 		name : 'actionSheet-ui',
 		data(){
@@ -101,54 +102,4 @@
 		}
 	}
 </script>
-
-<style>
-	.actionSheet-ui{
-		height: 100%;
-		width: 100%;
-	}
-	.actionSheet-ui .mask{
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		background: #000;
-		opacity: 0.4;
-	}
-	.actionSheet-ui .actionSheet{
-		position: fixed;
-		bottom: 0;
-		width: 100%;
-		left: 0;
-		text-align: center;
-	}
-	.actionSheet-ui .popMsg{
-		position: absolute;
-		height: 100%;
-		width: 100%;
-		background: transparent;
-		z-index: 11;
-	}
-	.actionSheet-ui .popMsgBox{
-		padding: 20px;
-		border-radius: 4px;
-		position: absolute;
-		width: 90%;
-		height: 420px;
-		background: #fff;
-		left: 5%;
-		top: 50%;
-		margin-top : -210px;
-		overflow-y : auto; 
-	}
-	.actionSheet-ui .popMsgBox label{
-		font-size: 12px;
-		margin-bottom: 5px;
-		color: #000;
-	}
-	.actionSheet-ui .mui-btn-primary{
-		padding: 8px 10px;
-	}
-	.actionSheet-ui .mui-table-view-cell{
-		font-size: 12px;
-	}
-</style>
+<style scoped></style>

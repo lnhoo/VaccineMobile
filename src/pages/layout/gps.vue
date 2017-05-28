@@ -101,23 +101,19 @@
 	}
 </script>
 
-<style>
+<style scoped lang="scss">
 	.gps{
 		position: fixed;
 		top: 75px;
 		left: 0;
 		bottom: 0;
 		right: 0;
-	}
-	.box{
-		height: 100%;
-		width: 100%;
-	}
-	.aaaas{
-		height: 100%;
-		width: 100%;
-	}
-	.gps .no-data-msg{
-		top:0;
+		.box{
+			height: 100%;
+			width: 100%;
+		}
+		.no-data-msg{
+			top:0;
+		}
 	}
 </style>
