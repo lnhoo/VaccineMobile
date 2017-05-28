@@ -34,13 +34,14 @@
 					<div class="ds-tell"><span class="mui-spinner"></span></div>
 				</div>
 			</div>
-
+			
 			<router-view></router-view>	
 		</div>
 	</transition>
 </template>
 <script>
-	import header from '@/pages/layout/header'
+	import header from '@/pages/layout/header';
+	import '@/assets/scss/nursery-stock';
     export default {
     	name: 'page-login',
     	components :{
@@ -148,7 +149,7 @@
 	                	let req = JSON.parse(result.d)
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)           	
-	                	}else{
+	                	}else{hg
 	                		_self.items = []
 	                		if(req.Response.Body.Items){
 	                			var vaccine = req.Response.Body.Items.Item
@@ -182,4 +183,4 @@
 		}
     }
 </script>
-<style scoped="scoped" src="@/assets/css/inoculation/nursery-stock"></style>
+<style scoped="scoped"></style>
