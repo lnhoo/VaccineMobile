@@ -16,6 +16,7 @@
 <script>
 	require('@/assets/js/d9')
 	let md5 = require("@/assets/js/md5")
+	import '@/assets/scss/login'
     export default {
     	name: 'page-login',
         data() {
@@ -94,4 +95,4 @@
     }
 </script>
 
-<style scoped src="@/assets/css/login"></style>
+<style scoped></style>
