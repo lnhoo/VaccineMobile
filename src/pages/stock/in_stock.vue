@@ -35,9 +35,9 @@
 							<span class="flex-items text-r">{{batch.Status}}</span>
 						</div>
 						<div class="mui-button-row">
-							<button v-if="batch.InRecipeNo == batch.InRecipeNo" class="mui-btn mui-btn-primary" type="button" @click="directStorage(batch,index)">直接入库</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary" type="button" @click="codeInStorage(batch.InRecipeNo)">扫码入库</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary" type="button" @click="codeOutCar(batch.InRecipeNo)">扫码卸苗</button>&nbsp;&nbsp;
+							<button v-if="batch.InRecipeNo == batch.InRecipeNo" class="mui-btn mui-btn-primary" type="button" @click="directStorage(batch,index)">直接入库</button>
+							<button class="mui-btn mui-btn-primary" type="button" @click="codeInStorage(batch.InRecipeNo)">扫码入库</button>
+							<button class="mui-btn mui-btn-primary" type="button" @click="codeOutCar(batch.InRecipeNo)">扫码卸苗</button>
 							<button class="mui-btn mui-btn-primary" type="button" @click="lookDetail(batch.InRecipeNo)">查看详情</button>
 						</div>
 					</div>

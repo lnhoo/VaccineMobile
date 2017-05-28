@@ -18,6 +18,7 @@
 </template>
 <script>
 	import Header from '@/pages/layout/header'
+	import '@/assets/scss/stock-list'
 	export default {
 		components:{
 			'v-header' : Header
@@ -91,6 +92,4 @@
 		}
 	}
 </script>
-<style scoped src="@/assets/css/stock/stock-list">
-	
-</style>
+<style scoped></style>
