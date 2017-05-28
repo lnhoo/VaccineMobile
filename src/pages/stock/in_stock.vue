@@ -4,40 +4,41 @@
 			<v-header :headerObj="headerObj"></v-header>
 			<ul class="mui-table-view" v-if="batchList.length>0">
 				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
-					<a class="mui-navigate-right" href="javascript:;">{{batch.VaccineName}}&nbsp;&nbsp;{{batch.BatchNo}}</a>
+					<a class="mui-navigate-right" href="javascript:;">{{batch.InRecipeNo}}</a>
 					<div class="mui-collapse-content">
 						<div class="flex pd10">
 							<span class="flex-items">入库单号</span>
-							<span class="flex-items text-r">{{batch.RecipeNo}}</span>
+							<span class="flex-items text-r">{{batch.InRecipeNo}}</span>
 						</div>
 						<div class="flex pd10">
-							<span class="flex-items">疫苗药品名称</span>
-							<span class="flex-items text-r">{{batch.VaccineName}}</span>
-						</div>
-						<div class="flex pd10">
-							<span class="flex-items">生产企业</span>
-							<span class="flex-items text-r">{{batch.ManufactureName}}</span>
-						</div>
-						<div class="flex pd10">
-							<span class="flex-items">入库总数量</span>
+							<span class="flex-items">入库疫苗总数量</span>
 							<span class="flex-items text-r">{{batch.Number}}</span>
 						</div>
 						<div class="flex pd10">
-							<span class="flex-items">已入库数量</span>
-							<span class="flex-items text-r">{{batch.InStorageNumber}}</span>
+							<span class="flex-items">已卸车疫苗数量</span>
+							<span class="flex-items text-r">{{batch.UnLoadNumber}}</span>
 						</div>
 						<div class="flex pd10">
-							<span class="flex-items">卸车数量</span>
-							<span class="flex-items text-r">{{batch.UnloadNumber}}</span>
+							<span class="flex-items">包装箱总数量</span>
+							<span class="flex-items text-r">{{batch.PackedNumber}}</span>
 						</div>
 						<div class="flex pd10">
-							<span class="flex-items">有效期</span>
-							<span class="flex-items text-r">{{batch.ShelfLife}}</span>
+							<span class="flex-items">已卸车包装箱数量</span>
+							<span class="flex-items text-r">{{batch.UnLoadPackeNumber}}</span>
 						</div>
-						<div class="mui-button-row pd10">
-							<button class="mui-btn mui-btn-primary" type="button" @click="directStorage(batch,index)">直接入库</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary" type="button" @click="codeInStorage(batch.SerialNo)">扫码入库</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary" type="button" @click="codeOutCar(batch.SerialNo)">扫码卸苗</button>
+						<div class="flex pd10">
+							<span class="flex-items">已入库包装箱数量</span>
+							<span class="flex-items text-r">{{batch.InStoragePackeNumber}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">入库单状态</span>
+							<span class="flex-items text-r">{{batch.Status}}</span>
+						</div>
+						<div class="mui-button-row">
+							<button v-if="batch.InRecipeNo == batch.InRecipeNo" class="mui-btn mui-btn-primary" type="button" @click="directStorage(batch,index)">直接入库</button>&nbsp;&nbsp;
+							<button class="mui-btn mui-btn-primary" type="button" @click="codeInStorage(batch.InRecipeNo)">扫码入库</button>&nbsp;&nbsp;
+							<button class="mui-btn mui-btn-primary" type="button" @click="codeOutCar(batch.InRecipeNo)">扫码卸苗</button>&nbsp;&nbsp;
+							<button class="mui-btn mui-btn-primary" type="button" @click="lookDetail(batch.InRecipeNo)">查看详情</button>
 						</div>
 					</div>
 				</li>
@@ -84,15 +85,10 @@
 		        	 			"Header":{\
 		            	 			"AppCode":"01",\
 		            	 			"AppTypeCode":"01",\
-		            	 			"FunCode":"0005",\
+		            	 			"FunCode":"0023",\
 		            	 			"ResponseFormat":"2"\
 		            	 		},"Body":{\
-		            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
-		            	 			"RecipeNo":"",\
-		            	 			"BatchNo":"",\
-		            	 			"Page":1,\
-		            	 			"PageSize":200,\
-		            	 			"Status":1\
+		            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'"\
 		            	 		}\
 		            	 	}\
 		        	 	}',
@@ -129,10 +125,17 @@
 				}
 				this.idx = idx;
 	            this.$router.push({
-	            	path  :'/home/in-stock/cold-list',
-	            	query : { serialNo : batch.SerialNo, type : '0' }
+	            	path  :'/home/in-stock/detail',
+	            	query : { 
+	            		inRecipeNo : batch.InRecipeNo,
+	            		total : batch.Number,
+	            		inStorageNumber : batch.InStorageNumber,
+	            		from : 'zjrk',
+	            		title: '入库单批号列表'
+	            	}
 	            });
 			},
+			// 扫码入库
 			codeInStorage(serialNo) {
 				this.$router.push({
 	            	path  :'/home/in-stock/cold-list',
@@ -197,6 +200,17 @@
 				let data = this.batchList[this.idx];
 				data.InStorageNumber = Math.floor(data.InStorageNumber)+Math.floor(number);
 				this.$set(this.batchList[this.idx],data);
+			},
+			// 查看详情
+			lookDetail( inRecipeNo ){
+				this.$router.push({
+					path : '/home/in-stock/detail',
+					query: {
+						inRecipeNo : inRecipeNo,
+						from : 'ckxq',
+						title: '入库单批号列表'
+					}
+				})
 			}
 		}
 	}

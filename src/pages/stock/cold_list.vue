@@ -14,6 +14,7 @@
 </template>
 <script>
 	import Header from '@/pages/layout/header'
+	import '@/assets/scss/stock-list'
 	export default {
 		components:{
 			'v-header' : Header
@@ -77,8 +78,16 @@
 		methods: {
 			inStorage : function( item ){
 				let _self = this;
-				plus.nativeUI.prompt( "待入库数量:100", function(e){
+				let total = Math.floor(_self.$route.query.total);
+				let inStorageNumber = Math.floor(_self.$route.query.inStorageNumber);
+				plus.nativeUI.prompt( "待入库数量:"+(total-inStorageNumber), function(e){
 					if(e.index == 0){
+						if(isNaN(e.value)){
+							mui.toast("请输入数字");return;
+						}
+						if(Math.floor(e.value)>(total-inStorageNumber)){
+							mui.toast("输入数量不能大于待入库数量");return;
+						}
 						_self.joinCold( item,e.value);
 					}
 				},"入库提示", "请输入入库数量", ["确定","取消"]);
@@ -188,4 +197,4 @@
 		}
 	}
 </script>
-<style scoped src="@/assets/css/stock/stock-list"></style>
+<style scoped></style>

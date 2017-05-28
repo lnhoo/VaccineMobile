@@ -51,6 +51,11 @@ export default new Router({
                       path: 'cold-list',
                       name: 'coldList',
                       component: resolve => require(['@/pages/stock/cold_list'], resolve)
+                    },
+                    {
+                      path: 'detail',
+                      name: 'detail',
+                      component: resolve => require(['@/pages/stock/detail'], resolve)
                     }
                 ]
             },
