@@ -1,0 +1,47 @@
+#allmapss{
+	position: absolute;
+	top:75px;
+	left: 0;
+	right: 0;
+	bottom: 120px;
+	overflow: hidden;
+}
+.maps{
+	position: fixed;
+	top:0;
+	bottom: 0;
+	width: 100%;
+	background: #303f7a;
+	-webkit-transition:all .3s ease;
+	transition:all .3s ease;
+}
+.footer-box{
+	position: fixed;
+	bottom: 5px;
+	width: 90%;
+	height: 110px;
+	left:5%;
+	background: #3D4897;
+	border-radius: 5px;
+	padding: 10px;
+	color:#fff;
+	overflow-y: auto;
+}
+.car-card{
+	display: inline-block;
+	padding: 1px 5px;
+	background: #6972B2;
+	border-radius: 20px;
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+.car-item{
+	margin-left: 6px;
+}
+.no-bg{
+	background: none;
+	padding-right: 0;
+}
+.tb td:first-child{
+	vertical-align: top;
+}
