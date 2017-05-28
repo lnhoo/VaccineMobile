@@ -2,8 +2,7 @@ import Vue from 'vue'
 import router from './router'
 import mui from '../js/mui.min.js'
 import App from './App'
-import '@/assets/css/common'
-
+import '@/assets/css/lib/common'
 Vue.config.productionTip = false
 
 window.mui=mui

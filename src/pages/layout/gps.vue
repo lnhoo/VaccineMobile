@@ -113,10 +113,6 @@
 		height: 100%;
 		width: 100%;
 	}
-	.aaaas{
-		height: 100%;
-		width: 100%;
-	}
 	.gps .no-data-msg{
 		top:0;
 	}

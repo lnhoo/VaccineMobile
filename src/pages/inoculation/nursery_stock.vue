@@ -41,6 +41,7 @@
 </template>
 <script>
 	import header from '@/pages/layout/header'
+	import '@/assets/scss/nursery-stock'
     export default {
     	name: 'page-login',
     	components :{
@@ -182,4 +183,4 @@
 		}
     }
 </script>
-<style scoped="scoped" src="@/assets/css/inoculation/nursery-stock"></style>
+<style scoped></style>

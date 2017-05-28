@@ -30,6 +30,7 @@
 </template>
 <script>
 	import header from '@/pages/layout/header'
+	import '@/assets/scss/traceability'
 	export default {
 		name:"page-vaccine-detail",
 		components :{
@@ -98,43 +99,5 @@
 	}
 </script>
 <style scoped="scoped">
-	.page-vaccine-detail{
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		background: #303F7A;
-		z-index: 999;
-		-webkit-transition:all .6s ease;
-		transition:all .6s ease;
-	}
-	.vaccine-detail{
-		position: absolute;
-		top: 75px;
-		left: 0;
-		right:0;
-		bottom: 0;
-		z-index: 999;
-		padding: 10px;
-		overflow-y: auto;
-		background: url("../../assets/images/b32.png") no-repeat; 
-		background-size:100% 100%; 
-	}
-	.wuza1{ background:url("../../assets/images/b33.png") no-repeat; background-size:100% 100%; position:absolute; left:10px; top:20px; width:50px; padding:25px 5px 25px 15px}
-	.wuza1 i{writing-mode:tb-rl; color:#a3a3a3; float:left; display:block; padding:0 4px 0 0}
-	.wuza1 i img{ width:15px; height:auto; margin-bottom:4px;}
-	.wuza1 span{writing-mode:tb-rl; color:#4096e1; font-size:16px;}
-	.wuza2{ padding:50px 0 0 80px;}
-	.wuza2 em{ display:block; text-align:center; padding:5px 0}
-	.wuza2 em img{ height:30px; width:auto}
-	.wuza2_a{ border:1px dashed #4096e1;border-radius:10px; padding:10px;}
-	.wuza2_a h3{ font-size:16px; color:#4096e1;}
-	.wuza2_a span{color:#a3a3a3; display:block; padding:10px 0; }
-	.wuza2_a span img{width:15px; height:auto;margin-top: 5px;float: left;margin-top: 2px;margin-right: 10px;}
-	.wuza2_a i{color:#a3a3a3; padding-left:15px;}
-	.vaccine-detail .title{
-		position: absolute;
-		top:20px;
-		left: 80px;
-	}
-
+	
 </style>

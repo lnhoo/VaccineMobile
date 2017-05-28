@@ -28,12 +28,9 @@
 	</div>
 </template>
 <script>
-	import header from '@/pages/layout/header'
+	import '@/assets/scss/mine'
 	export default {
 		name:"page-child-info",
-		components :{
-    		'v-header' : header
-    	},
 		data() {
 			return {
 				mineInfo : {
@@ -64,26 +61,4 @@
 		}
 	}
 </script>
-<style scoped="scoped">
-	.page-child-info{
-		position: absolute;
-		overflow: hidden;
-		-webkit-transition:all .3s ease;
-		transition:all .3s ease;
-		background: #fff;
-		font-size: 14px;
-		top:90px;
-		bottom: 44px;
-		left: 0;
-		right: 0;
-	}
-	.child-info-box{
-		position: fixed;
-		overflow: hidden;
-		top: 75px;
-		left: 0;
-		right: 0;
-		bottom: 50px;
-		z-index: 10;
-	}
-</style>
+<style scoped></style>

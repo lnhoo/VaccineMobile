@@ -4,54 +4,55 @@
 	overflow: hidden;
 	overflow-y:auto ;
 	text-align: center;
+	.top-icon{
+		width:100%;	
+		display:block;
+		text-align: center;
+		margin-top: 35%;
+	}
+	.img-wrap{
+		width:70px;
+		height:70px;
+		margin: 0 auto;
+		background: #f5f6f8;
+		border-radius: 50%;
+		overflow: hidden;
+	}
+	.mui-input-clear{
+		width: 80%;
+		border-radius: 40px;
+		border:1px solid #F2F2F2;
+		-webkit-box-shadow: 1px 1px 2px #E7EAEE;
+		-moz-box-shadow: 1px 1px 2px #E7EAEE;
+		box-shadow: 1px 1px 2px #E7EAEE;
+		margin-bottom: 30px;
+		font-size: 12px;
+		padding: 10px 0;
+	}
+	.login-btn{
+		width: 80%;
+		border-radius: 57px;
+		background:#4450a0; 
+		margin-top: 2em;
+		padding: 10px 0;
+	}
+	.login-frm{
+		padding-top: 4em;
+	}
+	input.user-name{
+	    background: url(../../assets/images/userName.png) 6ss% 45% no-repeat;
+	    background-size:19px;
+		padding-left: 50px;
+		background-color: white;
+	}
+	input.password{
+		background: url(../../assets/images/password.png) 6% 45% no-repeat;
+		background-size:18px;
+		padding-left: 50px;
+		background-color: white;
+	}
+	.message{width: 100%;text-align: center;padding-top: 2em;font-size: 12px;}
+	.message a{color:#6c708f;}
+
 }
-.top-icon{
-	width:100%;	
-	display:block;
-	text-align: center;
-	margin-top: 35%;
-}
-.img-wrap{
-	width:70px;
-	height:70px;
-	margin: 0 auto;
-	background: #f5f6f8;
-	border-radius: 50%;
-	overflow: hidden;
-}
-.mui-input-clear{
-	width: 80%;
-	border-radius: 40px;
-	border:1px solid #F2F2F2;
-	-webkit-box-shadow: 1px 1px 2px #E7EAEE;
-	-moz-box-shadow: 1px 1px 2px #E7EAEE;
-	box-shadow: 1px 1px 2px #E7EAEE;
-	margin-bottom: 30px;
-	font-size: 12px;
-	padding: 10px 0;
-}
-.login-btn{
-	width: 80%;
-	border-radius: 57px;
-	background:#4450a0; 
-	margin-top: 2em;
-	padding: 10px 0;
-}
-.login-frm{
-	padding-top: 4em;
-}
-input.user-name{
-    background: url(../../assets/images/userName.png) 6% 45% no-repeat;
-    background-size:19px;
-	padding-left: 50px;
-	background-color: white;
-}
-input.password{
-	background: url(../../assets/images/password.png) 6% 45% no-repeat;
-	background-size:18px;
-	padding-left: 50px;
-	background-color: white;
-}
-.message{width: 100%;text-align: center;padding-top: 2em;font-size: 12px;}
-.message a{color:#6c708f;}
 

@@ -57,6 +57,7 @@
 </template>
 
 <script>
+	import '@/assets/scss/home'
 	export default {
     	name: 'page-home-tab',
         data() {
@@ -74,5 +75,4 @@
     }
 </script>
 
-<style scoped src="@/assets/css/home">
-</style>
+<style scoped></style>
