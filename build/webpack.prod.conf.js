@@ -15,8 +15,7 @@ var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var env = config.build.env
 
 gulp.task('concatCss', function() {                                     
-    gulp.src(['./src/assets/css/mui.min.css'])                
-        .pipe(concat('mui.min.css'))                                   
+    gulp.src(['./src/assets/css/lib/mui.min.css'])                
         .pipe(minifyCss())                                              
         .pipe(gulp.dest('./dist/assets/css'));                                  
 })

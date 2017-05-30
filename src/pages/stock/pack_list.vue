@@ -1,0 +1,193 @@
+<template>
+	<transition name="move">
+		<div class="order-num">
+			<v-header :headerObj="headerObj"></v-header>
+			<ul class="mui-table-view" v-if="batchList.length>0">
+				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
+					<a class="mui-navigate-right" href="javascript:;">{{batch.PackedNo}}</a>
+					<div class="mui-collapse-content">
+						<div class="flex pd10">
+							<span class="flex-items">包装箱码</span>
+							<span class="flex-items text-r">{{batch.PackedNo}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">接收单位</span>
+							<span class="flex-items text-r">{{batch.NextOrgName}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">包装箱疫苗总数量</span>
+							<span class="flex-items text-r">{{batch.Number}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">状态</span>
+							<span class="flex-items text-r">{{batch.Status}}</span>
+						</div>
+						<div class="mui-button-row pd10">
+							<button class="mui-btn mui-btn-primary" type="button"  @click="toDetail(batch)">详情</button>
+							<button class="mui-btn mui-btn-primary" type="button" v-if="batch.StatusID=='1'"  @click="add(batch)">添加疫苗</button>
+							<button class="mui-btn mui-btn-primary" type="button" v-if="batch.StatusID=='1'" @click="del(batch.PackedNo,index)">删除包装箱</button>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div v-if="batchList.length==0" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#303f7a;">
+				<div class="ds-table">
+					<div class="ds-tell">{{noMessage}}</div>
+				</div>
+			</div>
+			<router-view></router-view>
+		</div>
+	</transition>
+</template>
+<script type="text/javascript">
+	import Header from '@/pages/layout/header'
+	export default {
+		name :'order-num',
+		components:{
+			"v-header" : Header
+		},
+		data() {
+			return {
+				headerObj :{
+					title:'包装箱列表',
+					hasBack : true
+				},
+				batchList:[],
+				noMessage : '暂无数据'
+			}
+		},
+		mounted(){
+			let _self = this;
+			mui.ajax({
+                type: "POST",
+                contentType:"application/json; charset=utf-8",
+                url : localStorage.getItem("http"),
+                data: {
+	        	 	strRequest:'{\
+	        	 		"Request":{\
+	        	 			"Header":{\
+	            	 			"AppCode":"01",\
+	            	 			"AppTypeCode":"01",\
+	            	 			"FunCode":"0027",\
+	            	 			"ResponseFormat":"2"\
+	            	 		},"Body":{\
+	            	 			"OutRecipeNo":"'+_self.$route.query.outRecipeNo+'"\
+	            	 		}\
+	            	 	}\
+	        	 	}',
+	        	 	RequestFormat:2
+	        	},
+                dataType:'json',
+                success:function(result){
+                	let req = JSON.parse(result.d)
+                	if(req.Response.Header.ResultCode=="1"){
+                		_self.noMessage = req.Response.Header.ResultMsg          	
+                	}else{
+                		let items = req.Response.Body.Items;
+
+                		console.log(items);
+
+                		if(items){
+                			let batch = items.Item
+	                		if(!(batch instanceof Array)){
+	                			_self.batchList.push( batch )
+	                		}else{
+	                			_self.batchList = batch
+	                		}
+                		}
+                	}
+                },
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					mui.toast(type);
+				}
+            });
+		},
+		methods : {
+			toDetail( batch ){
+				console.log(batch.PackedNo);
+				this.$router.push({
+					path : "/home/out-stock/pack-list/pack-detail",
+					query : {
+						coldValue : batch.PackedNo
+					}
+				})
+			},
+			add( batch ){
+				this.$router.push({
+					path : "/home/out-stock/pack-list/out-batch",
+					query : {
+						outRecipeNo : batch.OutRecipeNo,
+						packedNo : batch.PackedNo
+					}
+				})
+			},
+			del( packedNo,idx ){
+				let _self = this;
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data: {
+		        	 	strRequest:'{\
+		        	 		"Request":{\
+		        	 			"Header":{\
+		            	 			"AppCode":"01",\
+		            	 			"AppTypeCode":"01",\
+		            	 			"FunCode":"0030",\
+		            	 			"ResponseFormat":"2"\
+		            	 		},"Body":{\
+		            	 			"PackedNo":"'+packedNo+'"\
+		            	 		}\
+		            	 	}\
+		        	 	}',
+		        	 	RequestFormat:2
+		        	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		_self.noMessage = req.Response.Header.ResultMsg          	
+	                	}else{
+	                		mui.toast( req.Response.Header.ResultMsg );
+	                		_self.batchList.splice( idx,1 )
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            });
+			}
+		}
+	}
+</script>
+<style scoped>
+	.order-num{
+		height: 100%;
+		width: 100%;
+		background: #303f7a;
+		position: absolute;
+		color:#fff;
+		-webkit-transition:all .3s ease;
+ 		transition:all .3s ease;
+ 		overflow-y: auto;
+	}
+	.order-num .mui-table-view{
+		position: absolute;
+		top:75px;
+		bottom: 0;
+		left:0;
+		right: 0;
+		background: #303f7a;
+	}
+	.order-num .mui-collapse-content .flex-items{
+		font-size: 12px;
+	}
+	.order-num .mui-table-view-cell.mui-active{
+		background: transparent;
+	}
+	.order-num .mui-table-view-cell.mui-collapse .mui-collapse-content{
+		background: transparent;
+	}
+</style>
