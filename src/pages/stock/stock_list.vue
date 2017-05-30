@@ -1,5 +1,5 @@
 <template>
-	<transition name="move" v-on:after-leave="leave">
+	<transition name="move">
 		<div class="page-child-info">
 			<v-header :headerObj="headerObj"></v-header>
 			<div class="child-info-box">
@@ -41,12 +41,14 @@
 					title   : '库存列表',
 					hasBack : true
 				},
-				items : []
+				items : [],
+				fromId : null,
 			}
 		},
 		mounted(){
 			let _self = this;
 			let query = this.$route.query;
+			this.fromId =  query.fromId;
 			mui.ajax({
                 type: "POST",
                 contentType:"application/json; charset=utf-8",
@@ -76,7 +78,6 @@
                 		mui.toast(req.Response.Header.ResultMsg)           	
                 	}else{
                 		let items = req.Response.Body.Items;
-                		console.log(items)
                 		if(items){
                 			let stock = items.Item
 	                		if(!(stock instanceof Array)){
@@ -94,17 +95,21 @@
             }); 
 		},
 		methods:{
-			leave() {
-				this.$parent.homeRouter = false
-			},
 			outStock( item ){
 				let _self = this;
 				plus.nativeUI.prompt( "可出库数量："+item.Number, function(e){
 					if(e.index == 0){
+						if(isNaN(e.value)){
+							mui.toast("请输入数字");return;
+						}
 						if(Math.floor(e.value)>Math.floor(item.Number)){
 							mui.toast("没有足够的出库数量");return;
 						}
-						_self.outCold( item.coldStoreNo,e.value);
+						if(fromId=='out_batch'){
+							_self.addYM(item.ColdStoreNo,e.value)
+						}else{
+							_self.outCold( item.ColdStoreNo,e.value);	
+						}
 					}
 				},"提示", "请输入出库数量", ["确定","取消"]);
 			},
@@ -142,8 +147,50 @@
 	                	}else{
 	                		plus.nativeUI.closeWaiting();
 	                		mui.toast(req.Response.Header.ResultMsg)  
-	                		_self.$router.go(-1)
-	                		_self.$parent.roloadData()
+	                		_self.$router.go(-2)
+	                		//_self.$parent.roloadData()
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            });
+			},
+			addYM( coldStoreNo,number ){
+				let _self = this;
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data:{
+	            	 	strRequest:'{\
+	            	 		"Request":{\
+	            	 			"Header":{\
+	                	 			"AppCode":"01",\
+	                	 			"AppTypeCode":"01",\
+	                	 			"FunCode":"0029",\
+	                	 			"ResponseFormat":"2"\
+	                	 		},"Body":{\
+	                	 			"PackedNo":"'+_self.$route.query.packedNo+'",\
+	                	 			"OutSerialNo":"'+_self.$route.query.serialNo+'",\
+	                	 			"OutNumber":"'+number+'",\
+	                	 			"ColdStoreNo":"'+coldStoreNo+'"\
+	                	 		}\
+	                	 	}\
+	            	 	}',
+	            	 	RequestFormat:2
+	            	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                	}else{
+	                		//plus.nativeUI.closeWaiting();
+	                		mui.toast(req.Response.Header.ResultMsg)  
+	                		_self.$router.go(-2)
+	                		//_self.$parent.roloadData()
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){

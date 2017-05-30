@@ -74,7 +74,7 @@
                 },
 				error:function(xhr,type,errorThrown){
 					//异常处理；
-					alert(type);
+					mui.toast(type);
 				}
             }); 
 		},

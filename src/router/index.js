@@ -48,14 +48,33 @@ export default new Router({
                       component: resolve => require(['@/pages/layout/barcode'], resolve)
                     },
                     {
-                      path: 'cold-list',
-                      name: 'coldList',
-                      component: resolve => require(['@/pages/stock/cold_list'], resolve)
+                        path: 'cold-list',
+                        name: 'coldList',
+                        component: resolve => require(['@/pages/stock/cold_list'], resolve)
                     },
                     {
-                      path: 'detail',
-                      name: 'detail',
-                      component: resolve => require(['@/pages/stock/detail'], resolve)
+                        path: 'detail',
+                        name: 'detail',
+                        component: resolve => require(['@/pages/stock/detail'], resolve),
+                        children : [
+                            {
+                              path: 'cold-list',
+                              name: 'coldList',
+                              component: resolve => require(['@/pages/stock/cold_list'], resolve)
+                            }
+                        ]
+                    },
+                    {
+                        path: 'order-detail',
+                        name: 'orderDetail',
+                        component: resolve => require(['@/pages/stock/order_detail'], resolve),
+                        children : [
+                            {
+                              path: 'cold-list',
+                              name: 'coldList',
+                              component: resolve => require(['@/pages/stock/cold_list'], resolve)
+                            }
+                        ]
                     }
                 ]
             },
@@ -65,9 +84,38 @@ export default new Router({
                 component: resolve => require(['@/pages/stock/out_stock'], resolve),
                 children : [
                     {
-                      path: 'stock-list',
-                      name: 'stockList',
-                      component: resolve => require(['@/pages/stock/stock_list'], resolve)
+                        path: 'stock-list',
+                        name: 'stockList',
+                        component: resolve => require(['@/pages/stock/stock_list'], resolve)
+                    },
+                    {
+                        path: 'pack-list',
+                        name: 'packList',
+                        component: resolve => require(['@/pages/stock/pack_list'], resolve),
+                        children : [
+                            {
+                                path: 'pack-detail',
+                                name: 'packDetail',
+                                component: resolve => require(['@/pages/stock/pack_detail'], resolve)
+                            },
+                            {
+                                path: 'out-batch',
+                                name: 'outBatch',
+                                component: resolve => require(['@/pages/stock/out_batch'], resolve),
+                                children : [
+                                    {
+                                        path: 'stock-list',
+                                        name: 'stockList',
+                                        component: resolve => require(['@/pages/stock/stock_list'], resolve)
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        path: 'stock-detail',
+                        name: 'stockDetail',
+                        component: resolve => require(['@/pages/stock/stock_detail'], resolve)
                     }
                 ]
             },

@@ -3,7 +3,7 @@
 		<div class="stock-list">
 			<v-header :headerObj="headerObj"></v-header>
 			<div class="stock-box">
-				<div  class="stock-container" v-for="(item,index) in stockList" @click="type=='0'?inStorage(item):scanCode(item.ColdStoreNo)">
+				<div  class="stock-container" v-for="(item,index) in stockList" @click="type=='0'?inStorage(item):scanCode(item)">
 					<img src="../../assets/images/j17.png"/>
 					<b v-html="item.ColdStoreName"></b>
 					<span class="jz" v-html="customerName"></span>
@@ -78,17 +78,30 @@
 		methods: {
 			inStorage : function( item ){
 				let _self = this;
-				let total = Math.floor(_self.$route.query.total);
-				let inStorageNumber = Math.floor(_self.$route.query.inStorageNumber);
-				plus.nativeUI.prompt( "待入库数量:"+(total-inStorageNumber), function(e){
+				let total = "";
+				let inStorageNumber = "";
+				let finalNumber = 0; 
+				let queryParams = _self.$route.query;
+				if(!queryParams.packeNumber){
+					total = Math.floor(queryParams.total);
+					inStorageNumber = Math.floor(queryParams.inStorageNumber);
+					finalNumber = total-inStorageNumber;
+				}else{
+					finalNumber = Math.floor(queryParams.packeNumber);
+				}
+				plus.nativeUI.prompt( "待入库数量:"+finalNumber, function(e){
 					if(e.index == 0){
 						if(isNaN(e.value)){
 							mui.toast("请输入数字");return;
 						}
-						if(Math.floor(e.value)>(total-inStorageNumber)){
+						if( Math.floor(e.value) > finalNumber ){
 							mui.toast("输入数量不能大于待入库数量");return;
 						}
-						_self.joinCold( item,e.value);
+						if(!queryParams.packeNumber){
+							_self.joinCold( item, e.value );
+						}else{
+							_self.gotoUnbox( item,e.value );
+						}
 					}
 				},"入库提示", "请输入入库数量", ["确定","取消"]);
 			},
@@ -127,8 +140,8 @@
 	                	}else{
 	                		plus.nativeUI.closeWaiting();
 	                		mui.toast(req.Response.Header.ResultMsg)  
-	                		_self.$router.go(-1)
-	                		_self.$parent.roloadData( number )
+	                		_self.$router.go(-2)
+	                		//_self.$parent.roloadData( number )
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){
@@ -138,13 +151,13 @@
 	            }); 
 			},
 			// 扫描入库
-			scanCode(coldStoreNo) {
+			scanCode( item ) {
 				let _self = this;
 				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					var codeValue = result.split("|")[0];
 					if(codeValue){
-						_self.scanCodeInStock(codeValue,coldStoreNo)
+						_self.scanCodeInStock(item,codeValue)
 					}else{
 						mui.toast("无效二维码");
 					}
@@ -153,8 +166,54 @@
 					mui.toast("失败")
 				})
 			},
+			gotoUnbox( item,value ){
+				let _self = this;
+				let queryParams = _self.$route.query;
+				plus.nativeUI.showWaiting( "数据处理中..." );
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data:{
+	            	 	strRequest:'{\
+	            	 		"Request":{\
+	            	 			"Header":{\
+	                	 			"AppCode":"01",\
+	                	 			"AppTypeCode":"01",\
+	                	 			"FunCode":"0025",\
+	                	 			"ResponseFormat":"2"\
+	                	 		},"Body":{\
+	                	 			"RecipeNo":"'+queryParams.inRecipeNo+'",\
+	                	 			"ColdStoreNo":"'+item.ColdStoreNo+'",\
+	                	 			"OutSerialNo":"'+queryParams.outSerialNo+'",\
+	                	 			"InNumber":'+value+',\
+	                	 			"PackedNo":"'+queryParams.packedNo+'",\
+	                	 			"OperatorName":"'+localStorage.getItem("userName")+'"\
+	                	 		}\
+	                	 	}\
+	            	 	}',
+	            	 	RequestFormat:2
+	            	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                	}else{
+	                		plus.nativeUI.closeWaiting();
+	                		mui.toast(req.Response.Header.ResultMsg)  
+	                		_self.$router.go(-2)
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast( type );
+					}
+	            }); 
+			},
 			// 处理扫码入库
-			scanCodeInStock( codeValue , coldStoreNo){
+			scanCodeInStock( item,codeValue ){
+				let _self = this;
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -168,9 +227,8 @@
 	                	 			"FunCode":"0007",\
 	                	 			"ResponseFormat":"2"\
 	                	 		},"Body":{\
-	                	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
-	                	 			"BusType":1,\
-	                	 			"ColdStoreNo":"'+coldStoreNo+'",\
+	                	 			"InRecipeNo":"'+_self.$route.query.inRecipeNo+'",\
+	                	 			"ColdStoreNo":"'+item.ColdStoreNo+'",\
 	                	 			"OperatorName":"'+localStorage.getItem("userName")+'",\
 	                	 			"CodeValue":"'+codeValue+'"\
 	                	 		}\
@@ -183,9 +241,9 @@
 	                	let req = JSON.parse(result.d)
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)
-	                		_self.$router.go(-1)           	
 	                	}else{
-	                		mui.toast(req.Response.Header.ResultMsg)  
+	                		mui.toast(req.Response.Header.ResultMsg)
+	                		_self.$router.go(-1)        
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){

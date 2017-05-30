@@ -21,7 +21,7 @@
     	name: 'page-login',
         data() {
 			return {
-				'UserNo' : 'SY_Manager',
+				'UserNo' : 'Manager',
 				'UserPwd' : '123456'
 			}
 		},

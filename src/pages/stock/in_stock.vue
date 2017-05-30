@@ -2,7 +2,7 @@
 	<transition name="move">
 		<div class="order-num">
 			<v-header :headerObj="headerObj"></v-header>
-			<ul class="mui-table-view" v-if="batchList.length>0">
+			<ul class="mui-table-view ul-cls" v-if="batchList.length>0">
 				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
 					<a class="mui-navigate-right" href="javascript:;">{{batch.InRecipeNo}}</a>
 					<div class="mui-collapse-content">
@@ -35,17 +35,17 @@
 							<span class="flex-items text-r">{{batch.Status}}</span>
 						</div>
 						<div class="mui-button-row">
-							<button v-if="batch.InRecipeNo == batch.InRecipeNo" class="mui-btn mui-btn-primary" type="button" @click="directStorage(batch,index)">直接入库</button>
-							<button class="mui-btn mui-btn-primary" type="button" @click="codeInStorage(batch.InRecipeNo)">扫码入库</button>
-							<button class="mui-btn mui-btn-primary" type="button" @click="codeOutCar(batch.InRecipeNo)">扫码卸苗</button>
+							<button class="mui-btn mui-btn-primary" type="button" @click="selectOpt(index)">疫苗入库</button>&nbsp;&nbsp;
+							<button class="mui-btn mui-btn-primary" type="button" @click="codeOutCar(batch.InRecipeNo)">扫码卸苗</button>&nbsp;&nbsp;
 							<button class="mui-btn mui-btn-primary" type="button" @click="lookDetail(batch.InRecipeNo)">查看详情</button>
+
 						</div>
 					</div>
 				</li>
 			</ul>
 			<div v-if="batchList.length==0" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#303f7a;">
 				<div class="ds-table">
-					<div class="ds-tell">暂无数据</div>
+					<div class="ds-tell">{{message}}</div>
 				</div>
 			</div>
 			<router-view></router-view>	
@@ -62,11 +62,12 @@
 		data() {
 			return {
 				headerObj :{
-					title:'疫苗入库批号列表',
+					title:'疫苗入库单列表',
 					hasBack : true
 				},
 				batchList:[],
-				idx : 0
+				idx : 0,
+				message : '暂无数据'
 			}
 		},
 		mounted(){
@@ -98,10 +99,9 @@
 	                success:function(result){
 	                	let req = JSON.parse(result.d)
 	                	if(req.Response.Header.ResultCode=="1"){
-	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                		_self.message =  req.Response.Header.ResultMsg    	
 	                	}else{
 	                		let items = req.Response.Body.Items;
-	                		console.log(items)
 	                		if(items){
 	                			let batch = items.Item
 		                		if(!(batch instanceof Array)){
@@ -118,12 +118,12 @@
 					}
 	            });
 			},
-			// 直接入库 recipeNo入库单号
-			directStorage( batch,idx ) {
+			// 直接入库 
+			directStorage() {
+				let batch = this.batchList[this.idx];
 				if(Math.floor(batch.InStorageNumber)>=Math.floor(batch.Number)){
 					mui.toast("入库数量已满");return;
 				}
-				this.idx = idx;
 	            this.$router.push({
 	            	path  :'/home/in-stock/detail',
 	            	query : { 
@@ -136,20 +136,25 @@
 	            });
 			},
 			// 扫码入库
-			codeInStorage(serialNo) {
+			codeInStorage() {
+				let _self = this;
+				let batch = this.batchList[this.idx];
 				this.$router.push({
 	            	path  :'/home/in-stock/cold-list',
-	            	query : { serialNo : serialNo, type : '1' }
+	            	query : { 
+	            		type : '1',
+	            		inRecipeNo : batch.InRecipeNo 
+	            	}
 	            });
 			},
 			// 扫码卸苗
-			codeOutCar() {
+			codeOutCar(inRecipeNo) {
 				let _self = this;
 				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					var codeValue = result.split("|")[0];
 					if(codeValue){
-						_self.unCar(codeValue)	
+						_self.unCar(inRecipeNo,codeValue)
 					}else{
 						mui.toast("无效二维码");
 					}
@@ -159,12 +164,13 @@
 				})
 			},
 			// 扫码卸苗
-			unCar(coldValue){
+			unCar(inRecipeNo,coldValue){
+				let _self = this;
 				mui.ajax({
-	                type: "POST",
-	                contentType:"application/json; charset=utf-8",
-	                url : localStorage.getItem("http"),
-	                data: {
+		            type: "POST",
+		            contentType:"application/json; charset=utf-8",
+		            url : localStorage.getItem("http"),
+		            data: {
 		        	 	strRequest:'{\
 		        	 		"Request":{\
 		        	 			"Header":{\
@@ -174,27 +180,27 @@
 		            	 			"ResponseFormat":"2"\
 		            	 		},"Body":{\
 		            	 			"CodeValue":"'+coldValue+'",\
-		            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
+		            	 			"InRecipeNo":"'+inRecipeNo+'",\
 		            	 			"OperatorName":"'+localStorage.getItem("userName")+'"\
 		            	 		}\
 		            	 	}\
 		        	 	}',
 		        	 	RequestFormat:2
 		        	},
-	                dataType:'json',
-	                success:function(result){
-	                	let req = JSON.parse(result.d)
-	                	if(req.Response.Header.ResultCode=="1"){
-	                		mui.toast(req.Response.Header.ResultMsg)           	
-	                	}else{
-	                		mui.toast(req.Response.Header.ResultMsg) 
-	                	}
-	                },
+		            dataType:'json',
+		            success:function(result){
+		            	let req = JSON.parse(result.d)
+		            	if(req.Response.Header.ResultCode=="1"){
+		            		mui.toast(req.Response.Header.ResultMsg)          	
+		            	}else{
+		            		mui.toast(req.Response.Header.ResultMsg)
+		            	}
+		            },
 					error:function(xhr,type,errorThrown){
 						//异常处理；
 						mui.toast(type);
 					}
-	            });
+		        });
 			},
 			roloadData( number ) {
 				let data = this.batchList[this.idx];
@@ -211,6 +217,55 @@
 						title: '入库单批号列表'
 					}
 				})
+			},
+			selectOpt(idx){
+				this.idx = idx;
+				let _self = this;
+				var btnArray = [{title:"直接入库"},{title:"拆箱入库"},{title:"扫码入库"}];
+				plus.nativeUI.actionSheet( {
+					cancel:"取消",
+					buttons:btnArray
+				}, function(e){
+					var index = e.index;
+					switch (index){
+						case 1:
+							_self.directStorage();
+							break;
+						case 2:
+							_self.unboxing();
+							break;
+						case 3:
+							_self.codeInStorage();
+							break;
+					}
+				} );
+			},
+			// 拆箱入库
+			unboxing(){
+				let _self = this;
+				let batch = this.batchList[this.idx];
+				let content = plus.android.runtimeMainActivity();
+				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
+					let codeValue = result.split("|")[0];
+					if(codeValue){
+						_self.gotoUnboxing(batch.InRecipeNo,codeValue);
+					}else{
+						mui.toast("无效二维码");
+					}
+				}, function(result) {
+					//失败
+					mui.toast("失败")
+				})
+				
+			},
+			gotoUnboxing(inRecipeNo,codeValue){
+				this.$router.push({
+	            	path  :'/home/in-stock/order-detail',
+	            	query : { 
+	            		inRecipeNo : inRecipeNo,
+	            		codeValue  :codeValue
+	            	}
+	            });
 			}
 		}
 	}
@@ -225,7 +280,7 @@
 		-webkit-transition:all .3s ease;
  		transition:all .3s ease;
 	}
-	.order-num .mui-table-view{
+	.order-num .ul-cls{
 		position: absolute;
 		top:75px;
 		bottom: 0;

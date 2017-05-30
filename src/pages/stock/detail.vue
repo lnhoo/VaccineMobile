@@ -1,9 +1,9 @@
 <template>
 	<transition name="move">
-		<div class="order-num">
+		<div class="detail-page-box">
 			<v-header :headerObj="headerObj"></v-header>
-			<ul class="mui-table-view" v-if="batchList.length>0">
-				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
+			<ul class="mui-table-view ul-cls" v-if="batchList.length>0">
+				<li class="mui-table-view-cell  mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
 					<a class="mui-navigate-right" href="javascript:;">{{batch.VaccineName}}<span style="font-size:14px;float:right;padding-right:2em;">批号：{{batch.BatchNo}}</span></a>
 					<div class="mui-collapse-content">
 						<div class="flex pd10">
@@ -42,19 +42,19 @@
 					</div>
 				</li> 
 			</ul>
+			<router-view></router-view>	
 			<div v-if="batchList.length==0" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#303f7a;">
 				<div class="ds-table">
 					<div class="ds-tell">暂无数据</div>
 				</div>
 			</div>
-			<router-view></router-view>	
 		</div>
 	</transition>
 </template>
 <script type="text/javascript">
 	import Header from '@/pages/layout/header'
 	export default {
-		name :'order-num',
+		name :'detail-page-box',
 		components:{
 			"v-header" : Header
 		},
@@ -133,11 +133,11 @@
 				}
 				this.idx = idx;
 	            this.$router.push({
-	            	path  :'/home/in-stock/cold-list',
+	            	path  :'/home/in-stock/detail/cold-list',
 	            	query : { 
 	            		serialNo : batch.SerialNo, 
 	            		type : '0',
-	            		total : _self.$route.query.title,
+	            		total : _self.$route.query.total,
 	            		inStorageNumber :  _self.$route.query.inStorageNumber
 	            	}
 	            });
@@ -146,7 +146,7 @@
 	}
 </script>
 <style>
-	.order-num{
+	.detail-page-box{
 		height: 100%;
 		width: 100%;
 		background: #303f7a;
@@ -154,8 +154,12 @@
 		color:#fff;
 		-webkit-transition:all .3s ease;
  		transition:all .3s ease;
+ 		z-index: 1000;
 	}
-	.order-num .mui-table-view{
+	.mui-backdrop{
+		z-index: 998;
+	}
+	.detail-page-box .ul-cls{
 		position: absolute;
 		top:75px;
 		bottom: 0;
@@ -164,13 +168,13 @@
 		background: #303f7a;
 		overflow-y: auto;
 	}
-	.order-num .mui-collapse-content .flex-items{
+	.detail-page-box .mui-collapse-content .flex-items{
 		font-size: 12px;
 	}
-	.order-num .mui-table-view-cell.mui-active{
+	.detail-page-box .mui-table-view-cell.mui-active{
 		background: transparent;
 	}
-	.order-num .mui-table-view-cell.mui-collapse .mui-collapse-content{
+	.detail-page-box .mui-table-view-cell.mui-collapse .mui-collapse-content{
 		background: transparent;
 	}
 </style>
