@@ -217,7 +217,7 @@
 				this.idx = idx;
 				let _self = this;
 				let batch = this.batchList[this.idx];
-				var btnArray = [{title:"扫码出库"},{title:"添加包装箱"}];
+				var btnArray = [{title:"添加包装箱"},{title:"扫码出库"}];
 				if(batch.StatusID!="0" || batch.StatusID!="1"){
 					btnArray.splice( idx,1 );	
 				}
@@ -228,10 +228,10 @@
 					var index = e.index;
 					switch (index){
 						case 1:
-							_self.codeOutStorage();
+							_self.addPack();
 							break;
 						case 2:
-							_self.addPack();
+							_self.codeOutStorage();
 							break;
 					}
 				} );

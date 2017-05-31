@@ -93,10 +93,10 @@
 				mui.prompt('待入库数量:'+finalNumber, '数量', '提示', btnArray, function(e) {
 					if (e.index == 1) {
 						if(isNaN(e.value)){
-							mui.toast("请输入数字");return;
+							mui.toast("请输入数字");return false;
 						}
 						if( Math.floor(e.value) > finalNumber ){
-							mui.toast("输入数量不能大于待入库数量");return;
+							mui.toast("输入数量不能大于待入库数量");return false;
 						}
 						if(!queryParams.packeNumber){
 							_self.joinCold( item, e.value );
