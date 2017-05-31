@@ -114,7 +114,7 @@
            	},
            	openLocation( vehicleId ) {
            		let _self = this;
-           		/*if(plus.os.name=="Android"){   
+           		if(plus.os.name=="Android"){   
 				    var context = plus.android.importClass("android.content.Context"); 
 				    var locationManager=plus.android.importClass("android.location.LocationManager"); 
 				    var main = plus.android.runtimeMainActivity(); 
@@ -123,7 +123,7 @@
 				    if(!androidIsOpen){ 
 				    	mui.toast("请手动开启GPS"); return;
 				    }
-				}*/ 
+				}
            		setTimeout(function(){
 					_self.$router.push({
 		    			path :'/home/maps',

@@ -4,7 +4,7 @@
 			<v-header :headerObj="headerObj"></v-header>
 			<ul class="mui-table-view" v-if="batchList.length>0">
 				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
-					<a class="mui-navigate-right" href="javascript:;">{{batch.PackedNo}}</a>
+					<a class="mui-navigate-right" href="javascript:;">包装箱码：{{batch.PackedNo}}</a>
 					<div class="mui-collapse-content">
 						<div class="flex pd10">
 							<span class="flex-items">包装箱码</span>
@@ -23,9 +23,9 @@
 							<span class="flex-items text-r">{{batch.Status}}</span>
 						</div>
 						<div class="mui-button-row pd10">
-							<button class="mui-btn mui-btn-primary" type="button"  @click="toDetail(batch)">详情</button>
-							<button class="mui-btn mui-btn-primary" type="button" v-if="batch.StatusID=='1'"  @click="add(batch)">添加疫苗</button>
-							<button class="mui-btn mui-btn-primary" type="button" v-if="batch.StatusID=='1'" @click="del(batch.PackedNo,index)">删除包装箱</button>
+							<button class="mui-btn mui-btn-primary fl-r " type="button" v-if="batch.StatusID=='1'"  @click="add(batch)">添加疫苗</button>
+							<button class="mui-btn mui-btn-primary fl-r mr10" type="button" v-if="batch.StatusID=='1'" @click="del(batch.PackedNo,index)">删除包装箱</button>
+							<button class="mui-btn mui-btn-primary fl-r mr10" type="button"  @click="toDetail(batch)">详情</button>
 						</div>
 					</div>
 				</li>
@@ -162,32 +162,4 @@
 		}
 	}
 </script>
-<style scoped>
-	.order-num{
-		height: 100%;
-		width: 100%;
-		background: #303f7a;
-		position: absolute;
-		color:#fff;
-		-webkit-transition:all .3s ease;
- 		transition:all .3s ease;
- 		overflow-y: auto;
-	}
-	.order-num .mui-table-view{
-		position: absolute;
-		top:75px;
-		bottom: 0;
-		left:0;
-		right: 0;
-		background: #303f7a;
-	}
-	.order-num .mui-collapse-content .flex-items{
-		font-size: 12px;
-	}
-	.order-num .mui-table-view-cell.mui-active{
-		background: transparent;
-	}
-	.order-num .mui-table-view-cell.mui-collapse .mui-collapse-content{
-		background: transparent;
-	}
-</style>
+<style scoped></style>

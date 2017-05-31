@@ -19,7 +19,7 @@
 			</div>
 			<div class="no-data-msg" v-if="carList.length==0">
 				<div class="ds-table">
-					<div class="ds-tell">无数据</div>
+					<div class="ds-tell">{{message}}</div>
 				</div>
 			</div>
 		</div>
@@ -40,6 +40,7 @@
 					hasBack : true
 				}, 
 				map : null,
+				message : "无数据",
 				carList : []
 			}
 		},
@@ -68,10 +69,9 @@
                 success:function(result){
                 	let req = JSON.parse(result.d)
                 	if(req.Response.Header.ResultCode=="1"){
-                		mui.toast(req.Response.Header.ResultMsg)           	
+                		_self.message  =  req.Response.Header.ResultMsg;        	
                 	}else{
                 		let items = req.Response.Body.Items;
-                		console.log(items)
                 		if(items){
                 			let item = items.Item
 	                		if(!(item instanceof Array)){

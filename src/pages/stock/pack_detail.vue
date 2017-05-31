@@ -105,31 +105,4 @@
 		}
 	}
 </script>
-<style scoped>
-	.order-num{
-		height: 100%;
-		width: 100%;
-		background: #303f7a;
-		position: absolute;
-		color:#fff;
-		-webkit-transition:all .3s ease;
- 		transition:all .3s ease;
-	}
-	.order-num .mui-table-view{
-		position: absolute;
-		top:75px;
-		bottom: 0;
-		left:0;
-		right: 0;
-		background: #303f7a;
-	}
-	.order-num .mui-collapse-content .flex-items{
-		font-size: 12px;
-	}
-	.order-num .mui-table-view-cell.mui-active{
-		background: transparent;
-	}
-	.order-num .mui-table-view-cell.mui-collapse .mui-collapse-content{
-		background: transparent;
-	}
-</style>
+<style scoped></style>

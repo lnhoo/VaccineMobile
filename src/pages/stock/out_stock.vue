@@ -43,9 +43,9 @@
 							<span class="flex-items text-r">{{batch.Status}}</span>
 						</div>
 						<div class="mui-button-row pd10">
-							<button class="mui-btn mui-btn-primary" type="button" @click="selectOpt(index)">疫苗出库</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary" type="button"  @click="codeInCar(batch)">扫码装苗</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary" type="button" @click="packing(batch.OutRecipeNo)">疫苗装箱</button>
+							<button class="mui-btn mui-btn-primary fl-r" type="button" @click="selectOpt(index)">疫苗出库</button>&nbsp;&nbsp;
+							<button class="mui-btn mui-btn-primary fl-r mr10" type="button"  @click="codeInCar(batch)">扫码装苗</button>&nbsp;&nbsp;
+							<button class="mui-btn mui-btn-primary fl-r mr10" type="button" @click="packing(batch.OutRecipeNo)">疫苗装箱</button>
 						</div>
 					</div>
 				</li>
@@ -275,32 +275,4 @@
 		}
 	}
 </script>
-<style scoped>
-	.order-num{
-		height: 100%;
-		width: 100%;
-		background: #303f7a;
-		position: absolute;
-		color:#fff;
-		-webkit-transition:all .3s ease;
- 		transition:all .3s ease;
- 		overflow-y: auto;
-	}
-	.order-num .mui-table-view{
-		position: absolute;
-		top:75px;
-		bottom: 0;
-		left:0;
-		right: 0;
-		background: #303f7a;
-	}
-	.order-num .mui-collapse-content .flex-items{
-		font-size: 12px;
-	}
-	.order-num .mui-table-view-cell.mui-active{
-		background: transparent;
-	}
-	.order-num .mui-table-view-cell.mui-collapse .mui-collapse-content{
-		background: transparent;
-	}
-</style>
+<style scoped></style>

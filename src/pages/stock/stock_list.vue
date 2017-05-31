@@ -97,22 +97,22 @@
 		methods:{
 			outStock( item ){
 				let _self = this;
-				plus.nativeUI.prompt( "可出库数量："+item.Number, function(e){
-					if(e.index == 0){
+				var btnArray = ['取消', '确定'];
+				mui.prompt('可出库数量：'+item.Number, '数量', '提示', btnArray, function(e) {
+					if (e.index == 1) {
 						if(isNaN(e.value)){
-							mui.toast("请输入数字");return;
+							mui.toast("请输入数值");return false;
 						}
 						if(Math.floor(e.value)>Math.floor(item.Number)){
-							mui.toast("没有足够的出库数量");return;
+							mui.toast("没有足够的出库数量");return false;
 						}
-						alert(fromId)
-						if(fromId=="out_batch"){
+						if(_self.fromId=="out_batch"){
 							_self.addYM(item.ColdStoreNo,e.value)
 						}else{
 							_self.outCold( item.ColdStoreNo,e.value);	
 						}
-					}
-				},"提示", "请输入出库数量", ["确定","取消"]);
+					} 
+				})
 			},
 			outCold( coldStoreNo,number ) {
 				plus.nativeUI.showWaiting( "数据处理中..." );

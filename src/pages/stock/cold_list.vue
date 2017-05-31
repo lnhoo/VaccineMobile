@@ -89,8 +89,9 @@
 				}else{
 					finalNumber = Math.floor(queryParams.packeNumber);
 				}
-				plus.nativeUI.prompt( "待入库数量:"+finalNumber, function(e){
-					if(e.index == 0){
+				var btnArray = ['取消', '确定'];
+				mui.prompt('待入库数量:'+finalNumber, '数量', '提示', btnArray, function(e) {
+					if (e.index == 1) {
 						if(isNaN(e.value)){
 							mui.toast("请输入数字");return;
 						}
@@ -102,8 +103,8 @@
 						}else{
 							_self.gotoUnbox( item,e.value );
 						}
-					}
-				},"入库提示", "请输入入库数量", ["确定","取消"]);
+					} 
+				})
 			},
 			// 直接入库
 			joinCold(item,number) {

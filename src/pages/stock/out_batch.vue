@@ -42,7 +42,7 @@
 			</ul>
 			<div v-if="batchList.length==0" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#303f7a;">
 				<div class="ds-table">
-					<div class="ds-tell">暂无数据</div>
+					<div class="ds-tell">{{message}}</div>
 				</div>
 			</div>
 			<router-view></router-view>
@@ -62,7 +62,8 @@
 					title:'疫苗出库批号列表',
 					hasBack : true
 				},
-				batchList:[]
+				batchList:[],
+				message : "暂无数据"
 			}
 		},
 		mounted(){
@@ -95,7 +96,7 @@
                 success:function(result){
                 	let req = JSON.parse(result.d)
                 	if(req.Response.Header.ResultCode=="1"){
-                		mui.toast(req.Response.Header.ResultMsg)           	
+                		_self.message = req.Response.Header.ResultMsg         	
                 	}else{
                 		let items = req.Response.Body.Items;
                 		console.log(items)
@@ -133,32 +134,4 @@
 		}
 	}
 </script>
-<style scoped>
-	.order-num{
-		height: 100%;
-		width: 100%;
-		background: #303f7a;
-		position: absolute;
-		color:#fff;
-		-webkit-transition:all .3s ease;
- 		transition:all .3s ease;
- 		overflow-y: auto;
-	}
-	.order-num .mui-table-view{
-		position: absolute;
-		top:75px;
-		bottom: 0;
-		left:0;
-		right: 0;
-		background: #303f7a;
-	}
-	.order-num .mui-collapse-content .flex-items{
-		font-size: 12px;
-	}
-	.order-num .mui-table-view-cell.mui-active{
-		background: transparent;
-	}
-	.order-num .mui-table-view-cell.mui-collapse .mui-collapse-content{
-		background: transparent;
-	}
-</style>
+<style scoped></style>

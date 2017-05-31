@@ -11,7 +11,7 @@
 
 		<div class="no-data-msg" v-if="carList.length==0">
 			<div class="ds-table">
-				<div class="ds-tell">无数据</div>
+				<div class="ds-tell">{{message}}</div>
 			</div>
 		</div>
 	</div>
@@ -23,7 +23,8 @@
 	      	return {
 	      		idx : 1,
 	      		sts : 0,
-	      		carList : []
+	      		carList : [],
+	      		message : '暂无数据'
 	      	}
 	    },
 	    mounted() {
@@ -55,7 +56,7 @@
 	                success:function(result){
 	                	let req = JSON.parse(result.d)
 	                	if(req.Response.Header.ResultCode=="1"){
-	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                		_self.message = req.Response.Header.ResultMsg;           	
 	                	}else{
 	                		let items = req.Response.Body.Items;
 	                		console.log(items)
