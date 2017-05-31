@@ -105,7 +105,8 @@
 						if(Math.floor(e.value)>Math.floor(item.Number)){
 							mui.toast("没有足够的出库数量");return;
 						}
-						if(fromId=='out_batch'){
+						alert(fromId)
+						if(fromId=="out_batch"){
 							_self.addYM(item.ColdStoreNo,e.value)
 						}else{
 							_self.outCold( item.ColdStoreNo,e.value);	
