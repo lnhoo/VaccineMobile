@@ -219,7 +219,7 @@
 				let batch = this.batchList[this.idx];
 				var btnArray = [{title:"添加包装箱"},{title:"扫码出库"}];
 				if(batch.StatusID!="0" || batch.StatusID!="1"){
-					btnArray.splice( idx,1 );	
+					btnArray.splice( 1,1 );	
 				}
 				plus.nativeUI.actionSheet( {
 					cancel:"取消",
