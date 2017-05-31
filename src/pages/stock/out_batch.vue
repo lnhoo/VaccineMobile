@@ -126,7 +126,7 @@
 						shelfLife : batch.ShelfLife,
 						packedNo : _self.$route.query.packedNo,
 						serialNo : batch.SerialNo,
-						fromId : 'out_batch'
+						fromId : "out_batch"
 					}
 				})
 			}
