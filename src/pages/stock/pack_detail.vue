@@ -1,5 +1,5 @@
 <template>
-	<transition name="move">
+	<transition name="move" v-on:after-enter="enter">
 		<div class="order-num">
 			<v-header :headerObj="headerObj"></v-header>
 			<ul class="mui-table-view" v-if="batchList.length>0">
@@ -55,53 +55,52 @@
 				message : ''
 			}
 		},
-		mounted(){
-			let _self = this;
-			mui.ajax({
-                type: "POST",
-                contentType:"application/json; charset=utf-8",
-                url : localStorage.getItem("http"),
-                data: {
-	        	 	strRequest:'{\
-	        	 		"Request":{\
-	        	 			"Header":{\
-	            	 			"AppCode":"01",\
-	            	 			"AppTypeCode":"01",\
-	            	 			"FunCode":"0024",\
-	            	 			"ResponseFormat":"2"\
-	            	 		},"Body":{\
-	            	 			"InRecipeNo":"",\
-	            	 			"CodeValue":"'+_self.$route.query.coldValue+'"\
-	            	 		}\
-	            	 	}\
-	        	 	}',
-	        	 	RequestFormat:2
-	        	},
-                dataType:'json',
-                success:function(result){
-                	let req = JSON.parse(result.d)
-                	if(req.Response.Header.ResultCode=="1"){
-                		_self.message = req.Response.Header.ResultMsg          	
-                	}else{
-                		let items = req.Response.Body.Items;
-                		if(items){
-                			let batch = items.Item
-	                		if(!(batch instanceof Array)){
-	                			_self.batchList.push( batch )
-	                		}else{
-	                			_self.batchList = batch
-	                		}
-                		}
-                	}
-                },
-				error:function(xhr,type,errorThrown){
-					//异常处理；
-					mui.toast(type);
-				}
-            });
-		},
 		methods : {
-			
+			enter(){
+				let _self = this;
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data: {
+		        	 	strRequest:'{\
+		        	 		"Request":{\
+		        	 			"Header":{\
+		            	 			"AppCode":"01",\
+		            	 			"AppTypeCode":"01",\
+		            	 			"FunCode":"0024",\
+		            	 			"ResponseFormat":"2"\
+		            	 		},"Body":{\
+		            	 			"InRecipeNo":"",\
+		            	 			"CodeValue":"'+_self.$route.query.coldValue+'"\
+		            	 		}\
+		            	 	}\
+		        	 	}',
+		        	 	RequestFormat:2
+		        	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		_self.message = req.Response.Header.ResultMsg          	
+	                	}else{
+	                		let items = req.Response.Body.Items;
+	                		if(items){
+	                			let batch = items.Item
+		                		if(!(batch instanceof Array)){
+		                			_self.batchList.push( batch )
+		                		}else{
+		                			_self.batchList = batch
+		                		}
+	                		}
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            });
+			}
 		}
 	}
 </script>

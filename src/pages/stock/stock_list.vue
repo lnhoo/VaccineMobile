@@ -1,5 +1,5 @@
 <template>
-	<transition name="move">
+	<transition name="move" v-on:after-enter="enter">
 		<div class="page-child-info">
 			<v-header :headerObj="headerObj"></v-header>
 			<div class="child-info-box">
@@ -46,56 +46,56 @@
 				message : ''
 			}
 		},
-		mounted(){
-			let _self = this;
-			let query = this.$route.query;
-			this.fromId =  query.fromId;
-			mui.ajax({
-                type: "POST",
-                contentType:"application/json; charset=utf-8",
-                url : localStorage.getItem("http"),
-                data:{
-            	 	strRequest:'{\
-            	 		"Request":{\
-            	 			"Header":{\
-                	 			"AppCode":"01",\
-                	 			"AppTypeCode":"01",\
-                	 			"FunCode":"0018",\
-                	 			"ResponseFormat":"2"\
-                	 		},"Body":{\
-                	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
-                	 			"BatchNo":"'+query.batchNo+'",\
-                	 			"ProductCode":"'+query.productCode+'",\
-                	 			"ShelfLife":"'+query.shelfLife+'"\
-                	 		}\
-                	 	}\
-            	 	}',
-            	 	RequestFormat:2
-            	},
-                dataType:'json',
-                success:function(result){
-                	let req = JSON.parse(result.d)
-                	if(req.Response.Header.ResultCode=="1"){
-                		_self.message = req.Response.Header.ResultMsg        	
-                	}else{
-                		let items = req.Response.Body.Items;
-                		if(items){
-                			let stock = items.Item
-	                		if(!(stock instanceof Array)){
-	                			_self.items.push( stock )
-	                		}else{
-	                			_self.items = stock
-	                		}
-                		}
-                	}
-                },
-				error:function(xhr,type,errorThrown){
-					//异常处理；
-					mui.toast( type );
-				}
-            }); 
-		},
 		methods:{
+			enter(){
+				let _self = this;
+				let query = this.$route.query;
+				this.fromId =  query.fromId;
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data:{
+	            	 	strRequest:'{\
+	            	 		"Request":{\
+	            	 			"Header":{\
+	                	 			"AppCode":"01",\
+	                	 			"AppTypeCode":"01",\
+	                	 			"FunCode":"0018",\
+	                	 			"ResponseFormat":"2"\
+	                	 		},"Body":{\
+	                	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
+	                	 			"BatchNo":"'+query.batchNo+'",\
+	                	 			"ProductCode":"'+query.productCode+'",\
+	                	 			"ShelfLife":"'+query.shelfLife+'"\
+	                	 		}\
+	                	 	}\
+	            	 	}',
+	            	 	RequestFormat:2
+	            	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		_self.message = req.Response.Header.ResultMsg        	
+	                	}else{
+	                		let items = req.Response.Body.Items;
+	                		if(items){
+	                			let stock = items.Item
+		                		if(!(stock instanceof Array)){
+		                			_self.items.push( stock )
+		                		}else{
+		                			_self.items = stock
+		                		}
+	                		}
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast( type );
+					}
+	            }); 
+			},
 			outStock( item ){
 				let _self = this;
 				var btnArray = ['取消', '确定'];
