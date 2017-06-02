@@ -79,7 +79,7 @@
 	                		localStorage.setItem("codeList",JSON.stringify(codeList));
 	                		
 	                		_self.$router.push({ name: 'home'})
-	                		//plus.nativeUI.closeWaiting();
+	                		
 	                		
 	                	}
 	                },

@@ -59,6 +59,7 @@
 			}
 		},
 		mounted(){
+			plus.nativeUI.closeWaiting();
 			// 获取用户菜单权限集合
 			this.codeList = JSON.parse(localStorage.getItem("codeList"))
 		},
