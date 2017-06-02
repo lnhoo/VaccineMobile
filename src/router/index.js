@@ -116,6 +116,11 @@ export default new Router({
                         path: 'stock-detail',
                         name: 'stockDetail',
                         component: resolve => require(['@/pages/stock/stock_detail'], resolve)
+                    },
+                    {
+                        path: 'out-stock-detail',
+                        name: 'outStockDetail',
+                        component: resolve => require(['@/pages/stock/out_stock_detail'], resolve)
                     }
                 ]
             },

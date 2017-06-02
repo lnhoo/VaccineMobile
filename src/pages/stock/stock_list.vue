@@ -14,7 +14,7 @@
 			    			</td>
 			    			<td>库存量<br>
 			    				<span class="font-color">{{item.Number}}</span><br>
-			    				<span class="out-btn" @click="outStock(item)">出库</span>
+			    				<span class="out-btn" @click="outStock(item)">装箱</span>
 			    			</td>
 			    		</tr>
 			    	</table>
@@ -98,13 +98,14 @@
 			outStock( item ){
 				let _self = this;
 				var btnArray = ['取消', '确定'];
-				mui.prompt('可出库数量：'+item.Number, '数量', '提示', btnArray, function(e) {
+				var unOutNum = _self.$route.query.unOutNum;
+				mui.prompt('库存总数量：'+item.Number+"<br>待出库数量："+unOutNum, '数量', '提示', btnArray, function(e) {
 					if (e.index == 1) {
 						if(isNaN(e.value)){
 							mui.toast("请输入数值");return false;
 						}
-						if(Math.floor(e.value)>Math.floor(item.Number)){
-							mui.toast("没有足够的出库数量");return false;
+						if(Math.floor(e.value)>Math.floor(unOutNum)){
+							mui.toast("出货完成");return false;
 						}
 						if(_self.fromId=="out_batch"){
 							_self.addYM(item.ColdStoreNo,e.value)

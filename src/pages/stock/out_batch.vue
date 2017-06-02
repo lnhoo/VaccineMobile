@@ -127,6 +127,7 @@
 						shelfLife : batch.ShelfLife,
 						packedNo : _self.$route.query.packedNo,
 						serialNo : batch.SerialNo,
+						unOutNum : Math.floor(batch.Number) - Math.floor(batch.OutStorageNumber),
 						fromId : "out_batch"
 					}
 				})

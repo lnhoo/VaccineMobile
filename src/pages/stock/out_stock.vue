@@ -43,9 +43,12 @@
 							<span class="flex-items text-r">{{batch.Status}}</span>
 						</div>
 						<div class="mui-button-row pd10">
-							<button class="mui-btn mui-btn-primary fl-r" type="button" @click="selectOpt(index)">疫苗出库</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary fl-r mr10" type="button"  @click="codeInCar(batch)">扫码装苗</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary fl-r mr10" type="button" @click="packing(batch.OutRecipeNo)">疫苗装箱</button>
+							<div class="flex">
+								<span class="flex-items mui-btn-primary" @tap="codeOutStorage(index)">扫码出库</span>
+								<span class="flex-items mui-btn-primary" @tap="codeInCar(batch.OutRecipeNo)">扫码装车</span>
+								<span class="flex-items mui-btn-primary" @tap="packing(batch.OutRecipeNo)">疫苗装箱</span>
+								<span class="flex-items mui-btn-primary" @tap="toDetail(batch.OutRecipeNo)">详情</span>
+							</div>	
 						</div>
 					</div>
 				</li>
@@ -73,7 +76,6 @@
 					hasBack : true
 				},
 				batchList : [],
-				idx : 0,
 				noMessage : '暂无数据'
 			}
 		},
@@ -140,13 +142,12 @@
 			// 扫码出库
 			codeOutStorage() {
 				let _self = this;
-				let batch = this.batchList[this.idx];
 				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					//成功
 					var codeValue = result.split("|")[0];
 					if(codeValue){
-						_self.outData( batch.SerialNo,codeValue )
+						_self.outData( batch.outRecipeNo,codeValue )
 					}else{
 						mui.toast("无效二维码");
 					}
@@ -155,17 +156,25 @@
 					mui.toast("失败")
 				})
 			},
-			// 扫码装苗
-			codeInCar( item ) {
-				this.$router.push({
-					path : "/home/out-stock/stock-detail",
-					query : {
-						outRecipeNo : item.OutRecipeNo	
+			// 扫码装车
+			codeInCar( outRecipeNo ) {
+				let _self = this;
+				let content = plus.android.runtimeMainActivity();
+				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
+					//成功
+					var codeValue = result.split("|")[0];
+					if(codeValue){
+						_self.toJoinCar( outRecipeNo,codeValue )
+					}else{
+						mui.toast("无效二维码");
 					}
+				}, function(result) {
+					//失败
+					mui.toast("失败")
 				})
 			},
 			// 扫描出库
-			outData(serialNo,coldValue){
+			outData(outRecipeNo,coldValue){
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -179,8 +188,7 @@
 		            	 			"FunCode":"0013",\
 		            	 			"ResponseFormat":"2"\
 		            	 		},"Body":{\
-		            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
-		            	 			"SerialNo":"'+serialNo+'",\
+		            	 			"OutRecipeNo":"'+outRecipeNo+'",\
 		            	 			"CodeValue":"'+coldValue+'",\
 		            	 			"OperatorName":"'+localStorage.getItem("userName")+'"\
 		            	 		}\
@@ -203,41 +211,8 @@
 					}
 	            });
 			},
-			
-			// 疫苗装箱
-			packing( outRecipeNo ){
-				this.$router.push({
-					path : "/home/out-stock/pack-list",
-					query : {
-						outRecipeNo : outRecipeNo
-					}
-				})
-			},
-			selectOpt(idx){
-				this.idx = idx;
-				let _self = this;
-				let batch = this.batchList[this.idx];
-				var btnArray = [{title:"添加包装箱"},{title:"扫码出库"}];
-				if(batch.StatusID!="0" || batch.StatusID!="1"){
-					btnArray.splice( 1,1 );	
-				}
-				plus.nativeUI.actionSheet( {
-					cancel:"取消",
-					buttons:btnArray
-				}, function(e){
-					var index = e.index;
-					switch (index){
-						case 1:
-							_self.addPack();
-							break;
-						case 2:
-							_self.codeOutStorage();
-							break;
-					}
-				} );
-			},
-			addPack() {
-				let batch = this.batchList[this.idx];
+			// 处理扫码装车
+			toJoinCar(outRecipeNo,codeValue){
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -248,10 +223,12 @@
 		        	 			"Header":{\
 		            	 			"AppCode":"01",\
 		            	 			"AppTypeCode":"01",\
-		            	 			"FunCode":"0028",\
+		            	 			"FunCode":"0014",\
 		            	 			"ResponseFormat":"2"\
 		            	 		},"Body":{\
-		            	 			"OutRecipeNo":"'+batch.OutRecipeNo+'"\
+		            	 			"OutRecipeNo":"'+outRecipeNo+'",\
+		            	 			"CodeValue":"'+codeValue+'",\
+		            	 			"OperatorName":"'+localStorage.getItem("userName")+'"\
 		            	 		}\
 		            	 	}\
 		        	 	}',
@@ -271,6 +248,24 @@
 						mui.toast(type);
 					}
 	            });
+			},
+			// 疫苗装箱
+			packing( outRecipeNo ){
+				this.$router.push({
+					path : "/home/out-stock/pack-list",
+					query : {
+						outRecipeNo : outRecipeNo
+					}
+				})
+			},
+			
+			toDetail( outRecipeNo ) {
+				this.$router.push({
+					path : "/home/out-stock/out-stock-detail",
+					query : {
+						outRecipeNo : outRecipeNo
+					}
+				})
 			}
 		}
 	}

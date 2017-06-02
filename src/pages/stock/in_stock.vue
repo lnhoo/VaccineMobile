@@ -221,21 +221,26 @@
 			selectOpt(idx){
 				this.idx = idx;
 				let _self = this;
-				var btnArray = [{title:"直接入库"},{title:"拆箱入库"},{title:"扫码入库"}];
-				plus.nativeUI.actionSheet( {
+				let data = this.batchList[this.idx];
+				var btnArray = [{title:"扫码入库"},{title:"拆箱入库"}];
+				// 如果是入库单号与出库单号相同则显示直接入库
+				if(data.InRecipeNo == data.OutRecipeNo){
+					btnArray.push({title:"直接入库"});
+				}
+				plus.nativeUI.actionSheet({
 					cancel:"取消",
 					buttons:btnArray
 				}, function(e){
 					var index = e.index;
 					switch (index){
 						case 1:
-							_self.directStorage();
+							_self.codeInStorage();
 							break;
 						case 2:
 							_self.unboxing();
 							break;
 						case 3:
-							_self.codeInStorage();
+							_self.directStorage();
 							break;
 					}
 				} );

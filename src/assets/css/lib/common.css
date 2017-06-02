@@ -13,6 +13,12 @@ html,body{
 	overflow: hidden;
 
 }
+a:active{
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+    -ms-tap-highlight-color: rgba(0, 0, 0, 0);
+    -o-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 #app{
 	height: 100%;
 	background: #303f7a;
@@ -163,8 +169,8 @@ html,body{
 	position: absolute;
 	color:#fff;
 	-webkit-transition:all .3s ease;
-		transition:all .3s ease;
-		overflow-y: auto;
+	transition:all .3s ease;
+	overflow: hidden;
 }
 .order-num .mui-table-view{
 	position: absolute;
@@ -173,6 +179,7 @@ html,body{
 	left:0;
 	right: 0;
 	background: #303f7a;
+	overflow-y: auto;
 }
 .order-num .mui-collapse-content .flex-items{
 	font-size: 12px;
@@ -182,4 +189,22 @@ html,body{
 }
 .order-num .mui-table-view-cell.mui-collapse .mui-collapse-content{
 	background: transparent;
+}
+.flr-text{
+	font-size:14px;
+	padding-right:2em;
+	position: absolute;
+	right: 18px;
+}
+.flex .mui-btn-primary{
+	margin-right: 5px;
+	padding: 5px 0;
+}
+.flex span.mui-btn-primary:last-child{
+	margin-right: 0;
+}
+.add-packing-btn{
+	display: block;
+	width: 100%;
+	padding: 6px 12px;
 }

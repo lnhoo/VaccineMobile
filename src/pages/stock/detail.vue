@@ -4,7 +4,9 @@
 			<v-header :headerObj="headerObj"></v-header>
 			<ul class="mui-table-view ul-cls" v-if="batchList.length>0">
 				<li class="mui-table-view-cell  mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
-					<a class="mui-navigate-right" href="javascript:;">{{batch.VaccineName}}<span style="font-size:14px;float:right;padding-right:2em;">批号：{{batch.BatchNo}}</span></a>
+					<a class="mui-navigate-right" href="javascript:;">{{batch.VaccineName}}
+						<span class="flr-text">批号：{{batch.BatchNo}}</span>
+					</a>
 					<div class="mui-collapse-content">
 						<div class="flex pd10">
 							<span class="flex-items">疫苗名称</span>

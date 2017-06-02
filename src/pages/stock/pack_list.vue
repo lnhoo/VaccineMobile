@@ -2,7 +2,11 @@
 	<transition name="move">
 		<div class="order-num">
 			<v-header :headerObj="headerObj"></v-header>
+
 			<ul class="mui-table-view" v-if="batchList.length>0">
+				<li style="padding:10px 20px;">
+					<button class="mui-btn mui-btn-primary add-packing-btn" type="button" @tap="addPacking()">添加库房</button>	
+				</li>
 				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
 					<a class="mui-navigate-right" href="javascript:;">包装箱码：{{batch.PackedNo}}</a>
 					<div class="mui-collapse-content">
@@ -23,9 +27,13 @@
 							<span class="flex-items text-r">{{batch.Status}}</span>
 						</div>
 						<div class="mui-button-row pd10">
-							<button class="mui-btn mui-btn-primary fl-r " type="button" v-if="batch.StatusID=='1'"  @click="add(batch)">添加疫苗</button>
-							<button class="mui-btn mui-btn-primary fl-r mr10" type="button" v-if="batch.StatusID=='1'" @click="del(batch.PackedNo,index)">删除包装箱</button>
-							<button class="mui-btn mui-btn-primary fl-r mr10" type="button"  @click="toDetail(batch)">详情</button>
+							<div class="flex">
+								<span class="flex-items mui-btn-primary" v-if="batch.StatusID=='1'"  @tap="add(batch)">添加疫苗</span>
+
+								<span class="flex-items mui-btn-primary" v-if="batch.StatusID=='1'" @tap="del(batch.PackedNo,index)">删除包装箱</span>
+								<span class="flex-items mui-btn-primary" @tap="toDetail(batch)">详情</span>
+							</div>	
+
 						</div>
 					</div>
 				</li>
@@ -84,9 +92,6 @@
                 		_self.noMessage = req.Response.Header.ResultMsg          	
                 	}else{
                 		let items = req.Response.Body.Items;
-
-                		console.log(items);
-
                 		if(items){
                 			let batch = items.Item
 	                		if(!(batch instanceof Array)){
@@ -124,6 +129,7 @@
 			},
 			del( packedNo,idx ){
 				let _self = this;
+				plus.nativeUI.showWaiting( "删除中..." );
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -151,7 +157,48 @@
 	                	}else{
 	                		mui.toast( req.Response.Header.ResultMsg );
 	                		_self.batchList.splice( idx,1 )
+	                		plus.nativeUI.closeWaiting();
 	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            });
+			},
+			// 添加包装箱
+			addPacking(){
+				let _self = this;
+				plus.nativeUI.showWaiting( "正在添加..." );
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data: {
+		        	 	strRequest:'{\
+		        	 		"Request":{\
+		        	 			"Header":{\
+		            	 			"AppCode":"01",\
+		            	 			"AppTypeCode":"01",\
+		            	 			"FunCode":"0028",\
+		            	 			"ResponseFormat":"2"\
+		            	 		},"Body":{\
+		            	 			"OutRecipeNo":"'+_self.$route.query.outRecipeNo+'"\
+		            	 		}\
+		            	 	}\
+		        	 	}',
+		        	 	RequestFormat:2
+		        	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                	}else{
+	                		plus.nativeUI.closeWaiting();
+	                		_self.batchList.push( req.Response.Body.Items.Item )
+	                		mui.toast("添加成功"); 
+		                }
 	                },
 					error:function(xhr,type,errorThrown){
 						//异常处理；
