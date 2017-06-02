@@ -1,5 +1,5 @@
 <template>
-	<transition name="move">
+	<transition name="move" v-on:after-enter="enter">
 		<div class="order-num">
 			<v-header :headerObj="headerObj"></v-header>
 			<ul class="mui-table-view" v-if="batchList.length>0">
@@ -53,9 +53,9 @@
 					</div>
 				</li>
 			</ul>
-			<div v-if="batchList.length==0" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#303f7a;">
+			<div v-if="batchList.length==0"  class="no-data-msg">
 				<div class="ds-table">
-					<div class="ds-tell">{{noMessage}}</div>
+					<div class="ds-tell">{{noMessage}}<span v-if="!noMessage" class="mui-spinner"></span></div>
 				</div>
 			</div>
 			<router-view></router-view>
@@ -76,55 +76,54 @@
 					hasBack : true
 				},
 				batchList : [],
-				noMessage : '暂无数据'
+				noMessage : ''
 			}
 		},
-		mounted(){
-			let _self = this;
-			mui.ajax({
-                type: "POST",
-                contentType:"application/json; charset=utf-8",
-                url : localStorage.getItem("http"),
-                data: {
-	        	 	strRequest:'{\
-	        	 		"Request":{\
-	        	 			"Header":{\
-	            	 			"AppCode":"01",\
-	            	 			"AppTypeCode":"01",\
-	            	 			"FunCode":"0026",\
-	            	 			"ResponseFormat":"2"\
-	            	 		},"Body":{\
-	            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'"\
-	            	 		}\
-	            	 	}\
-	        	 	}',
-	        	 	RequestFormat:2
-	        	},
-                dataType:'json',
-                success:function(result){
-                	let req = JSON.parse(result.d)
-                	if(req.Response.Header.ResultCode=="1"){
-                		_self.noMessage = req.Response.Header.ResultMsg          	
-                	}else{
-                		let items = req.Response.Body.Items;
-                		if(items){
-                			console.log(items);
-                			let batch = items.Item
-	                		if(!(batch instanceof Array)){
-	                			_self.batchList.push( batch )
-	                		}else{
-	                			_self.batchList = batch
-	                		}
-                		}
-                	}
-                },
-				error:function(xhr,type,errorThrown){
-					//异常处理；
-					mui.toast(type);
-				}
-            });
-		},
 		methods : {
+			enter(){
+				let _self = this;
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data: {
+		        	 	strRequest:'{\
+		        	 		"Request":{\
+		        	 			"Header":{\
+		            	 			"AppCode":"01",\
+		            	 			"AppTypeCode":"01",\
+		            	 			"FunCode":"0026",\
+		            	 			"ResponseFormat":"2"\
+		            	 		},"Body":{\
+		            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'"\
+		            	 		}\
+		            	 	}\
+		        	 	}',
+		        	 	RequestFormat:2
+		        	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		_self.noMessage = req.Response.Header.ResultMsg          	
+	                	}else{
+	                		let items = req.Response.Body.Items;
+	                		if(items){
+	                			let batch = items.Item
+		                		if(!(batch instanceof Array)){
+		                			_self.batchList.push( batch )
+		                		}else{
+		                			_self.batchList = batch
+		                		}
+	                		}
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            });
+			},
 			/*directStorage( batch ) {
 				if(Math.floor(batch.OutStorageNumber)>=Math.floor(batch.Number)){
 					mui.toast("出库数量已达上限");return;

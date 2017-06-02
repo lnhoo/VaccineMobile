@@ -26,8 +26,8 @@ export default new Router({
                 ]
             },
             {   
-                path: 'cold-chain', 
-                name : 'coldChain',
+                path: 'list', 
+                name : 'list',
                 component: resolve => require(['@/pages/stock/list'], resolve),
                 children : [
                     {

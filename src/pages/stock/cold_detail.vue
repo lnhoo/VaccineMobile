@@ -1,5 +1,5 @@
 <template>
-	<transition name="move" v-on:after-leave="leave">
+	<transition name="move" v-on:after-enter="enter">
 		<div class="cold-detail-page">
 			<v-header :headerObj="headerObj"></v-header>
 			<div class="device-wrap" v-if="devices.length>0">
@@ -14,7 +14,7 @@
 
 			<div class="no-data-msg" v-if="devices.length==0">
 				<div class="ds-table">
-					<div class="ds-tell">无数据</div>
+					<div class="ds-tell">{{message}}<span v-if="!message" class="mui-spinner"></span></div>
 				</div>
 			</div>
 		</div>
@@ -40,65 +40,61 @@
 					title:'设备温湿度',
 					hasBack : true
 				},
-				devices : []
+				devices : [],
+				message : ''
 			}
 		},
-		mounted() {
-			let _self = this;
-			mui.ajax({
-                type: "POST",
-                contentType:"application/json; charset=utf-8",
-                url : localStorage.getItem("http"),
-                data: {
-	        	 	strRequest:'{\
-	        	 		"Request":{\
-	        	 			"Header":{\
-	            	 			"AppCode":"01",\
-	            	 			"AppTypeCode":"01",\
-	            	 			"FunCode":"0009",\
-	            	 			"ResponseFormat":"2"\
-	            	 		},"Body":{\
-	            	 			"ColdNo":"'+_self.$route.query.coldNo+'"\
-	            	 		}\
-	            	 	}\
-	        	 	}',
-	        	 	RequestFormat:2
-	        	},
-                dataType:'json',
-                success:function(result){
-                	let req = JSON.parse(result.d)
-                	if(req.Response.Header.ResultCode=="1"){
-                		mui.toast(req.Response.Header.ResultMsg)           	
-                	}else{
-                		let items = req.Response.Body.Items;
-                		if(items){
-                			let devices = items.Item
-                			console.log(devices)
-	                		if(!(devices instanceof Array)){
-	                			_self.devices.push( devices )
-	                		}else{
-	                			_self.devices = devices
-	                		}
-	                		_self.$nextTick(() => {
-						        _self.getEchatsData(_self.devices[0])
-						    })	
-                		}
-                	}
-                },
-				error:function(xhr,type,errorThrown){
-					//异常处理；
-					mui.toast(type);
-				}
-            });
-		},
 		methods : {
-			leave() {
-				this.$parent.listRouter = false
+			enter() {
+				let _self = this;
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data: {
+		        	 	strRequest:'{\
+		        	 		"Request":{\
+		        	 			"Header":{\
+		            	 			"AppCode":"01",\
+		            	 			"AppTypeCode":"01",\
+		            	 			"FunCode":"0009",\
+		            	 			"ResponseFormat":"2"\
+		            	 		},"Body":{\
+		            	 			"ColdNo":"'+_self.$route.query.coldNo+'"\
+		            	 		}\
+		            	 	}\
+		        	 	}',
+		        	 	RequestFormat:2
+		        	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		_self.message = req.Response.Header.ResultMsg          	
+	                	}else{
+	                		let items = req.Response.Body.Items;
+	                		if(items){
+	                			let devices = items.Item
+		                		if(!(devices instanceof Array)){
+		                			_self.devices.push( devices )
+		                		}else{
+		                			_self.devices = devices
+		                		}
+		                		_self.$nextTick(() => {
+							        _self.getEchatsData(_self.devices[0])
+							    })	
+	                		}
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            });
 			},
 			switchTab( e,device ) {
 				// 如果是当前设备就不请求数据
 				if(e.target.className.indexOf("on")!=-1)return;
-
 				var flexItems = mui(".device-list .flex-items")
 				for( var i=0; i<flexItems.length; i++ ){
 					flexItems[i].className = "flex-items"
@@ -132,11 +128,9 @@
 	                dataType:'json',
 	                success:function(result){
 	                	let req = JSON.parse(result.d)
-	                	console.log(req)
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
-	                		console.log(req)
 	                		let detailArr = []
 	                		let detail = req.Response.Body.Items.Item
 	                		if(!(detail instanceof Array)){
@@ -193,8 +187,6 @@
 			},
 			initEcharts(options) {
 		        var echart = echarts.init(document.getElementById(options.id));
-		        console.log(options.maxValue)
-		        console.log(options.minValue)
 		        var option = {
 		            title: {
 		                text: options.text,

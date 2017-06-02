@@ -45,7 +45,7 @@
 		                <span><b>运输监控</b><i>Transportation</i></span>
 		                <img src="../../assets/images/j26.png" class="img2"/>
 		            </a>
-		            <a href="javascript:;" class="cf" @tap="goPage('home/cold-chain','Monitor_003')">
+		            <a href="javascript:;" class="cf" @tap="goPage('home/list','Monitor_003')">
 		            	<img src="../../assets/images/j29.png" class="img1"/>
 		                <span><b>冷链监控</b><i>Cold chain<br/>monitoring</i></span>
 		                <img src="../../assets/images/j27.png" class="img2"/>

@@ -38,9 +38,9 @@
 					</div>
 				</li>
 			</ul>
-			<div v-if="batchList.length==0" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#303f7a;">
+			<div v-if="batchList.length==0"  class="no-data-msg" >
 				<div class="ds-table">
-					<div class="ds-tell">{{noMessage}}</div>
+					<div class="ds-tell">{{message}}<span v-if="!message" class="mui-spinner"></span></div>
 				</div>
 			</div>
 			<router-view></router-view>
@@ -61,7 +61,7 @@
 					hasBack : true
 				},
 				batchList:[],
-				noMessage : '暂无数据'
+				message : ''
 			}
 		},
 		mounted(){
@@ -89,7 +89,7 @@
                 success:function(result){
                 	let req = JSON.parse(result.d)
                 	if(req.Response.Header.ResultCode=="1"){
-                		_self.noMessage = req.Response.Header.ResultMsg          	
+                		_self.message = req.Response.Header.ResultMsg          	
                 	}else{
                 		let items = req.Response.Body.Items;
                 		if(items){

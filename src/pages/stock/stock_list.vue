@@ -21,7 +21,7 @@
 			    </div>
 			    <div class="no-data-msg" v-if="items.length==0">
 					<div class="ds-table">
-						<div class="ds-tell">无数据</div>
+						<div class="ds-tell">{{message}}<span v-if="!message" class="mui-spinner"></span></div>
 					</div>
 				</div>
 			</div>
@@ -43,6 +43,7 @@
 				},
 				items : [],
 				fromId : null,
+				message : ''
 			}
 		},
 		mounted(){
@@ -75,7 +76,7 @@
                 success:function(result){
                 	let req = JSON.parse(result.d)
                 	if(req.Response.Header.ResultCode=="1"){
-                		mui.toast(req.Response.Header.ResultMsg)           	
+                		_self.message = req.Response.Header.ResultMsg        	
                 	}else{
                 		let items = req.Response.Body.Items;
                 		if(items){
@@ -101,6 +102,7 @@
 				var unOutNum = _self.$route.query.unOutNum;
 				mui.prompt('库存总数量：'+item.Number+"<br>待出库数量："+unOutNum, '数量', '提示', btnArray, function(e) {
 					if (e.index == 1) {
+						if(!e.value)return false;
 						if(isNaN(e.value)){
 							mui.toast("请输入数值");return false;
 						}

@@ -11,7 +11,7 @@
 
 		<div class="no-data-msg" v-if="carList.length==0">
 			<div class="ds-table">
-				<div class="ds-tell">{{message}}</div>
+				<div class="ds-tell">{{message}}<span v-if="!message" class="mui-spinner"></span></div>
 			</div>
 		</div>
 	</div>
@@ -24,7 +24,7 @@
 	      		idx : 1,
 	      		sts : 0,
 	      		carList : [],
-	      		message : '暂无数据'
+	      		message : ''
 	      	}
 	    },
 	    mounted() {

@@ -4,21 +4,19 @@
 			<v-header :headerObj="headerObj"></v-header>
 			<ul class="mui-table-view ul-cls" v-if="batchList.length>0">
 				<li class="mui-table-view-cell  mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
-					<a class="mui-navigate-right" href="javascript:;">{{batch.VaccineName}}
-						<span class="flr-text">批号：{{batch.BatchNo}}</span>
-					</a>
+					<a class="mui-navigate-right" href="javascript:;">{{batch.RecipeNo}}</a>
 					<div class="mui-collapse-content">
 						<div class="flex pd10">
 							<span class="flex-items">疫苗名称</span>
 							<span class="flex-items text-r">{{batch.VaccineName}}</span>
 						</div>
 						<div class="flex pd10">
-							<span class="flex-items">批号</span>
-							<span class="flex-items text-r">{{batch.BatchNo}}</span>
-						</div>
-						<div class="flex pd10">
 							<span class="flex-items">厂家名称</span>
 							<span class="flex-items text-r">{{batch.ManufactureName}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">接收单位</span>
+							<span class="flex-items text-r">{{batch.RevOrgName}}</span>
 						</div>
 						
 						<div class="flex pd10">
@@ -26,28 +24,36 @@
 							<span class="flex-items text-r">{{batch.ShelfLife}}</span>
 						</div>
 						<div class="flex pd10">
-							<span class="flex-items">入库总数量</span>
+							<span class="flex-items">出库总数量</span>
 							<span class="flex-items text-r">{{batch.Number}}</span>
 						</div>
 						<div class="flex pd10">
-							<span class="flex-items">已入库数量</span>
-							<span class="flex-items text-r">{{batch.InStorageNumber}}</span>
+							<span class="flex-items">已出库数量</span>
+							<span class="flex-items text-r">{{batch.OutStorageNumber}}</span>
 						</div>
 						<div class="flex pd10">
-							<span class="flex-items">入库单状态</span>
-							<span class="flex-items text-r">{{batch.InStorageStatus}}</span>
+							<span class="flex-items">卸车数量</span>
+							<span class="flex-items text-r">{{batch.LoadNumber}}</span>
 						</div>
-						<div class="mui-button-row">
-							<button v-if="fromId=='zjrk'" class="mui-btn mui-btn-primary fl-r" type="button" @click="gotoStock(batch,index)">入&nbsp;&nbsp;库</button>
-						</div>
+						<div class="flex pd10">
+							<span class="flex-items">出库单状态</span>
+							<span class="flex-items text-r">
+								<span v-if="batch.OutStorageStatus=='0'">登记出库</span>
+								<span v-if="batch.OutStorageStatus=='1'">出库中</span>
+								<span v-if="batch.OutStorageStatus=='2'">已出库</span>
+								<span v-if="batch.OutStorageStatus=='3'">作废</span>
+								<span v-if="batch.OutStorageStatus=='4'">运输中</span>
+								<span v-if="batch.OutStorageStatus=='5'">完成运输</span>
 
+							</span>
+						</div>
 					</div>
 				</li> 
 			</ul>
 			<router-view></router-view>	
-			<div v-if="batchList.length==0" class="no-data-msg">
+			<div v-if="batchList.length==0"  class="no-data-msg" >
 				<div class="ds-table">
-					<div class="ds-tell">暂无数据</div>
+					<div class="ds-tell">{{message}}<span v-if="!message" class="mui-spinner"></span></div>
 				</div>
 			</div>
 		</div>
@@ -63,19 +69,15 @@
 		data() {
 			return {
 				headerObj :{
-					title:'',
+					title:'出库单详情',
 					hasBack : true
 				},
 				batchList:[],
-				idx : 0,
-				fromId : null
-				
+				message : ""
 			}
 		},
 		mounted(){
 			let _self = this;
-			_self.fromId = _self.$route.query.from;
-			_self.headerObj.title = _self.$route.query.title;
            	mui.ajax({
                 type: "POST",
                 contentType:"application/json; charset=utf-8",
@@ -86,11 +88,11 @@
 	        	 			"Header":{\
 	            	 			"AppCode":"01",\
 	            	 			"AppTypeCode":"01",\
-	            	 			"FunCode":"0005",\
+	            	 			"FunCode":"0015",\
 	            	 			"ResponseFormat":"2"\
 	            	 		},"Body":{\
 	            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
-	            	 			"RecipeNo":"'+_self.$route.query.inRecipeNo+'",\
+	            	 			"RecipeNo":"'+_self.$route.query.outRecipeNo+'",\
 	            	 			"BatchNo":"",\
 	            	 			"Page":1,\
 	            	 			"PageSize":200\
@@ -106,10 +108,9 @@
                 		mui.toast(req.Response.Header.ResultMsg)           	
                 	}else{
 	                	if(req.Response.Header.ResultCode=="1"){
-	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                		_self.message = req.Response.Header.ResultMsg          	
 	                	}else{
 	                		let items = req.Response.Body.Items;
-	                		console.log(items)
 	                		if(items){
 	                			let batch = items.Item
 		                		if(!(batch instanceof Array)){
@@ -128,22 +129,7 @@
             });
 		},
 		methods : {
-			gotoStock(batch,idx){
-				let _self = this;
-				if(Math.floor(batch.InStorageNumber)>=Math.floor(batch.Number)){
-					mui.toast("该批号已完成入库");return;
-				}
-				this.idx = idx;
-	            this.$router.push({
-	            	path  :'/home/in-stock/detail/cold-list',
-	            	query : { 
-	            		serialNo : batch.SerialNo, 
-	            		type : '0',
-	            		total : _self.$route.query.total,
-	            		inStorageNumber :  _self.$route.query.inStorageNumber
-	            	}
-	            });
-			}
+			
 		}
 	}
 </script>

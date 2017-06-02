@@ -23,7 +23,9 @@
 		        <br>
 		        <br>
 		        <br>
-		        <button type="button" class="mui-btn mui-btn-danger mui-btn-block" style="width:90%;margin:10px auto;" @click="logout()">退出登录</button>
+		        <p style="padding:0 5%;">
+		        	<button type="button" class="mui-btn mui-btn-danger add-packing-btn"  @click="logout()">退出登录</button>	
+		        </p>
 		</div>
 	</div>
 </template>

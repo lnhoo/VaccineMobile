@@ -1,5 +1,5 @@
 <template>
-	<transition name="move" v-on:after-leave="leave">
+	<transition name="move" v-on:after-enter="enter">
 		<div class="maps">
 			<v-header :headerObj="headerObj"></v-header>
 			<div id="allmapss"></div>
@@ -19,7 +19,7 @@
 			</div>
 			<div class="no-data-msg" v-if="carList.length==0">
 				<div class="ds-table">
-					<div class="ds-tell">{{message}}</div>
+					<div class="ds-tell">{{message}}<span v-if="!message" class="mui-spinner"></span></div>
 				</div>
 			</div>
 		</div>
@@ -40,58 +40,55 @@
 					hasBack : true
 				}, 
 				map : null,
-				message : "无数据",
+				message : "",
 				carList : []
 			}
 		},
-		mounted() {
-			let _self = this;
-			mui.ajax({
-                type: "POST",
-                contentType:"application/json; charset=utf-8",
-                url : localStorage.getItem("http"),
-                data: {
-	        	 	strRequest:'{\
-	        	 		"Request":{\
-	        	 			"Header":{\
-	            	 			"AppCode":"01",\
-	            	 			"AppTypeCode":"01",\
-	            	 			"FunCode":"0011",\
-	            	 			"ResponseFormat":"2"\
-	            	 		},"Body":{\
-	            	 			"OrgCode":"'+localStorage.getItem("customerCode")+'"\
-	            	 		}\
-	            	 	}\
-	        	 	}',
-	        	 	RequestFormat:2
-	        	},
-                dataType:'json',
-                success:function(result){
-                	let req = JSON.parse(result.d)
-                	if(req.Response.Header.ResultCode=="1"){
-                		_self.message  =  req.Response.Header.ResultMsg;        	
-                	}else{
-                		let items = req.Response.Body.Items;
-                		if(items){
-                			let item = items.Item
-	                		if(!(item instanceof Array)){
-	                			_self.carList.push( item )
-	                		}else{
-	                			_self.carList = item
-	                		}
-	                		_self.initMap(_self.carList[0])
-                		}
-                	}
-                },
-				error:function(xhr,type,errorThrown){
-					//异常处理；
-					mui.toast(type);
-				}
-            });
-		},
 		methods:{
-			leave() {
-				this.$parent.homeRouter = false
+			enter() {
+				let _self = this;
+				mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data: {
+		        	 	strRequest:'{\
+		        	 		"Request":{\
+		        	 			"Header":{\
+		            	 			"AppCode":"01",\
+		            	 			"AppTypeCode":"01",\
+		            	 			"FunCode":"0011",\
+		            	 			"ResponseFormat":"2"\
+		            	 		},"Body":{\
+		            	 			"OrgCode":"'+localStorage.getItem("customerCode")+'"\
+		            	 		}\
+		            	 	}\
+		        	 	}',
+		        	 	RequestFormat:2
+		        	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		_self.message  =  req.Response.Header.ResultMsg;        	
+	                	}else{
+	                		let items = req.Response.Body.Items;
+	                		if(items){
+	                			let item = items.Item
+		                		if(!(item instanceof Array)){
+		                			_self.carList.push( item )
+		                		}else{
+		                			_self.carList = item
+		                		}
+		                		_self.initMap(_self.carList[0])
+	                		}
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						mui.toast(type);
+					}
+	            });
 			},
 			switchTab(car) {
 				if(!car.GPSY){

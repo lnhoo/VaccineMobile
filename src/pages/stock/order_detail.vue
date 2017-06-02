@@ -34,7 +34,7 @@
 					</div>
 				</li> 
 			</ul>
-			<div v-if="detailList.length==0" style="position:absolute;top:75px;left:0;right:0;bottom:0;z-index:10;background:#303f7a;">
+			<div v-if="detailList.length==0" class="no-data-msg">
 				<div class="ds-table">
 					<div class="ds-tell">{{message}}</div>
 				</div>
