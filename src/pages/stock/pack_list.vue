@@ -5,7 +5,7 @@
 
 			<ul class="mui-table-view" v-if="batchList.length>0">
 				<li style="padding:10px 20px;">
-					<button class="mui-btn mui-btn-primary add-packing-btn" type="button" @tap="addPacking()">添加库房</button>	
+					<button class="mui-btn mui-btn-primary add-packing-btn" type="button" @tap="addPacking()">添加包装箱</button>	
 				</li>
 				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
 					<a class="mui-navigate-right" href="javascript:;">包装箱码：{{batch.PackedNo}}</a>
@@ -28,8 +28,7 @@
 						</div>
 						<div class="mui-button-row pd10">
 							<div class="flex">
-								<span class="flex-items mui-btn-primary" v-if="batch.StatusID=='1'"  @tap="add(batch)">添加疫苗</span>
-
+								<span class="flex-items mui-btn-primary" v-if="batch.StatusID=='1' && outNumber!=packedNumber"  @tap="add(batch)">添加疫苗</span>
 								<span class="flex-items mui-btn-primary" v-if="batch.StatusID=='1'" @tap="del(batch.PackedNo,index)">删除包装箱</span>
 								<span class="flex-items mui-btn-primary" @tap="toDetail(batch)">详情</span>
 							</div>	
@@ -61,7 +60,9 @@
 					hasBack : true
 				},
 				batchList:[],
-				message : ''
+				message : '',
+				outNumber : '',
+				packedNumber : ''
 			}
 		},
 		methods : {
@@ -95,6 +96,8 @@
 	                		let items = req.Response.Body.Items;
 	                		if(items){
 	                			let batch = items.Item
+	                			_self.outNumber = req.Response.Body.OutNumber
+	                			_self.packedNumber = req.Response.Body.PackedNumber
 		                		if(!(batch instanceof Array)){
 		                			_self.batchList.push( batch )
 		                		}else{

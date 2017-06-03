@@ -4,15 +4,13 @@
 			<v-header :headerObj="headerObj"></v-header>
 			<ul class="mui-table-view" v-if="batchList.length>0">
 				<li class="mui-table-view-cell mui-collapse" v-for="(batch,index) in batchList" :class="{'mui-active':index==0}">
-					<a class="mui-navigate-right" href="javascript:;">{{batch.PackedNo}}</a>
+					<a class="mui-navigate-right" href="javascript:;">{{batch.VaccineName}}
+						<span class="flr-text">批号:{{batch.BatchNo}}</span>
+					</a>
 					<div class="mui-collapse-content">
 						<div class="flex pd10">
 							<span class="flex-items">包装箱唯一号</span>
 							<span class="flex-items text-r">{{batch.PackedNo}}</span>
-						</div>
-						<div class="flex pd10">
-							<span class="flex-items">疫苗名称</span>
-							<span class="flex-items text-r">{{batch.VaccineName}}</span>
 						</div>
 						<div class="flex pd10">
 							<span class="flex-items">生产企业</span>
@@ -23,7 +21,7 @@
 							<span class="flex-items text-r">{{batch.ShelfLife}}</span>
 						</div>
 						<div class="flex pd10">
-							<span class="flex-items">已卸车包装数量</span>
+							<span class="flex-items">疫苗总数量</span>
 							<span class="flex-items text-r">{{batch.PackeNumber}}</span>
 						</div>
 					</div>
