@@ -21,13 +21,13 @@
     	name: 'page-login',
         data() {
 			return {
-				'UserNo' : '',
-				'UserPwd' : ''
+				'UserNo' : 'SY_Manager',
+				'UserPwd' : '123456'
 			}
 		},
 		mounted(){
-			localStorage.setItem("http","http://61.189.37.57:10004/WebService.asmx/CallFun");
-			//localStorage.setItem("http","http://114.55.90.253:10999/WebService.asmx/CallFun");
+			//localStorage.setItem("http","http://61.189.37.57:10004/WebService.asmx/CallFun");
+			localStorage.setItem("http","http://114.55.90.253:10999/WebService.asmx/CallFun");
 		},
 		methods: {
            	login (){

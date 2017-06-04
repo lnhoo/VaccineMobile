@@ -100,14 +100,14 @@
 				let _self = this;
 				var btnArray = ['取消', '确定'];
 				var unOutNum = _self.$route.query.unOutNum;
-				mui.prompt('库存总数量：'+item.Number+"<br>待出库数量："+unOutNum, '数量', '提示', btnArray, function(e) {
+				mui.prompt('库存总数量：'+item.Number+"\r\n待出库数量："+unOutNum, '数量', '提示', btnArray, function(e) {
 					if (e.index == 1) {
 						if(!e.value)return false;
 						if(isNaN(e.value)){
 							mui.toast("请输入数值");return false;
 						}
 						if(Math.floor(e.value)>Math.floor(unOutNum)){
-							mui.toast("出货完成");return false;
+							mui.toast("数量不能大于待出库数量");return false;
 						}
 						if(_self.fromId=="out_batch"){
 							_self.addYM(item.ColdStoreNo,e.value)
@@ -194,7 +194,7 @@
 	                		//plus.nativeUI.closeWaiting();
 	                		mui.toast(req.Response.Header.ResultMsg)  
 	                		_self.$router.go(-2)
-	                		//_self.$parent.roloadData()
+	                		_self.$parent.$parent.initData();
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){

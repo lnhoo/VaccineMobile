@@ -31,10 +31,14 @@
 							<span class="flex-items text-r">{{batch.OutStorageNumber}}</span>
 						</div>
 						<div class="flex pd10">
+							<span class="flex-items">已装箱数量</span>
+							<span class="flex-items text-r">{{batch.PackingNumber}}</span>
+						</div>
+						<div class="flex pd10">
 							<span class="flex-items">有效期</span>
 							<span class="flex-items text-r">{{batch.ShelfLife}}</span>
 						</div>
-						<div class="mui-button-row pd10">
+						<div class="mui-button-row pd10" v-if="batch.Number!=batch.PackingNumber">
 							<button class="mui-btn mui-btn-primary fl-r" type="button" @click="inPack(batch)">装 &nbsp;&nbsp;箱</button>
 						</div>
 					</div>
@@ -117,6 +121,7 @@
 					}
 	            });
 			},
+			// 装箱
 			inPack( batch ){
 				let _self = this;
 				this.$router.push({
@@ -127,7 +132,7 @@
 						shelfLife : batch.ShelfLife,
 						packedNo : _self.$route.query.packedNo,
 						serialNo : batch.SerialNo,
-						unOutNum : Math.floor(batch.Number) - Math.floor(batch.OutStorageNumber),
+						unOutNum : Math.floor(batch.Number) - Math.floor(batch.PackingNumber),
 						fromId : "out_batch"
 					}
 				})

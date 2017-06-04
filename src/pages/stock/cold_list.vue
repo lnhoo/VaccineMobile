@@ -1,5 +1,5 @@
 <template>
-	<transition name="move">
+	<transition name="move" v-on:after-enter="enter">
 		<div class="stock-list">
 			<v-header :headerObj="headerObj"></v-header>
 			<div class="stock-box">
@@ -7,7 +7,13 @@
 					<img src="../../assets/images/j17.png"/>
 					<b v-html="item.ColdStoreName"></b>
 					<span class="jz" v-html="customerName"></span>
-				</div>	
+				</div>
+					
+				<div v-if="stockList.length==0"  class="no-data-msg" >
+					<div class="ds-table">
+						<div class="ds-tell">{{message}}<span v-if="!message" class="mui-spinner"></span></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</transition>
@@ -28,54 +34,59 @@
 				},
 				listRouter : false,
 				stockList : [],
+				message : '',
 				type : '',
 				customerName : localStorage.getItem("customerName")
 			}
 		},
-		mounted(){
-			this.type = this.$route.query.type
-			let _self = this;
-			mui('.mui-scroll-wrapper').scroll({
-				indicators: false //是否显示滚动条
-			});
-            mui.ajax({
-                type: "POST",
-                contentType:"application/json; charset=utf-8",
-                url : localStorage.getItem("http"),
-                data:{
-            	 	strRequest:'{\
-            	 		"Request":{\
-            	 			"Header":{\
-                	 			"AppCode":"01",\
-                	 			"AppTypeCode":"01",\
-                	 			"FunCode":"0004",\
-                	 			"ResponseFormat":"2"\
-                	 		},"Body":{\
-                	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
-                	 			"Page":1,\
-                	 			"PageSize":200,\
-                	 			"Status":"1"\
-                	 		}\
-                	 	}\
-            	 	}',
-            	 	RequestFormat:2
-            	},
-                dataType:'json',
-                success:function(result){
-                	let req = JSON.parse(result.d)
-                	if(req.Response.Header.ResultCode=="1"){
-                		mui.toast(req.Response.Header.ResultMsg)           	
-                	}else{
-                		_self.stockList = req.Response.Body.Items.Item.reverse()
-                	}
-                },
-				error:function(xhr,type,errorThrown){
-					//异常处理；
-					mui.toast(type);
-				}
-            }); 
-		},
 		methods: {
+			enter(){
+				this.initData();
+			},
+			initData(){
+				this.type = this.$route.query.type
+				let _self = this;
+				mui('.mui-scroll-wrapper').scroll({
+					indicators: false //是否显示滚动条
+				});
+	            mui.ajax({
+	                type: "POST",
+	                contentType:"application/json; charset=utf-8",
+	                url : localStorage.getItem("http"),
+	                data:{
+	            	 	strRequest:'{\
+	            	 		"Request":{\
+	            	 			"Header":{\
+	                	 			"AppCode":"01",\
+	                	 			"AppTypeCode":"01",\
+	                	 			"FunCode":"0004",\
+	                	 			"ResponseFormat":"2"\
+	                	 		},"Body":{\
+	                	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
+	                	 			"Page":1,\
+	                	 			"PageSize":200,\
+	                	 			"Status":"1"\
+	                	 		}\
+	                	 	}\
+	            	 	}',
+	            	 	RequestFormat:2
+	            	},
+	                dataType:'json',
+	                success:function(result){
+	                	let req = JSON.parse(result.d)
+	                	if(req.Response.Header.ResultCode=="1"){
+	                		_self.message = req.Response.Header.ResultMsg          	
+	                	}else{
+	                		_self.stockList = req.Response.Body.Items.Item.reverse()
+	                	}
+	                },
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						_self.message = type 
+					}
+	            }); 
+			},
+			// 直接入库
 			inStorage : function( item ){
 				let _self = this;
 				let total = "";
@@ -244,7 +255,9 @@
 	                		mui.toast(req.Response.Header.ResultMsg)
 	                	}else{
 	                		mui.toast(req.Response.Header.ResultMsg)
-	                		_self.$router.go(-1)        
+	                		_self.$parent.batchList = [];
+	                		_self.$parent.initData();
+	                		_self.$router.go(-1);      
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){

@@ -2,7 +2,6 @@
 	<transition name="move" v-on:after-enter="enter">
 		<div class="order-num">
 			<v-header :headerObj="headerObj"></v-header>
-
 			<ul class="mui-table-view" v-if="batchList.length>0">
 				<li style="padding:10px 20px;">
 					<button class="mui-btn mui-btn-primary add-packing-btn" type="button" @tap="addPacking()">添加包装箱</button>	
@@ -28,7 +27,7 @@
 						</div>
 						<div class="mui-button-row pd10">
 							<div class="flex">
-								<span class="flex-items mui-btn-primary" v-if="batch.StatusID=='1' && outNumber!=packedNumber"  @tap="add(batch)">添加疫苗</span>
+								<span class="flex-items mui-btn-primary" v-if="batch.StatusID=='1' && (outNumber!=packedNumber || !outNumber)"  @tap="add(batch)">添加疫苗</span>
 								<span class="flex-items mui-btn-primary" v-if="batch.StatusID=='1'" @tap="del(batch.PackedNo,index)">删除包装箱</span>
 								<span class="flex-items mui-btn-primary" @tap="toDetail(batch)">详情</span>
 							</div>	
@@ -38,6 +37,9 @@
 				</li>
 			</ul>
 			<div v-if="batchList.length==0"  class="no-data-msg" >
+				<div style="padding:10px 20px;">
+					<button type="button" class="mui-btn mui-btn-primary add-packing-btn"  @tap="addPacking()">添加包装箱</button>		
+				</div>
 				<div class="ds-table">
 					<div class="ds-tell">{{message}}<span v-if="!message" class="mui-spinner"></span></div>
 				</div>
@@ -62,12 +64,17 @@
 				batchList:[],
 				message : '',
 				outNumber : '',
-				packedNumber : ''
+				packedNumber : '',
+				outRecipeNo : this.$route.query.outRecipeNo
 			}
 		},
 		methods : {
 			enter(){
+				this.initData();
+			},
+			initData(){
 				let _self = this;
+				_self.batchList = [];
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -81,7 +88,7 @@
 		            	 			"FunCode":"0027",\
 		            	 			"ResponseFormat":"2"\
 		            	 		},"Body":{\
-		            	 			"OutRecipeNo":"'+_self.$route.query.outRecipeNo+'"\
+		            	 			"OutRecipeNo":"'+_self.outRecipeNo+'"\
 		            	 		}\
 		            	 	}\
 		        	 	}',
@@ -132,7 +139,7 @@
 			},
 			del( packedNo,idx ){
 				let _self = this;
-				plus.nativeUI.showWaiting( "删除中..." );
+				//plus.nativeUI.showWaiting( "删除中..." );
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -158,9 +165,13 @@
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		_self.noMessage = req.Response.Header.ResultMsg          	
 	                	}else{
-	                		mui.toast( req.Response.Header.ResultMsg );
+	                		mui.toast("删除成功"); 
+	                		_self.$parent.initData();
 	                		_self.batchList.splice( idx,1 )
-	                		plus.nativeUI.closeWaiting();
+	                		if(_self.batchList.length==0){
+	                			_self.message = "无包装箱"
+	                		}
+	                		//plus.nativeUI.closeWaiting();
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){
@@ -172,7 +183,7 @@
 			// 添加包装箱
 			addPacking(){
 				let _self = this;
-				plus.nativeUI.showWaiting( "正在添加..." );
+				//plus.nativeUI.showWaiting( "正在添加..." );
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -198,9 +209,10 @@
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
-	                		plus.nativeUI.closeWaiting();
+	                		//plus.nativeUI.closeWaiting();
 	                		_self.batchList.push( req.Response.Body.Items.Item )
 	                		mui.toast("添加成功"); 
+	                		_self.$parent.initData();
 		                }
 	                },
 					error:function(xhr,type,errorThrown){

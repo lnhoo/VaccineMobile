@@ -44,7 +44,7 @@
 						</div>
 						<div class="mui-button-row pd10">
 							<div class="flex">
-								<span class="flex-items mui-btn-primary" @tap="codeOutStorage(index)">扫码出库</span>
+								<span class="flex-items mui-btn-primary" @tap="codeOutStorage(batch.OutRecipeNo)">扫码出库</span>
 								<span class="flex-items mui-btn-primary" @tap="codeInCar(batch.OutRecipeNo)">扫码装车</span>
 								<span class="flex-items mui-btn-primary" @tap="packing(batch.OutRecipeNo)">疫苗装箱</span>
 								<span class="flex-items mui-btn-primary" @tap="toDetail(batch.OutRecipeNo)">详情</span>
@@ -76,12 +76,17 @@
 					hasBack : true
 				},
 				batchList : [],
+				customerCode : localStorage.getItem("customerCode"),
 				noMessage : ''
 			}
 		},
 		methods : {
 			enter(){
+				this.initData();
+			},
+			initData(){
 				let _self = this;
+				_self.batchList = [];
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -95,7 +100,7 @@
 		            	 			"FunCode":"0026",\
 		            	 			"ResponseFormat":"2"\
 		            	 		},"Body":{\
-		            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'"\
+		            	 			"CustomerCode":"'+_self.customerCode+'"\
 		            	 		}\
 		            	 	}\
 		        	 	}',
@@ -139,14 +144,14 @@
 				})
 			},*/
 			// 扫码出库
-			codeOutStorage() {
+			codeOutStorage(outRecipeNo) {
 				let _self = this;
 				let content = plus.android.runtimeMainActivity();
 				plus.D9Plugin.scanQrCode("参数1", "参数1", "参数1", content.getIntent(), function(result) {
 					//成功
 					var codeValue = result.split("|")[0];
 					if(codeValue){
-						_self.outData( batch.outRecipeNo,codeValue )
+						_self.outData( outRecipeNo,codeValue )
 					}else{
 						mui.toast("无效二维码");
 					}
@@ -173,7 +178,8 @@
 				})
 			},
 			// 扫描出库
-			outData(outRecipeNo,coldValue){
+			outData(outRecipeNo,codeValue){
+				let _self = this;
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -188,7 +194,7 @@
 		            	 			"ResponseFormat":"2"\
 		            	 		},"Body":{\
 		            	 			"OutRecipeNo":"'+outRecipeNo+'",\
-		            	 			"CodeValue":"'+coldValue+'",\
+		            	 			"CodeValue":"'+codeValue+'",\
 		            	 			"OperatorName":"'+localStorage.getItem("userName")+'"\
 		            	 		}\
 		            	 	}\
@@ -201,7 +207,9 @@
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
-	                		mui.toast(req.Response.Header.ResultMsg)        
+	                		mui.toast(req.Response.Header.ResultMsg) 
+	                		_self.batchList = [];  
+	                		_self.initData();
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){
@@ -212,6 +220,7 @@
 			},
 			// 处理扫码装车
 			toJoinCar(outRecipeNo,codeValue){
+				let _self = this;
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -239,7 +248,8 @@
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
-	                		mui.toast(req.Response.Header.ResultMsg)        
+	                		mui.toast(req.Response.Header.ResultMsg)
+	                		_self.initData();        
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){
@@ -257,7 +267,7 @@
 					}
 				})
 			},
-			
+			// 详情
 			toDetail( outRecipeNo ) {
 				this.$router.push({
 					path : "/home/out-stock/out-stock-detail",

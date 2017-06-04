@@ -7,12 +7,16 @@
 					<a class="mui-navigate-right" href="javascript:;">{{batch.InRecipeNo}}</a>
 					<div class="mui-collapse-content">
 						<div class="flex pd10">
-							<span class="flex-items">入库单号</span>
-							<span class="flex-items text-r">{{batch.InRecipeNo}}</span>
+							<span class="flex-items">发苗单号</span>
+							<span class="flex-items text-r">{{batch.OutRecipeNo}}</span>
 						</div>
 						<div class="flex pd10">
 							<span class="flex-items">入库疫苗总数量</span>
 							<span class="flex-items text-r">{{batch.Number}}</span>
+						</div>
+						<div class="flex pd10">
+							<span class="flex-items">已入库疫苗总数量</span>
+							<span class="flex-items text-r">{{batch.InStorageNumber}}</span>
 						</div>
 						<div class="flex pd10">
 							<span class="flex-items">已卸车疫苗数量</span>
@@ -35,10 +39,11 @@
 							<span class="flex-items text-r">{{batch.Status}}</span>
 						</div>
 						<div class="mui-button-row">
-							<button class="mui-btn mui-btn-primary fl-r" type="button" @click="selectOpt(index)">疫苗入库</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary fl-r mr10" type="button" @click="codeOutCar(batch.InRecipeNo)">扫码卸苗</button>&nbsp;&nbsp;
-							<button class="mui-btn mui-btn-primary fl-r mr10" type="button" @click="lookDetail(batch.InRecipeNo)">查看详情</button>
-
+							<div class="flex">
+								<span class="flex-items mui-btn-primary" @tap="selectOpt(index)">疫苗入库</span>
+								<span class="flex-items mui-btn-primary" @tap="codeOutCar(batch.InRecipeNo)">扫码卸车</span>
+								<span class="flex-items mui-btn-primary" @tap="lookDetail(batch.InRecipeNo)">查看详情</span>
+							</div>	
 						</div>
 					</div>
 				</li>
@@ -102,6 +107,7 @@
 	                		_self.message =  req.Response.Header.ResultMsg    	
 	                	}else{
 	                		let items = req.Response.Body.Items;
+	                		console.log(items);
 	                		if(items){
 	                			let batch = items.Item
 		                		if(!(batch instanceof Array)){
@@ -147,7 +153,7 @@
 	            	}
 	            });
 			},
-			// 扫码卸苗
+			// 扫码卸车
 			codeOutCar(inRecipeNo) {
 				let _self = this;
 				let content = plus.android.runtimeMainActivity();
@@ -163,7 +169,7 @@
 					mui.toast("失败")
 				})
 			},
-			// 扫码卸苗
+			// 扫码卸车
 			unCar(inRecipeNo,coldValue){
 				let _self = this;
 				mui.ajax({
@@ -193,7 +199,9 @@
 		            	if(req.Response.Header.ResultCode=="1"){
 		            		mui.toast(req.Response.Header.ResultMsg)          	
 		            	}else{
-		            		mui.toast(req.Response.Header.ResultMsg)
+		            		_self.batchList = [];
+		            		// 刷新列表
+		            		_self.initData();
 		            	}
 		            },
 					error:function(xhr,type,errorThrown){
