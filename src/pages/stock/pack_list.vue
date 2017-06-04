@@ -120,7 +120,6 @@
 	            });
 			},
 			toDetail( batch ){
-				console.log(batch.PackedNo);
 				this.$router.push({
 					path : "/home/out-stock/pack-list/pack-detail",
 					query : {
@@ -139,7 +138,7 @@
 			},
 			del( packedNo,idx ){
 				let _self = this;
-				//plus.nativeUI.showWaiting( "删除中..." );
+				plus.nativeUI.showWaiting( "删除中..." );
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -161,6 +160,7 @@
 		        	},
 	                dataType:'json',
 	                success:function(result){
+	                	plus.nativeUI.closeWaiting();
 	                	let req = JSON.parse(result.d)
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		_self.noMessage = req.Response.Header.ResultMsg          	
@@ -171,11 +171,11 @@
 	                		if(_self.batchList.length==0){
 	                			_self.message = "无包装箱"
 	                		}
-	                		//plus.nativeUI.closeWaiting();
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){
 						//异常处理；
+						plus.nativeUI.closeWaiting();
 						mui.toast(type);
 					}
 	            });
@@ -183,7 +183,7 @@
 			// 添加包装箱
 			addPacking(){
 				let _self = this;
-				//plus.nativeUI.showWaiting( "正在添加..." );
+				plus.nativeUI.showWaiting( "正在添加..." );
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -209,15 +209,16 @@
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
-	                		//plus.nativeUI.closeWaiting();
 	                		_self.batchList.push( req.Response.Body.Items.Item )
 	                		mui.toast("添加成功"); 
 	                		_self.$parent.initData();
 		                }
+		                plus.nativeUI.closeWaiting();
 	                },
 					error:function(xhr,type,errorThrown){
 						//异常处理；
 						mui.toast(type);
+						plus.nativeUI.closeWaiting();
 					}
 	            });
 			}

@@ -24,7 +24,7 @@
 							<span class="flex-items text-r">{{detail.ShelfLife}}</span>
 						</div>
 						<div class="flex pd10">
-							<span class="flex-items">待入库数量</span>
+							<span class="flex-items">疫苗总数量</span>
 							<span class="flex-items text-r">{{detail.PackeNumber}}</span>
 						</div>
 						<div class="mui-button-row">
@@ -36,7 +36,7 @@
 			</ul>
 			<div v-if="detailList.length==0" class="no-data-msg">
 				<div class="ds-table">
-					<div class="ds-tell">{{message}}</div>
+					<div class="ds-tell">{{message}}<span v-if="!message" class="mui-spinner"></span></div>
 				</div>
 			</div>
 			<router-view></router-view>	
@@ -57,7 +57,7 @@
 					hasBack : true
 				},
 				detailList:[],
-				message : '暂无数据'
+				message : ''
 			}
 		},
 		mounted(){
@@ -114,7 +114,7 @@
 	            	path  :'/home/in-stock/order-detail/cold-list',
 	            	query : { 
 	            		type : '0', 
-	            		packeNumber : batch.PackeNumber,
+	            		packeNumber : Math.floor(batch.PackeNumber)-Math.floor(batch.InNumber),
 	            		inRecipeNo : _self.$route.query.inRecipeNo,
 	            		outSerialNo : batch.OutSerialNo,
 	            		packedNo :  batch.PackedNo

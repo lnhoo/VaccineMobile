@@ -28,15 +28,15 @@
 		name : 'stock-list',
 		data() {
 			return {
-				headerObj :{
+				customerCode : localStorage.getItem("customerCode"),
+				headerObj : {
 					title:'库房列表',
 					hasBack : true
 				},
 				listRouter : false,
 				stockList : [],
 				message : '',
-				type : '',
-				customerName : localStorage.getItem("customerName")
+				type : ''
 			}
 		},
 		methods: {
@@ -44,8 +44,8 @@
 				this.initData();
 			},
 			initData(){
-				this.type = this.$route.query.type
 				let _self = this;
+				this.type = this.$route.query.type;
 				mui('.mui-scroll-wrapper').scroll({
 					indicators: false //是否显示滚动条
 				});
@@ -62,7 +62,7 @@
 	                	 			"FunCode":"0004",\
 	                	 			"ResponseFormat":"2"\
 	                	 		},"Body":{\
-	                	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'",\
+	                	 			"CustomerCode":"'+_self.customerCode+'",\
 	                	 			"Page":1,\
 	                	 			"PageSize":200,\
 	                	 			"Status":"1"\
@@ -73,11 +73,16 @@
 	            	},
 	                dataType:'json',
 	                success:function(result){
-	                	let req = JSON.parse(result.d)
+	                	let req = JSON.parse(result.d);
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		_self.message = req.Response.Header.ResultMsg          	
 	                	}else{
-	                		_self.stockList = req.Response.Body.Items.Item.reverse()
+	                		let items = req.Response.Body.Items;
+	                		if(items){
+	                			_self.stockList = items.Item.reverse()
+	                		}else{
+	                			_self.message = "无库房信息"
+	                		}
 	                	}
 	                },
 					error:function(xhr,type,errorThrown){
@@ -88,11 +93,11 @@
 			},
 			// 直接入库
 			inStorage : function( item ){
-				let _self = this;
-				let total = "";
-				let inStorageNumber = "";
-				let finalNumber = 0; 
-				let queryParams = _self.$route.query;
+				let _self = this,
+					total = "",
+					inStorageNumber = "",
+					finalNumber = 0,
+					queryParams = _self.$route.query;
 				if(!queryParams.packeNumber){
 					total = Math.floor(queryParams.total);
 					inStorageNumber = Math.floor(queryParams.inStorageNumber);
@@ -103,6 +108,7 @@
 				var btnArray = ['取消', '确定'];
 				mui.prompt('待入库数量:'+finalNumber, '数量', '提示', btnArray, function(e) {
 					if (e.index == 1) {
+						if(!e.value)return false;
 						if(isNaN(e.value)){
 							mui.toast("请输入数字");return false;
 						}
@@ -111,9 +117,12 @@
 						}
 						if(!queryParams.packeNumber){
 							_self.joinCold( item, e.value );
+							return true;
 						}else{
 							_self.gotoUnbox( item,e.value );
+							return true;
 						}
+						return false;
 					} 
 				})
 			},
@@ -148,13 +157,13 @@
 	                success:function(result){
 	                	let req = JSON.parse(result.d)
 	                	if(req.Response.Header.ResultCode=="1"){
-	                		mui.toast(req.Response.Header.ResultMsg)           	
+	                		mui.toast(req.Response.Header.ResultMsg)
 	                	}else{
-	                		plus.nativeUI.closeWaiting();
 	                		mui.toast(req.Response.Header.ResultMsg)  
 	                		_self.$router.go(-2)
-	                		//_self.$parent.roloadData( number )
+	                		_self.$parent.$parent.initData()
 	                	}
+	                	plus.nativeUI.closeWaiting();         
 	                },
 					error:function(xhr,type,errorThrown){
 						//异常处理；
@@ -178,6 +187,7 @@
 					mui.toast("失败")
 				})
 			},
+			// 拆箱入库
 			gotoUnbox( item,value ){
 				let _self = this;
 				let queryParams = _self.$route.query;
@@ -212,10 +222,11 @@
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
-	                		plus.nativeUI.closeWaiting();
-	                		mui.toast(req.Response.Header.ResultMsg)  
+	                		mui.toast(req.Response.Header.ResultMsg) 
+	                		_self.$parent.$parent.initData() 
 	                		_self.$router.go(-2)
 	                	}
+	                	plus.nativeUI.closeWaiting();
 	                },
 					error:function(xhr,type,errorThrown){
 						//异常处理；

@@ -104,7 +104,7 @@
 				var mk = new BMap.Marker(cur);
 					map.addOverlay(mk);
 					map.panTo(cur);
-				var infoWindow = new BMap.InfoWindow(carObj.PlateNo+"<br>温度："+carObj.MaxTemperature+"℃<br>湿度："+carObj.MinHumidity+"℃", { 
+				var infoWindow = new BMap.InfoWindow(carObj.PlateNo+"<br>温度："+carObj.MaxTemperature+"℃<br>湿度："+carObj.MinHumidity+"%", { 
 					offset : new BMap.Size(0,-25)
 				});    // 创建信息窗口对象
 				map.openInfoWindow(infoWindow,cur); 

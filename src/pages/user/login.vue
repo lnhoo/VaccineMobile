@@ -26,13 +26,13 @@
 			}
 		},
 		mounted(){
-			localStorage.setItem("http","http://61.189.37.57:10004/WebService.asmx/CallFun");
-			//localStorage.setItem("http","http://114.55.90.253:10999/WebService.asmx/CallFun");
+			//localStorage.setItem("http","http://61.189.37.57:10004/WebService.asmx/CallFun");
+			localStorage.setItem("http","http://114.55.90.253:10999/WebService.asmx/CallFun");
 		},
 		methods: {
            	login (){
            		let _self = this;
-           		//plus.nativeUI.showWaiting( "登录中..." );
+           		plus.nativeUI.showWaiting( "登录中..." );
            		mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -58,7 +58,6 @@
 	                	if(req.Response.Header.ResultCode=="1"){
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
-	                		console.log(JSON.parse(result.d))
 	                		let item = req.Response.Body.Items.Item;
 	                		let codeList = [];
 	                		for(var i = 0 ;i < item.length; i++){

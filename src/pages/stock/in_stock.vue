@@ -71,6 +71,7 @@
 					hasBack : true
 				},
 				batchList:[],
+				customerCode : localStorage.getItem("customerCode"),
 				idx : 0,
 				message : ''
 			}
@@ -81,6 +82,7 @@
 			},
 			initData() {
 				let _self = this;
+				_self.batchList = [];
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
@@ -94,7 +96,7 @@
 		            	 			"FunCode":"0023",\
 		            	 			"ResponseFormat":"2"\
 		            	 		},"Body":{\
-		            	 			"CustomerCode":"'+localStorage.getItem("customerCode")+'"\
+		            	 			"CustomerCode":"'+_self.customerCode+'"\
 		            	 		}\
 		            	 	}\
 		        	 	}',
@@ -107,7 +109,6 @@
 	                		_self.message =  req.Response.Header.ResultMsg    	
 	                	}else{
 	                		let items = req.Response.Body.Items;
-	                		console.log(items);
 	                		if(items){
 	                			let batch = items.Item
 		                		if(!(batch instanceof Array)){
@@ -199,6 +200,7 @@
 		            	if(req.Response.Header.ResultCode=="1"){
 		            		mui.toast(req.Response.Header.ResultMsg)          	
 		            	}else{
+		            		mui.toast(req.Response.Header.ResultMsg)
 		            		_self.batchList = [];
 		            		// 刷新列表
 		            		_self.initData();
@@ -269,7 +271,6 @@
 					//失败
 					mui.toast("失败")
 				})
-				
 			},
 			gotoUnboxing(inRecipeNo,codeValue){
 				this.$router.push({
