@@ -208,7 +208,6 @@
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
 	                		mui.toast(req.Response.Header.ResultMsg) 
-	                		_self.batchList = [];  
 	                		_self.initData();
 	                	}
 	                },
