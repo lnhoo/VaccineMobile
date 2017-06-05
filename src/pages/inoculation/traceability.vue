@@ -21,7 +21,7 @@
 			</div> 
 			<div v-if="detailList.length==0" class="no-data-msg">
 				<div class="ds-table">
-					<div class="ds-tell">暂无数据</div>
+					<div class="ds-tell">{{message}}<span v-if="!message" class="mui-spinner"></span></div>
 				</div>
 			</div> 
 
@@ -43,6 +43,7 @@
 					hasBack : true
 				},
 				detailList : [],
+				message : '',
 				orderObj : {}
 			}
 		},
@@ -71,10 +72,9 @@
                 success:function(result){
                 	let req = JSON.parse(result.d)
                 	if(req.Response.Header.ResultCode=="1"){
-                		mui.toast(req.Response.Header.ResultMsg)           	
+                		_self.message = req.Response.Header.ResultMsg        	
                 	}else{
                 		let items = req.Response.Items;
-                		console.log(req)
                 		if(items){
                 			let item = items.Item
                 			_self.orderObj.QRCodeValue = req.Response.QRCodeValue

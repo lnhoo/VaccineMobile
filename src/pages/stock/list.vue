@@ -3,7 +3,7 @@
 		<div class="stock-list">
 			<v-header :headerObj="headerObj"></v-header>
 			<div class="stock-box">
-				<div class="stock-container" v-for="(item,index) in stockList" @click="toDetail(item.ColdStoreNo)">
+				<div class="stock-container" v-for="(item,index) in stockList" @tap="toDetail(item.ColdStoreNo)">
 					<img src="../../assets/images/j17.png"/>
 					<b v-html="item.ColdStoreName"></b>
 					<span class="jz" v-html="customerName"></span>

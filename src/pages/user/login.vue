@@ -8,8 +8,8 @@
 		<div class="login-frm">
 			<input type="text" class="mui-input-clear user-name" v-model="UserNo" placeholder="输入用户名">
 			<input type="password" class="mui-input-clear password" v-model="UserPwd"  placeholder="输入密码">
-			<button type="button" class="mui-btn mui-btn-primary login-btn" @click="login">登录</button>
-			<div class="message"><a href="javascript:;" @click="forgetPwd">忘记密码?</a></div>
+			<button type="button" class="mui-btn mui-btn-primary login-btn" @tap="login">登录</button>
+			<div class="message hide"><a href="javascript:;">忘记密码?</a></div>
 		</div>
 	</div>
 </template>
@@ -87,9 +87,6 @@
 						mui.toast(type);
 					}
 	            })
-           	},
-           	forgetPwd(){
-           		mui.toast("忘记密码");
            	}
 		}
     }

@@ -27,6 +27,10 @@
 							<span class="flex-items">疫苗总数量</span>
 							<span class="flex-items text-r">{{detail.PackeNumber}}</span>
 						</div>
+						<div class="flex pd10">
+							<span class="flex-items">待入库疫苗数量</span>
+							<span class="flex-items text-r">{{unNumber}}</span>
+						</div>
 						<div class="mui-button-row">
 							<button class="mui-btn mui-btn-primary fl-r" type="button" @click="gotoStock(detail)">选择库房</button>
 						</div>
@@ -57,7 +61,8 @@
 					hasBack : true
 				},
 				detailList:[],
-				message : ''
+				message : '',
+				unNumber : 0
 			}
 		},
 		mounted(){
@@ -89,10 +94,10 @@
                 		_self.message = req.Response.Header.ResultMsg;          	
                 	}else{
                 		let items = req.Response.Body.Items;
-                		console.log( items );
 	            		if(items){
 	            			let Item = items.Item
 	                		if(!(Item instanceof Array)){
+	                			_self.unNumber = Math.floor(Item.PackeNumber)-Math.floor(Item.InNumber)
 	                			_self.detailList.push( Item )
 	                		}else{
 	                			_self.detailList = Item

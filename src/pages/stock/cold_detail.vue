@@ -5,7 +5,7 @@
 			<div class="device-wrap" v-if="devices.length>0">
 				<div class="device-list flex text-c">
 					<span class="flex-items" :class="{'on':index==0}" @click="switchTab($event,device)" v-for="(device,index) in devices">
-						{{device.ShowName}}<br>温度：{{device.Temperature}}℃<br>湿度：{{device.Humidity}}℃
+						{{device.ShowName}}<br>温度：{{device.Temperature}}℃<br>湿度：{{device.Humidity}}%
 					</span>
 				</div>
 				<div id="temperature" style="width: 96%;height:260px;margin:20px auto;"></div>
@@ -75,6 +75,7 @@
 	                		let items = req.Response.Body.Items;
 	                		if(items){
 	                			let devices = items.Item
+
 		                		if(!(devices instanceof Array)){
 		                			_self.devices.push( devices )
 		                		}else{
@@ -83,6 +84,8 @@
 		                		_self.$nextTick(() => {
 							        _self.getEchatsData(_self.devices[0])
 							    })	
+	                		}else{
+	                			_self.message = "没有设备"
 	                		}
 	                	}
 	                },
@@ -153,7 +156,6 @@
 	                			// 时间段
 	                			StrCollectTime.push(detailArr[i].StrCollectTime)
 	                		}
-
 	                		_self.initEcharts({
 					        	id : 'temperature',
 					        	text : '温度℃',
@@ -168,7 +170,7 @@
 
 					        _self.initEcharts({
 					        	id : 'humidity',
-					        	text : '湿度℃',
+					        	text : '湿度%',
 					        	max : '最高湿度',
 					        	mix : '最低湿度',
 					        	maxValue: device.MaxHumidity,

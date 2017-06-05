@@ -7,7 +7,7 @@
 					<a class="mui-navigate-right" href="javascript:;">{{batch.InRecipeNo}}</a>
 					<div class="mui-collapse-content">
 						<div class="flex pd10">
-							<span class="flex-items">发苗单号</span>
+							<span class="flex-items">调拨单号</span>
 							<span class="flex-items text-r">{{batch.OutRecipeNo}}</span>
 						</div>
 						<div class="flex pd10">
