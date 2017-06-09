@@ -32,7 +32,7 @@
 		methods: {
            	login (){
            		let _self = this;
-           		plus.nativeUI.showWaiting( "登录中..." );
+           		//plus.nativeUI.showWaiting( "登录中..." );
            		mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",

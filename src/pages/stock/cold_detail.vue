@@ -5,7 +5,9 @@
 			<div class="device-wrap" v-if="devices.length>0">
 				<div class="device-list flex text-c">
 					<span class="flex-items" :class="{'on':index==0}" @click="switchTab($event,device)" v-for="(device,index) in devices">
-						{{device.ShowName}}<br>温度：{{device.Temperature}}℃<br>湿度：{{device.Humidity}}%
+						{{device.ShowName}}<br>温度：{{device.Temperature?device.Temperature:0}}℃<br>湿度：{{device.Humidity?device.Humidity:0}}%
+						<span class="device-status" v-if="device.IsOffline=='1'">离线</span>
+						<span class="device--update-time" v-if="device.IsOffline!='1'">{{device.CollectTime}}</span>
 					</span>
 				</div>
 				<div id="temperature" style="width: 96%;height:260px;margin:20px auto;"></div>
@@ -73,9 +75,9 @@
 	                		_self.message = req.Response.Header.ResultMsg          	
 	                	}else{
 	                		let items = req.Response.Body.Items;
+	                		console.log(items)
 	                		if(items){
 	                			let devices = items.Item
-
 		                		if(!(devices instanceof Array)){
 		                			_self.devices.push( devices )
 		                		}else{
@@ -135,6 +137,7 @@
 	                		mui.toast(req.Response.Header.ResultMsg)           	
 	                	}else{
 	                		let detailArr = []
+	                		if(!req.Response.Body.Items)return;
 	                		let detail = req.Response.Body.Items.Item
 	                		if(!(detail instanceof Array)){
 	                			detailArr.push( detail )
@@ -272,6 +275,7 @@
 		position: absolute;
 		top:95px;
 		width: 96%;
+		margin-left: 2%;
 		bottom: 0;
 		overflow:hidden;
 		overflow-y: auto;
@@ -283,12 +287,26 @@
 		margin: 0 auto;
 	}
 	.device-list  .flex-items{
-		border:1px solid #6464E0;
 		padding: 10px;
 		color:#fff;
+		position: relative;
+		background: #000;
+		padding-bottom: 25px;
 	}
 	.on{
 		background: #6464E0;
+		color:#fff;
+	}
+	.device-status{
+		position: absolute;
+		bottom: 0;
+		right: 5px;
+		color:#fff;
+	}
+	.device--update-time{
+		position: absolute;
+		bottom: 0;
+		right: 5px;
 		color:#fff;
 	}
 </style>
