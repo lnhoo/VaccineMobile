@@ -27,10 +27,10 @@
 			return {
 				items :[],
 				params : {
-					MaxTemperature : 21,
-					MinTemperature : 10,
-					MaxHumidity : 26,
-					MinHumidity : 12
+					MaxTemperature : '',
+					MinTemperature : '',
+					MaxHumidity : '',
+					MinHumidity : ''
 				},
 				showForm : false,
 				status : 1
@@ -57,6 +57,9 @@
 			},
 			toSubmit() {
 				let _self = this;
+				for(var p in _self.params){  
+			    	if(!_self.params[p] && isNaN(_self.params[p]))return;     
+			    }  
 				mui.ajax({
 	                type: "POST",
 	                contentType:"application/json; charset=utf-8",
